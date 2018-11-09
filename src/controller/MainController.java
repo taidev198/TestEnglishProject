@@ -103,7 +103,7 @@ public class MainController implements Initializable {
     private void goToGrammar(){
         try {
             Parent parent = FXMLLoader.load(getClass().getResource("/view/grammar.fxml"));
-            anchorPane.getChildren().removeAll();
+            anchorPane.getChildren().clear();
             anchorPane.getChildren().addAll(parent);
         } catch (IOException e) {
             e.printStackTrace();

@@ -29,7 +29,7 @@ public class loginController implements Initializable {
     public void goHome(){
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/view/Main.fxml"));
-           anchorPane.getChildren().removeAll();
+           anchorPane.getChildren().clear();
            anchorPane.getChildren().addAll(root);
             new FadeIn(root).play();
         } catch (IOException e) {
@@ -40,7 +40,7 @@ public class loginController implements Initializable {
     public void signUp(){
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/view/signup.fxml"));
-            pane.getChildren().removeAll();
+            pane.getChildren().clear();
             pane.getChildren().addAll(root);
             new FadeIn(root).play();
         } catch (IOException e) {
@@ -50,7 +50,7 @@ public class loginController implements Initializable {
     public void backScene(){
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/view/SignIn.fxml"));
-            pane1.getChildren().removeAll();
+            pane1.getChildren().clear();
             pane1.getChildren().addAll(root);
             new FadeIn(root).play();
 

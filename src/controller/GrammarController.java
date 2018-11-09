@@ -43,7 +43,7 @@ public class GrammarController implements Initializable {
         listView.setOpaqueInsets(new Insets(10));
         listView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             try {
-                FXMLLoader loader=  new FXMLLoader(getClass().getResource("/main/view/MainContent.fxml"));
+                FXMLLoader loader=  new FXMLLoader(getClass().getResource("/view/MainContent.fxml"));
                 Parent root =  loader.load();
                 MainContentController m = loader.getController();
                 m.setContent("1");
