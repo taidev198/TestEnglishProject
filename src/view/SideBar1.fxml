@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="580.0" prefWidth="250.0" styleClass="sidebar" stylesheets="@../resource/stylehseet.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Controller">
+   <children>
+      <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="580.0" prefWidth="250.0">
+         <children>
+            <ImageView fitHeight="80.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../resource/user-icon.png" />
+               </image>
+               <VBox.margin>
+                  <Insets left="85.0" />
+               </VBox.margin>
+            </ImageView>
+            <HBox prefHeight="46.0" prefWidth="338.0">
+               <children>
+                  <Label styleClass="sidebar-btn-icon" stylesheets="@../resource/stylehseet.css" text="Nguyen Thanh Tai">
+                     <HBox.margin>
+                        <Insets left="70.0" top="5.0" />
+                     </HBox.margin>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </Label>
+                  <FontAwesomeIcon fill="#8c7e7e" iconName="SORT_DESC" size="1.5em" styleClass="sidebar-btn-icon">
+                     <HBox.margin>
+                        <Insets left="5.0" />
+                     </HBox.margin>
+                  </FontAwesomeIcon>
+               </children>
+            </HBox>
+            <Label text="MAIN" />
+            <HBox prefHeight="46.0" prefWidth="250.0" styleClass="sidebar-btn" stylesheets="@../resource/stylehseet.css">
+               <children>
+                  <FontAwesomeIcon fill="#b8b1b1" iconName="HOME" size="1.5em" styleClass="sidebar-btn-icon">
+                     <HBox.margin>
+                        <Insets left="10.0" top="10.0" />
+                     </HBox.margin>
+                  </FontAwesomeIcon>
+                  <Label styleClass="sidebar-btn-icon" text="HOME">
+                     <HBox.margin>
+                        <Insets left="20.0" top="10.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox layoutX="10.0" layoutY="154.0" prefHeight="46.0" prefWidth="250.0" styleClass="sidebar-btn" stylesheets="@../resource/stylehseet.css">
+               <children>
+                  <FontAwesomeIcon fill="#b8b1b1" iconName="ARCHIVE" size="1.5em" styleClass="sidebar-btn-icon" text="">
+                     <HBox.margin>
+                        <Insets left="10.0" top="10.0" />
+                     </HBox.margin>
+                  </FontAwesomeIcon>
+                  <Label styleClass="sidebar-btn-icon" text="TASK">
+                     <HBox.margin>
+                        <Insets left="20.0" top="10.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox layoutX="10.0" layoutY="200.0" prefHeight="46.0" prefWidth="250.0" styleClass="sidebar-btn" stylesheets="@../resource/stylehseet.css">
+               <children>
+                  <FontAwesomeIcon fill="#b8b1b1" iconName="TASKS" size="1.5em" styleClass="sidebar-btn-icon">
+                     <HBox.margin>
+                        <Insets left="10.0" top="10.0" />
+                     </HBox.margin>
+                  </FontAwesomeIcon>
+                  <Label styleClass="sidebar-btn-icon" text="CALENDER">
+                     <HBox.margin>
+                        <Insets left="20.0" top="10.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox layoutX="10.0" layoutY="247.0" prefHeight="46.0" prefWidth="250.0" styleClass="sidebar-btn" stylesheets="@../resource/stylehseet.css">
+               <children>
+                  <FontAwesomeIcon fill="#b8b1b1" iconName="ARCHIVE" size="1.5em" styleClass="sidebar-btn-icon">
+                     <HBox.margin>
+                        <Insets left="10.0" top="10.0" />
+                     </HBox.margin>
+                  </FontAwesomeIcon>
+                  <Label styleClass="sidebar-btn-icon" text="TASK">
+                     <HBox.margin>
+                        <Insets left="20.0" top="10.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <Label layoutX="10.0" layoutY="136.0" text="SHARE" />
+            <HBox layoutX="10.0" layoutY="154.0" prefHeight="46.0" prefWidth="250.0" styleClass="sidebar-btn" stylesheets="@../resource/stylehseet.css">
+               <children>
+                  <FontAwesomeIcon fill="#b8b1b1" iconName="HOME" size="1.5em" styleClass="sidebar-btn-icon">
+                     <HBox.margin>
+                        <Insets left="10.0" top="10.0" />
+                     </HBox.margin>
+                  </FontAwesomeIcon>
+                  <Label styleClass="sidebar-btn-icon" text="HOME">
+                     <HBox.margin>
+                        <Insets left="20.0" top="10.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox layoutX="10.0" layoutY="200.0" prefHeight="46.0" prefWidth="250.0" styleClass="sidebar-btn" stylesheets="@../resource/stylehseet.css">
+               <children>
+                  <FontAwesomeIcon fill="#b8b1b1" iconName="ARCHIVE" size="1.5em" styleClass="sidebar-btn-icon" text="">
+                     <HBox.margin>
+                        <Insets left="10.0" top="10.0" />
+                     </HBox.margin>
+                  </FontAwesomeIcon>
+                  <Label styleClass="sidebar-btn-icon" text="TASK">
+                     <HBox.margin>
+                        <Insets left="20.0" top="10.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox layoutX="10.0" layoutY="247.0" prefHeight="46.0" prefWidth="250.0" styleClass="sidebar-btn" stylesheets="@../resource/stylehseet.css">
+               <children>
+                  <FontAwesomeIcon fill="#b8b1b1" iconName="TASKS" size="1.5em" styleClass="sidebar-btn-icon">
+                     <HBox.margin>
+                        <Insets left="10.0" top="10.0" />
+                     </HBox.margin>
+                  </FontAwesomeIcon>
+                  <Label styleClass="sidebar-btn-icon" text="CALENDER">
+                     <HBox.margin>
+                        <Insets left="20.0" top="10.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox layoutX="10.0" layoutY="293.0" prefHeight="46.0" prefWidth="250.0" styleClass="sidebar-btn" stylesheets="@../resource/stylehseet.css">
+               <children>
+                  <FontAwesomeIcon fill="#b8b1b1" iconName="ARCHIVE" size="1.5em" styleClass="sidebar-btn-icon">
+                     <HBox.margin>
+                        <Insets left="10.0" top="10.0" />
+                     </HBox.margin>
+                  </FontAwesomeIcon>
+                  <Label styleClass="sidebar-btn-icon" text="TASK">
+                     <HBox.margin>
+                        <Insets left="20.0" top="10.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

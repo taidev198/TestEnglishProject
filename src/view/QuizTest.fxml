@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ScrollBar?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.QuizTestController">
+   <children>
+      <Pane layoutX="52.0" layoutY="68.0" prefHeight="466.0" prefWidth="900.0" style="-fx-background-color: #E9E9E9;">
+         <children>
+            <ScrollBar layoutX="886.0" orientation="VERTICAL" prefHeight="466.0" prefWidth="14.0" />
+            <Text layoutX="15.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="870.1367950439453" />
+            <RadioButton layoutX="279.0" layoutY="62.0" mnemonicParsing="false" text="RadioButton" />
+            <RadioButton layoutX="55.0" layoutY="62.0" mnemonicParsing="false" text="RadioButton" />
+            <RadioButton layoutX="534.0" layoutY="62.0" mnemonicParsing="false" text="RadioButton" />
+            <RadioButton layoutX="737.0" layoutY="62.0" mnemonicParsing="false" text="RadioButton" />
+         </children>
+      </Pane>
+      <Button layoutX="456.0" layoutY="551.0" mnemonicParsing="false" text="SUBMIT" />
+      <Button layoutX="556.0" layoutY="551.0" mnemonicParsing="false" text="REVIEW" />
+      <Button layoutX="52.0" layoutY="30.0" mnemonicParsing="false" text="BACK TO HOME" />
+   </children>
+</AnchorPane>

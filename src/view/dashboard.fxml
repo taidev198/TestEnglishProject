@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Controller">
+   <children>
+      <AnchorPane prefHeight="592.0" prefWidth="792.0">
+         <children>
+            <VBox prefHeight="600.0" prefWidth="204.0" style="-fx-background-color: #3377AB;" styleClass="border" stylesheets="@../resource/color.css">
+               <children>
+                  <ImageView fitHeight="87.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true">
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="45.0" right="10.0" top="5.0" />
+                     </VBox.margin>
+                     <image>
+                        <Image url="@../resource/avatar.png" />
+                     </image>
+                  </ImageView>
+                  <HBox prefHeight="50.0" prefWidth="192.0">
+                     <children>
+                        <ImageView fitHeight="35.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <HBox.margin>
+                              <Insets left="10.0" top="5.0" />
+                           </HBox.margin>
+                           <image>
+                              <Image url="@../resource/avatar.png" />
+                           </image>
+                        </ImageView>
+                        <Label prefHeight="18.0" prefWidth="80.0" text="DashBoard">
+                           <HBox.margin>
+                              <Insets left="30.0" top="10.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                     <opaqueInsets>
+                        <Insets bottom="10.0" />
+                     </opaqueInsets>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox layoutX="16.0" layoutY="119.0" prefHeight="50.0" prefWidth="192.0">
+                     <children>
+                        <ImageView fitHeight="35.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <HBox.margin>
+                              <Insets left="10.0" top="5.0" />
+                           </HBox.margin>
+                           <image>
+                              <Image url="@../resource/avatar.png" />
+                           </image>
+                        </ImageView>
+                        <Label prefHeight="18.0" prefWidth="80.0" text="DashBoard">
+                           <HBox.margin>
+                              <Insets left="30.0" top="10.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                     <opaqueInsets>
+                        <Insets bottom="10.0" />
+                     </opaqueInsets>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox layoutX="16.0" layoutY="169.0" prefHeight="50.0" prefWidth="192.0">
+                     <children>
+                        <ImageView fitHeight="35.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <HBox.margin>
+                              <Insets left="10.0" top="5.0" />
+                           </HBox.margin>
+                           <image>
+                              <Image url="@../resource/avatar.png" />
+                           </image>
+                        </ImageView>
+                        <Label prefHeight="18.0" prefWidth="80.0" text="DashBoard">
+                           <HBox.margin>
+                              <Insets left="30.0" top="10.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox layoutX="16.0" layoutY="220.0" prefHeight="50.0" prefWidth="192.0">
+                     <children>
+                        <ImageView fitHeight="35.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <HBox.margin>
+                              <Insets left="10.0" top="5.0" />
+                           </HBox.margin>
+                           <image>
+                              <Image url="@../resource/avatar.png" />
+                           </image>
+                        </ImageView>
+                        <Label prefHeight="18.0" prefWidth="80.0" text="DashBoard">
+                           <HBox.margin>
+                              <Insets left="30.0" top="10.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox layoutX="16.0" layoutY="270.0" prefHeight="50.0" prefWidth="192.0">
+                     <children>
+                        <ImageView fitHeight="35.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <HBox.margin>
+                              <Insets left="10.0" top="5.0" />
+                           </HBox.margin>
+                           <image>
+                              <Image url="@../resource/avatar.png" />
+                           </image>
+                        </ImageView>
+                        <Label prefHeight="18.0" prefWidth="80.0" text="DashBoard">
+                           <HBox.margin>
+                              <Insets left="30.0" top="10.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox layoutX="16.0" layoutY="320.0" prefHeight="50.0" prefWidth="192.0">
+                     <children>
+                        <ImageView fitHeight="35.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <HBox.margin>
+                              <Insets left="10.0" top="5.0" />
+                           </HBox.margin>
+                           <image>
+                              <Image url="@../resource/avatar.png" />
+                           </image>
+                        </ImageView>
+                        <Label prefHeight="18.0" prefWidth="80.0" text="DashBoard">
+                           <HBox.margin>
+                              <Insets left="30.0" top="10.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox layoutX="16.0" layoutY="371.0" prefHeight="50.0" prefWidth="192.0">
+                     <children>
+                        <ImageView fitHeight="35.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <HBox.margin>
+                              <Insets left="10.0" top="5.0" />
+                           </HBox.margin>
+                           <image>
+                              <Image url="@../resource/avatar.png" />
+                           </image>
+                        </ImageView>
+                        <Label prefHeight="18.0" prefWidth="80.0" text="DashBoard">
+                           <HBox.margin>
+                              <Insets left="30.0" top="10.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </HBox>
+               </children>
+            </VBox>
+            <Pane layoutX="204.0" prefHeight="80.0" prefWidth="595.0" style="-fx-background-color: #3377AB;" styleClass="border" stylesheets="@../resource/color.css">
+               <children>
+                  <Label layoutX="204.0" layoutY="15.0" prefHeight="50.0" prefWidth="214.0" text="DashBoard" textAlignment="CENTER" textFill="#e28989">
+                     <font>
+                        <Font size="34.0" />
+                     </font>
+                  </Label>
+               </children></Pane>
+            <Pane layoutX="205.0" layoutY="79.0" prefHeight="521.0" prefWidth="595.0" style="-fx-background-color: #3377AB;" styleClass="border" stylesheets="@../resource/color.css">
+               <children>
+                  <VBox layoutX="14.0" layoutY="314.0" prefHeight="200.0" prefWidth="191.0">
+                     <children>
+                        <Label text="Proccessing" textFill="#0fd42c">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets left="40.0" />
+                           </VBox.margin>
+                        </Label>
+                        <HBox prefHeight="158.0" prefWidth="194.0">
+                           <children>
+                              <ProgressIndicator blendMode="MULTIPLY" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="118.0" prefWidth="115.0" progress="0.73">
+                                 <HBox.margin>
+                                    <Insets left="40.0" top="25.0" />
+                                 </HBox.margin>
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                              </ProgressIndicator>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <VBox layoutX="202.0" layoutY="314.0" prefHeight="200.0" prefWidth="191.0">
+                     <children>
+                        <Label text="Proccessing" textFill="#0fd42c">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets left="40.0" />
+                           </VBox.margin>
+                        </Label>
+                        <HBox prefHeight="158.0" prefWidth="194.0">
+                           <children>
+                              <ProgressIndicator blendMode="MULTIPLY" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="118.0" prefWidth="115.0" progress="0.73">
+                                 <HBox.margin>
+                                    <Insets left="40.0" top="25.0" />
+                                 </HBox.margin>
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                              </ProgressIndicator>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <VBox layoutX="393.0" layoutY="314.0" prefHeight="200.0" prefWidth="191.0">
+                     <children>
+                        <Label text="Proccessing" textFill="#0fd42c">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets left="40.0" />
+                           </VBox.margin>
+                        </Label>
+                        <HBox prefHeight="158.0" prefWidth="194.0">
+                           <children>
+                              <ProgressIndicator blendMode="MULTIPLY" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="118.0" prefWidth="115.0" progress="0.73">
+                                 <HBox.margin>
+                                    <Insets left="40.0" top="25.0" />
+                                 </HBox.margin>
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                              </ProgressIndicator>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <LineChart prefHeight="308.0" prefWidth="588.0">
+                    <xAxis>
+                      <CategoryAxis side="BOTTOM" />
+                    </xAxis>
+                    <yAxis>
+                      <NumberAxis side="LEFT" />
+                    </yAxis>
+                  </LineChart>
+               </children></Pane>
+         </children></AnchorPane>
+   </children>
+</AnchorPane>

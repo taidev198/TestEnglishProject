@@ -1,0 +1,17 @@
+.body {
+    -fx-background-color: #80BCEB
+
+}
+.border{
+    -fx-border-color: #FFD600;
+    -fx-padding: 5;
+}
+.button-login{
+    -fx-border-color: #1D1D1D;
+    -fx-border-radius: 20px;
+    -fx-background-radius: 20px;
+    -fx-background-color: #FFFF8D;
+}
+.label-hover{
+    -fx-background-color: #FFD600;
+}
