@@ -40,20 +40,20 @@ public class GrammarController implements Initializable {
             listView.getItems().add(label);
         }
         load();
-        listView.setOpaqueInsets(new Insets(10));
-        listView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            try {
-                FXMLLoader loader=  new FXMLLoader(getClass().getResource("/view/MainContent.fxml"));
-                Parent root =  loader.load();
-                MainContentController m = loader.getController();
-                m.setContent("1");
-                content.getChildren().removeAll();
-                content.getChildren().addAll(root);
+            listView.setOpaqueInsets(new Insets(10));
+            listView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+                try {
+                    FXMLLoader loader=  new FXMLLoader(getClass().getResource("/view/MainContent.fxml"));
+                    Parent root =  loader.load();
+                    MainContentController m = loader.getController();
+                    m.setContent("1");
+                    content.getChildren().removeAll();
+                    content.getChildren().addAll(root);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
 
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
     }
 
     @FXML
@@ -75,8 +75,7 @@ public class GrammarController implements Initializable {
         System.out.println("TestGrammar view");
     }
     @FXML
-    public void handle(MouseEvent event){
-
+    public void next(MouseEvent event){
     }
 
     public void initPopup(){

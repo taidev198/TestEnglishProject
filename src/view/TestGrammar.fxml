@@ -10,7 +10,7 @@
 
 <AnchorPane fx:id="anchorPane" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.TestGrammarController">
    <children>
-      <Pane layoutX="258.0" layoutY="77.0" prefHeight="510.0" prefWidth="736.0" style="-fx-background-color: #E0E0E0;">
+      <Pane fx:id="pane" layoutX="258.0" layoutY="77.0" prefHeight="510.0" prefWidth="736.0" style="-fx-background-color: #E0E0E0;">
          <children>
             <Text layoutX="14.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Question" wrappingWidth="691.7367553710938" />
             <RadioButton layoutX="14.0" layoutY="279.0" mnemonicParsing="false" text="A" />
