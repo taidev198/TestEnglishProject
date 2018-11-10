@@ -82,7 +82,7 @@
                               <Insets left="10.0" top="10.0" />
                            </HBox.margin>
                         </FontAwesomeIcon>
-                        <Label styleClass="sidebar-btn-icon" text="TEST GRAMMAR">
+                        <Label onMouseClicked="#goToTestGrammar" styleClass="sidebar-btn-icon" text="TEST GRAMMAR">
                            <HBox.margin>
                               <Insets left="20.0" top="10.0" />
                            </HBox.margin>

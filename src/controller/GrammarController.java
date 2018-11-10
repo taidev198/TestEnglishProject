@@ -1,5 +1,6 @@
 package controller;
 
+import animatefx.animation.FadeIn;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPopup;
 import javafx.fxml.FXML;
@@ -30,7 +31,6 @@ public class GrammarController implements Initializable {
     @FXML
     private JFXPopup popup;
 
-    private MainContentController mainContentController;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -62,6 +62,18 @@ public class GrammarController implements Initializable {
         System.out.println("thanh tai nguyen");
     }
 
+    @FXML
+    private void backHome(){
+        try {
+            Parent parent = FXMLLoader.load(getClass().getResource("/view/Main.fxml"));
+            anchorPane.getChildren().clear();
+            anchorPane.getChildren().addAll(parent);
+            new FadeIn(parent).play();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println("TestGrammar view");
+    }
     @FXML
     public void handle(MouseEvent event){
 

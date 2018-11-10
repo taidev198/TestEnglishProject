@@ -1,11 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.GrammarController">
    <children>
-      <ListView fx:id="listView" layoutY="-1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="200.0" styleClass="fx-list-view" stylesheets="@../resource/stylehseet.css" />
+      <ListView fx:id="listView" layoutY="49.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="558.0" prefWidth="200.0" styleClass="fx-list-view" stylesheets="@../resource/stylehseet.css" />
       <AnchorPane fx:id="content" layoutX="255.0" layoutY="102.0" prefHeight="473.0" prefWidth="747.0" />
+      <Text fill="#a75b5b" layoutX="380.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DESCRIPTION" textAlignment="CENTER" wrappingWidth="517.336669921875">
+         <font>
+            <Font size="23.0" />
+         </font>
+      </Text>
+      <Button layoutX="35.0" layoutY="14.0" mnemonicParsing="false" onAction="#backHome" prefHeight="26.0" prefWidth="180.0" text="Return to HOME" />
    </children>
 </AnchorPane>

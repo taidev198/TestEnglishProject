@@ -1,6 +1,7 @@
 package controller;
 
 
+import animatefx.animation.FadeIn;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -105,9 +106,24 @@ public class MainController implements Initializable {
             Parent parent = FXMLLoader.load(getClass().getResource("/view/grammar.fxml"));
             anchorPane.getChildren().clear();
             anchorPane.getChildren().addAll(parent);
+            new FadeIn(parent).play();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("thanh tai nguyen");
+        System.out.println("Grammar View");
+    }
+
+    @FXML
+    private void goToTestGrammar(){
+        try {
+            Parent parent = FXMLLoader.load(getClass().getResource("/view/TestGrammar.fxml"));
+            anchorPane.getChildren().clear();
+            anchorPane.getChildren().addAll(parent);
+            new FadeIn(parent).play();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println("TestGrammar view");
+
     }
 }

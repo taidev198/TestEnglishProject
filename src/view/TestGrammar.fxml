@@ -8,8 +8,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.TestGrammarController">
+<AnchorPane fx:id="anchorPane" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.TestGrammarController">
    <children>
       <Pane layoutX="258.0" layoutY="77.0" prefHeight="510.0" prefWidth="736.0" style="-fx-background-color: #E0E0E0;">
          <children>
@@ -21,12 +20,12 @@
             <Text layoutX="10.0" layoutY="398.0" strokeType="OUTSIDE" strokeWidth="0.0" text="explain" wrappingWidth="715.7367553710938" />
             <Text layoutX="19.0" layoutY="352.0" strokeType="OUTSIDE" strokeWidth="0.0" text="KEY" />
             <Button layoutX="598.0" layoutY="471.0" mnemonicParsing="false" text="PRE" />
-            <Button layoutX="669.0" layoutY="471.0" mnemonicParsing="false" text="BACK" />
+            <Button layoutX="669.0" layoutY="471.0" mnemonicParsing="false" text="NEXT" />
          </children>
       </Pane>
       <ListView fx:id="listContests" layoutY="48.0" prefHeight="537.0" prefWidth="250.0" />
-      <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="180.0" text="Return to HOME" />
-      <Text fill="#875c5c" layoutX="258.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DESCRIPTION" wrappingWidth="458.13665771484375">
+      <Button layoutY="14.0" mnemonicParsing="false" onAction="#backHome" prefHeight="26.0" prefWidth="180.0" text="Return to HOME" />
+      <Text fill="#875c5c" layoutX="375.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DESCRIPTION" textAlignment="CENTER" wrappingWidth="536.5366821289062">
          <font>
             <Font size="24.0" />
          </font>
