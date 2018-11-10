@@ -116,7 +116,7 @@ public class MainController implements Initializable {
     @FXML
     private void goToTestGrammar(){
         try {
-            Parent parent = FXMLLoader.load(getClass().getResource("/view/TestGrammar.fxml"));
+            Parent parent = FXMLLoader.load(getClass().getResource("/view/TestGrammar1.fxml"));
             anchorPane.getChildren().clear();
             anchorPane.getChildren().addAll(parent);
             new FadeIn(parent).play();

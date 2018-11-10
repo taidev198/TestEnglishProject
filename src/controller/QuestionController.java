@@ -2,9 +2,7 @@ package controller;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.WeakChangeListener;
-import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -22,6 +20,8 @@ import java.util.ResourceBundle;
 
 public class QuestionController implements Initializable {
 
+    @FXML
+    ListView<String> grammarLists;
     @FXML
     ListView<Question> listView;
     @FXML
@@ -235,8 +235,6 @@ public class QuestionController implements Initializable {
             if (selected && getListView() != null && !isEmpty() && getIndex() >= 0) {
                 getListView().getSelectionModel().select(getIndex());
                 System.out.println(getListView().getSelectionModel().getSelectedItem().getOptionA());
-                int idx = getIndex();
-               // System.out.println(idx);
                 if (optionA.isSelected()){
                     System.out.println("thanh tai nguyen");
                 }else if (optionB.isSelected())
