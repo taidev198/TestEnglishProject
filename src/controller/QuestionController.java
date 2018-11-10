@@ -29,11 +29,29 @@ public class QuestionController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        Question q =  new Question("hello", "hello", "a","b",
+        Question q =  new Question("hello", "You can easily increase the size of the Radio Button and Checkbox icons in SurveyGizmo surveys so that they are easier for your survey respondents to select.", "a","b",
                 "c", "d", "", "a", 1);
-
+        Question q1 =  new Question("hello", "hello", "b","b",
+                "c", "d", "", "a", 1);
+        Question q2 =  new Question("hello", "hello", "c","b",
+                "c", "d", "", "a", 1);
+        Question q3 =  new Question("hello", "hello", "d","b",
+                "c", "d", "", "a", 1);
+        Question q4 =  new Question("hello", "hello", "e","b",
+                "c", "d", "", "a", 1);
+        Question q5 =  new Question("hello", "hello", "f","b",
+                "c", "d", "", "a", 1);
+        Question q6 =  new Question("hello", "hello", "g","b",
+                "c", "d", "", "a", 1);
          listView.getItems().addAll(q);
-         listView.setCellFactory(new Callback<ListView<Question>, ListCell<Question>>() {
+
+        listView.getItems().addAll(q1);
+        listView.getItems().addAll(q2);
+        listView.getItems().addAll(q3);
+        listView.getItems().addAll(q4);
+        listView.getItems().addAll(q5);
+        listView.getItems().addAll(q6);
+        listView.setCellFactory(new Callback<ListView<Question>, ListCell<Question>>() {
             @Override
             public ListCell<Question> call(ListView<Question> param) {
                 return new QuestionCell();
@@ -204,6 +222,7 @@ public class QuestionController implements Initializable {
             if (item !=null && !empty){
                 question.setText(item.getQuestion());
                 optionA.setText(item.getOptionA());
+                number.setText(String.valueOf(item.getNumber()) + ": ");
                 setGraphic(vBox);
                 if (optionA.isSelected()){
                     System.out.println("thanh tai nguyen");
@@ -215,9 +234,13 @@ public class QuestionController implements Initializable {
         protected void radioChanged(boolean selected) {
             if (selected && getListView() != null && !isEmpty() && getIndex() >= 0) {
                 getListView().getSelectionModel().select(getIndex());
+                System.out.println(getListView().getSelectionModel().getSelectedItem().getOptionA());
+                int idx = getIndex();
+               // System.out.println(idx);
                 if (optionA.isSelected()){
                     System.out.println("thanh tai nguyen");
-                }
+                }else if (optionB.isSelected())
+                    System.out.println(optionA.getText());
 
             }
         }
