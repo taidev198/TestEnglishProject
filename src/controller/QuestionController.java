@@ -1,6 +1,9 @@
 package controller;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.WeakChangeListener;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -9,6 +12,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.util.Callback;
@@ -35,6 +39,15 @@ public class QuestionController implements Initializable {
                 return new QuestionCell();
             }
         });
+         listView.getItems().addListener(new ListChangeListener<Question>() {
+             @Override
+             public void onChanged(Change<? extends Question> c) {
+                 while (c.next()){
+                     System.out.println(c.getFrom());
+                 }
+             }
+         });
+        listView.setFocusTraversable( false );
 
 
     }
@@ -148,10 +161,11 @@ public class QuestionController implements Initializable {
         private Text key;
         private Text number;
         private VBox vBox;
+        ChangeListener<Boolean> radioListener = (src, ov, nv) -> radioChanged(nv);
+        WeakChangeListener<Boolean> weakRadioListener = new WeakChangeListener(radioListener);
 
         public QuestionCell(){
             super();
-
             question = new Text();
             optionA = new RadioButton();
             optionB = new RadioButton();
@@ -167,11 +181,21 @@ public class QuestionController implements Initializable {
             HBox.setMargin(optionB, new Insets(60, 70, 30, 70));
             HBox.setMargin(optionC, new Insets(60, 70, 30, 70));
             HBox.setMargin(optionD, new Insets(60, 70, 30, 70));
-
+            final ToggleGroup group = new ToggleGroup();
+            optionB.setToggleGroup(group);
+            optionA.setToggleGroup(group);
+            optionC.setToggleGroup(group);
+            optionD.setToggleGroup(group);
+            optionA.selectedProperty().addListener(weakRadioListener);
+            optionB.selectedProperty().addListener(weakRadioListener);
+            optionC.selectedProperty().addListener(weakRadioListener);
+            optionD.selectedProperty().addListener(weakRadioListener);
             choose.setAlignment(Pos.CENTER);
              vBox = new VBox(content, choose);
             vBox.setSpacing(10);
-
+            if (optionA.isSelected()){
+                System.out.println("thanh tai nguyen");
+            }
         }
 
         @Override
@@ -181,9 +205,22 @@ public class QuestionController implements Initializable {
                 question.setText(item.getQuestion());
                 optionA.setText(item.getOptionA());
                 setGraphic(vBox);
-
+                if (optionA.isSelected()){
+                    System.out.println("thanh tai nguyen");
+                }
 
             }else setGraphic(null);
         }
+
+        protected void radioChanged(boolean selected) {
+            if (selected && getListView() != null && !isEmpty() && getIndex() >= 0) {
+                getListView().getSelectionModel().select(getIndex());
+                if (optionA.isSelected()){
+                    System.out.println("thanh tai nguyen");
+                }
+
+            }
+        }
+
     }
 }
