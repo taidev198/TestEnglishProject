@@ -101,3 +101,15 @@
 .fx-list-view:hover{
     -fx-background-color: #3E869F;
 }
+
+.list-view .list-cell:even {
+    -fx-background-color: #FFFFFF;
+    -fx-text-fill: #FFFFFF;
+    -fx-border-color: #1E3A50;
+
+}
+.list-view .list-cell:odd {
+    -fx-background-color: #FFFFFF;
+    -fx-text-fill: #FFFFFF;
+    -fx-border-color: #1E3A50;
+}
