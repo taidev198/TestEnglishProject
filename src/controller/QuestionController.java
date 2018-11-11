@@ -7,10 +7,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.util.Callback;
@@ -21,13 +20,20 @@ import java.util.ResourceBundle;
 public class QuestionController implements Initializable {
 
     @FXML
-    ListView<String> grammarLists;
+    ListView<Label> grammarLists;
     @FXML
     ListView<Question> listView;
     @FXML
     AnchorPane anchorPane;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        for (int i = 0; i < 14; i++) {
+            Label label = new Label("AS, When Or While ,AS, When Or While" );
+            label.setGraphic( new ImageView( new Image("/resource/avatar.png")));
+            grammarLists.getItems().add(label);
+        }
+
 
         Question q =  new Question("hello", "You can easily increase the size of the Radio Button and Checkbox icons in SurveyGizmo surveys so that they are easier for your survey respondents to select.", "a","b",
                 "c", "d", "", "a", 1);
