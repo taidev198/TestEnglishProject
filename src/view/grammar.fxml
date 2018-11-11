@@ -10,7 +10,7 @@
    <children>
       <ListView fx:id="listView" layoutY="49.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="558.0" prefWidth="200.0" styleClass="fx-list-view" stylesheets="@../resource/stylehseet.css" />
       <AnchorPane fx:id="content" layoutX="255.0" layoutY="102.0" prefHeight="473.0" prefWidth="747.0" />
-      <Text fill="#a75b5b" layoutX="380.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DESCRIPTION" textAlignment="CENTER" wrappingWidth="517.336669921875">
+      <Text fx:id="description" fill="#a75b5b" layoutX="380.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DESCRIPTION" textAlignment="CENTER" wrappingWidth="517.336669921875">
          <font>
             <Font size="23.0" />
          </font>

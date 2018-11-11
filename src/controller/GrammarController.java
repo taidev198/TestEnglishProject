@@ -15,9 +15,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import model.GrammarModel;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class GrammarController implements Initializable {
@@ -29,13 +32,16 @@ public class GrammarController implements Initializable {
     @FXML
     private ListView<Label> listView;
     @FXML
-    private JFXPopup popup;
+    private Text description;
+    private GrammarModel model;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
-        for (int i = 0; i < 14; i++) {
-            Label label = new Label("AS, When Or While ,AS, When Or While" );
+        model = new GrammarModel();
+        List<List<String>> lists = model.getGrammar();
+        for (int i = 0; i < lists.get(0).size(); i++) {
+            Label label = new Label(lists.get(0).get(i) );
             label.setGraphic( new ImageView( new Image("/resource/avatar.png")));
             listView.getItems().add(label);
         }
@@ -46,7 +52,8 @@ public class GrammarController implements Initializable {
                     FXMLLoader loader=  new FXMLLoader(getClass().getResource("/view/MainContent.fxml"));
                     Parent root =  loader.load();
                     MainContentController m = loader.getController();
-                    m.setContent("1");
+                    description.setText(lists.get(0).get(listView.getSelectionModel().getSelectedIndex()));
+                    m.setContent(lists.get(1).get(listView.getSelectionModel().getSelectedIndex()));
                     content.getChildren().removeAll();
                     content.getChildren().addAll(root);
                 } catch (IOException e) {
@@ -60,6 +67,10 @@ public class GrammarController implements Initializable {
     public void load(){
 
         System.out.println("thanh tai nguyen");
+    }
+
+    private void addGrammar(){
+
     }
 
     @FXML
@@ -78,24 +89,5 @@ public class GrammarController implements Initializable {
     public void next(MouseEvent event){
     }
 
-    public void initPopup(){
-        JFXButton btn1 = new JFXButton("task1");
-        JFXButton btn2 = new JFXButton("task2");
-        JFXButton btn3 = new JFXButton("task3");
-
-        btn1.setPadding(new Insets(10));
-        btn2.setPadding(new Insets(10));
-        btn3.setPadding(new Insets(10));
-
-        VBox vBox = new VBox(btn1, btn2, btn3);
-        popup.setContent(vBox);
-        popup.setSource(listView);
-
-    }
-
-    @FXML
-    public void showPopup(MouseEvent event){
-        popup.show(JFXPopup.PopupVPosition.TOP, JFXPopup.PopupHPosition.LEFT, event.getX(), event.getY());
-    }
 
 }
