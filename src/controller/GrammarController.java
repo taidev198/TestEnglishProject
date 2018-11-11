@@ -1,6 +1,7 @@
 package controller;
 
 import animatefx.animation.FadeIn;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
