@@ -35,7 +35,7 @@ public class ContentAreaController implements Initializable {
     private void open_sidebar(ActionEvent event) throws IOException {
         BorderPane border_pane = (BorderPane) ((Node) event.getSource()).getScene().getRoot();
         if (flag) {
-            Parent sidebar = FXMLLoader.load(getClass().getResource("/main/view/SideBar1.fxml"));
+            Parent sidebar = FXMLLoader.load(getClass().getResource("/main/view/SideBar1View.fxml"));
             border_pane.setLeft(sidebar);
             flag = !flag;
         } else {

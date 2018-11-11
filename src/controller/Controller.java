@@ -38,7 +38,7 @@ public class Controller  implements Initializable {
 
                 });
         notifications.show();
-        Parent root = FXMLLoader.load(getClass().getResource("/main/view/dashboard.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/main/view/dashboardView.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);
@@ -49,7 +49,7 @@ public class Controller  implements Initializable {
     public void show() throws IOException {
         System.out.println("thanh tai nguyen");
         Parent root ;
-        root = FXMLLoader.load(getClass().getResource("/main/view/grammar.fxml"));
+        root = FXMLLoader.load(getClass().getResource("/main/view/grammarView.fxml"));
         borderPane.setCenter(root);
     }
 

@@ -20,10 +20,10 @@ public class Slidebar implements Initializable {
 
     @FXML
     public void slide() throws IOException {
-        borderPane = FXMLLoader.load(getClass().getResource("/main/view/admin.fxml"));
+        borderPane = FXMLLoader.load(getClass().getResource("/main/view/adminView.fxml"));
         System.out.println("thanh tai nguyen");
         Parent root ;
-        root = FXMLLoader.load(getClass().getResource("/main/view/grammar.fxml"));
+        root = FXMLLoader.load(getClass().getResource("/main/view/grammarView.fxml"));
         borderPane.setCenter(root);
         borderPane.getChildren().add(root);
        // borderPane = new BorderPane(root);

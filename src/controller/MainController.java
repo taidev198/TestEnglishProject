@@ -103,7 +103,7 @@ public class MainController implements Initializable {
     @FXML
     private void goToGrammar(){
         try {
-            Parent parent = FXMLLoader.load(getClass().getResource("/view/grammar.fxml"));
+            Parent parent = FXMLLoader.load(getClass().getResource("/view/grammarView.fxml"));
             anchorPane.getChildren().clear();
             anchorPane.getChildren().addAll(parent);
             new FadeIn(parent).play();
@@ -116,7 +116,7 @@ public class MainController implements Initializable {
     @FXML
     private void goToTestGrammar(){
         try {
-            Parent parent = FXMLLoader.load(getClass().getResource("/view/TestGrammar1.fxml"));
+            Parent parent = FXMLLoader.load(getClass().getResource("/view/TestGrammar1View.fxml"));
             anchorPane.getChildren().clear();
             anchorPane.getChildren().addAll(parent);
             new FadeIn(parent).play();

@@ -39,7 +39,7 @@ public class TestGrammarController implements Initializable {
             listContests.setOpaqueInsets(new Insets(10));
             listContests.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
                 try {
-                    FXMLLoader loader=  new FXMLLoader(getClass().getResource("/view/MainContent.fxml"));
+                    FXMLLoader loader=  new FXMLLoader(getClass().getResource("/view/MainContentView.fxml"));
                     Parent root =  loader.load();
                     MainContentController m = loader.getController();
                     m.setContent("1");System.out.println("thanh tai nguyen");
@@ -56,7 +56,7 @@ public class TestGrammarController implements Initializable {
     @FXML
     private void backHome(){
         try {
-            Parent parent = FXMLLoader.load(getClass().getResource("/view/Main.fxml"));
+            Parent parent = FXMLLoader.load(getClass().getResource("/view/MainView.fxml"));
             anchorPane.getChildren().clear();
             anchorPane.getChildren().addAll(parent);
             new FadeIn(parent).play();

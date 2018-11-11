@@ -1,8 +1,6 @@
 package controller;
 
 import animatefx.animation.FadeIn;
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXPopup;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -14,7 +12,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import model.GrammarModel;
 
@@ -49,7 +46,7 @@ public class GrammarController implements Initializable {
             listView.setOpaqueInsets(new Insets(10));
             listView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
                 try {
-                    FXMLLoader loader=  new FXMLLoader(getClass().getResource("/view/MainContent.fxml"));
+                    FXMLLoader loader=  new FXMLLoader(getClass().getResource("/view/MainContentView.fxml"));
                     Parent root =  loader.load();
                     MainContentController m = loader.getController();
                     description.setText(lists.get(0).get(listView.getSelectionModel().getSelectedIndex()));
@@ -76,7 +73,7 @@ public class GrammarController implements Initializable {
     @FXML
     private void backHome(){
         try {
-            Parent parent = FXMLLoader.load(getClass().getResource("/view/Main.fxml"));
+            Parent parent = FXMLLoader.load(getClass().getResource("/view/MainView.fxml"));
             anchorPane.getChildren().clear();
             anchorPane.getChildren().addAll(parent);
             new FadeIn(parent).play();

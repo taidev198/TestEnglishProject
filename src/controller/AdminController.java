@@ -23,7 +23,7 @@ public class AdminController implements Initializable {
     private void user(){
         Parent user = null;
         try {
-            user = FXMLLoader.load(getClass().getResource("/view/User.fxml"));
+            user = FXMLLoader.load(getClass().getResource("/view/UserView.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -35,7 +35,7 @@ public class AdminController implements Initializable {
     private void grammar(){
         Parent user = null;
         try {
-            user = FXMLLoader.load(getClass().getResource("/view/AdminGrammar.fxml"));
+            user = FXMLLoader.load(getClass().getResource("/view/AdminGrammarView.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -47,7 +47,7 @@ public class AdminController implements Initializable {
     private void testGrammar(){
         Parent user = null;
         try {
-            user = FXMLLoader.load(getClass().getResource("/view/AdminTestGrammar.fxml"));
+            user = FXMLLoader.load(getClass().getResource("/view/AdminTestGrammarView.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -59,7 +59,7 @@ public class AdminController implements Initializable {
     private void quizTest(){
         Parent user = null;
         try {
-            user = FXMLLoader.load(getClass().getResource("/view/AdminQuizzTest.fxml"));
+            user = FXMLLoader.load(getClass().getResource("/view/AdminQuizzTestView.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
