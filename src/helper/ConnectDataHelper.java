@@ -3,17 +3,13 @@ package helper;
 import java.sql.*;
 
 public class ConnectDataHelper {
-   private Connection conn = null;
-   private String url ;
-   private String userName = "root";
-   private String password = "03031998";
-    private ResultSet res;
+   private  static Connection conn = null;
+   private  static String url = "jdbc:mysql://localhost/data";
+   private  static String userName = "root";
+   private  static String password = "03031998";
+    private static ResultSet res;
 
-    public ConnectDataHelper(String url){
-        this.url = url;
-    }
-
-    public  Connection connectDB() throws ClassNotFoundException, IllegalAccessException,
+    public  static Connection connectDB() throws ClassNotFoundException, IllegalAccessException,
             InstantiationException, SQLException {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
            conn = DriverManager.getConnection(url, userName, password);

@@ -13,49 +13,36 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class GrammarModel  {
-    private ConnectDataHelper connectDataHelper;
+
 
 
     public GrammarModel() {
-        connectDataHelper = new ConnectDataHelper("jdbc:mysql://localhost/data");
-        try {
-            connectDataHelper.connectDB();
 
-        } catch (ClassNotFoundException | IllegalAccessException | SQLException | InstantiationException e) {
-            e.printStackTrace();
-        }
-        connectDataHelper.closeDB();
     }
 
-    private ResultSet loadDB() throws ClassNotFoundException, SQLException,
-            InstantiationException, IllegalAccessException {
-
-
-         return connectDataHelper.getDB();
-    }
 
 
     public void addGrammar(String description, String content){
         String query = "insert grammar(description, content) values(?, ?)";
-        try(PreparedStatement statement = connectDataHelper.getConnection().prepareStatement(query,
+        try(PreparedStatement statement = ConnectDataHelper.connectDB().prepareStatement(query,
                 Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, description);
             statement.setString(2, content);
             statement.executeUpdate();
 
-        } catch (SQLException e) {
+        } catch (SQLException | IllegalAccessException | ClassNotFoundException | InstantiationException e) {
             e.printStackTrace();
         }
     }
 
     public void deleteGrammar(int id){
         String query = "delete from grammar where id = ?";
-        try(PreparedStatement statement = connectDataHelper.getConnection().prepareStatement(query)) {
+        try(PreparedStatement statement = ConnectDataHelper.connectDB().prepareStatement(query)) {
 
             statement.setInt(1, id);
             statement.executeUpdate();
 
-        } catch (SQLException e) {
+        } catch (SQLException | IllegalAccessException | ClassNotFoundException | InstantiationException e) {
             e.printStackTrace();
         }
 
@@ -64,7 +51,7 @@ public class GrammarModel  {
     public List<List<String>> getGrammar(){
         String query = "select * from grammar";
         List<List<String>> ans = new ArrayList<>();
-        try(Statement statement = connectDataHelper.connectDB().createStatement()) {
+        try(Statement statement = ConnectDataHelper.connectDB().createStatement()) {
 
             statement.execute("use data");
             ResultSet resultSet = statement.executeQuery(query);
