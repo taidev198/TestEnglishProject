@@ -11,12 +11,25 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AdminController">
    <children>
+      <AnchorPane fx:id="anchorPane" layoutX="250.0" layoutY="-10.0">
+         <children>
+            <PieChart fx:id="pieChart" layoutX="25.0" layoutY="311.0" prefHeight="276.0" prefWidth="307.0" />
+            <PieChart fx:id="pieChart1" layoutX="396.0" layoutY="311.0" prefHeight="276.0" prefWidth="307.0" />
+            <LineChart fx:id="lineChart" layoutX="25.0" layoutY="35.0" prefHeight="262.0" prefWidth="713.0">
+               <xAxis>
+                  <CategoryAxis prefWidth="444.0" side="BOTTOM" />
+               </xAxis>
+               <yAxis>
+                  <NumberAxis side="LEFT" />
+               </yAxis>
+            </LineChart>
+         </children>
+      </AnchorPane>
       <AnchorPane prefHeight="612.0" prefWidth="250.0" styleClass="sidebar" stylesheets="@../resource/stylehseet.css">
          <children>
             <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="250.0">
@@ -68,7 +81,7 @@
                               <Insets left="10.0" top="10.0" />
                            </HBox.margin>
                         </FontAwesomeIcon>
-                        <Label styleClass="sidebar-btn-icon" text="USER">
+                        <Label onMouseClicked="#user" styleClass="sidebar-btn-icon" text="USER">
                            <HBox.margin>
                               <Insets left="20.0" top="10.0" />
                            </HBox.margin>
@@ -82,7 +95,7 @@
                               <Insets left="10.0" top="10.0" />
                            </HBox.margin>
                         </FontAwesomeIcon>
-                        <Label styleClass="sidebar-btn-icon" text="GRAMMAR">
+                        <Label onMouseClicked="#grammar" styleClass="sidebar-btn-icon" text="GRAMMAR">
                            <HBox.margin>
                               <Insets left="20.0" top="10.0" />
                            </HBox.margin>
@@ -99,7 +112,7 @@
                               <Insets left="10.0" top="10.0" />
                            </HBox.margin>
                         </FontAwesomeIcon>
-                        <Label styleClass="sidebar-btn-icon" text="QUIZ TEST">
+                        <Label onMouseClicked="#quizTest" styleClass="sidebar-btn-icon" text="QUIZ TEST">
                            <HBox.margin>
                               <Insets left="20.0" top="10.0" />
                            </HBox.margin>
@@ -109,7 +122,6 @@
                         </Label>
                      </children>
                   </HBox>
-                  <Label layoutX="10.0" layoutY="136.0" text="SHARE" />
                   <HBox layoutX="10.0" layoutY="154.0" prefHeight="46.0" prefWidth="250.0" styleClass="sidebar-btn" stylesheets="@../resource/stylehseet.css">
                      <children>
                         <FontAwesomeIcon fill="#b8b1b1" iconName="HOME" size="1.5em" styleClass="sidebar-btn-icon">
@@ -117,7 +129,7 @@
                               <Insets left="10.0" top="10.0" />
                            </HBox.margin>
                         </FontAwesomeIcon>
-                        <Label styleClass="sidebar-btn-icon" text="CHALLEGENE">
+                        <Label onMouseClicked="#testGrammar" styleClass="sidebar-btn-icon" text="TEST GRAMMAR">
                            <HBox.margin>
                               <Insets left="20.0" top="10.0" />
                            </HBox.margin>
@@ -179,19 +191,5 @@
             </VBox>
          </children>
       </AnchorPane>
-      <Pane layoutX="250.0" layoutY="-10.0" prefHeight="622.0" prefWidth="762.0" style="-fx-background-color: #F2F2F2;">
-         <children>
-            <PieChart fx:id="pieChart" layoutX="25.0" layoutY="311.0" prefHeight="276.0" prefWidth="307.0" />
-            <PieChart fx:id="pieChart1" layoutX="396.0" layoutY="311.0" prefHeight="276.0" prefWidth="307.0" />
-            <LineChart fx:id="lineChart" layoutX="25.0" layoutY="35.0" prefHeight="262.0" prefWidth="713.0">
-               <xAxis>
-                  <CategoryAxis prefWidth="444.0" side="BOTTOM" />
-               </xAxis>
-               <yAxis>
-                  <NumberAxis side="LEFT" />
-               </yAxis>
-            </LineChart>
-         </children>
-      </Pane>
    </children>
 </AnchorPane>

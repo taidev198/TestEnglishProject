@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AdminGrammarController">
+   <children>
+      <TableView layoutY="27.0" prefHeight="600.0" prefWidth="800.0">
+         <columns>
+            <TableColumn prefWidth="45.600006103515625" text="id" />
+            <TableColumn prefWidth="440.8000183105469" text="Question" />
+            <TableColumn minWidth="0.0" prefWidth="51.20001220703125" text="A" />
+            <TableColumn prefWidth="52.79998779296875" text="B" />
+            <TableColumn prefWidth="54.39996337890625" text="C" />
+            <TableColumn prefWidth="66.4000244140625" text="D" />
+            <TableColumn maxWidth="100.0" prefWidth="84.0" text="KEY" />
+         </columns>
+      </TableView>
+   </children>
+</AnchorPane>
