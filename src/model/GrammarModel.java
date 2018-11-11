@@ -35,7 +35,7 @@ public class GrammarModel  {
     }
 
 
-    private void addGrammar(String description, String content){
+    public void addGrammar(String description, String content){
         String query = "insert grammar(description, content) values(?, ?)";
         try(PreparedStatement statement = connectDataHelper.getConnection().prepareStatement(query,
                 Statement.RETURN_GENERATED_KEYS)) {
@@ -48,7 +48,7 @@ public class GrammarModel  {
         }
     }
 
-    private void deleteGrammar(int id){
+    public void deleteGrammar(int id){
         String query = "delete from grammar where id = ?";
         try(PreparedStatement statement = connectDataHelper.getConnection().prepareStatement(query)) {
 

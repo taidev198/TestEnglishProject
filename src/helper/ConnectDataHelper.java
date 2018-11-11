@@ -17,18 +17,6 @@ public class ConnectDataHelper {
             InstantiationException, SQLException {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
            conn = DriverManager.getConnection(url, userName, password);
-//            Statement statement = conn.createStatement();
-//            statement.execute("use  data ");//if this returns, there is a result set, otherwise not.
-//            res = statement.executeQuery("select * from user ");
-//            while (res.next()){
-//                String t = res.getString("username");//solution 2 using name of column: res.getString("username");
-//                String tmp = res.getString(2);
-//                //we can getObject() method to retrieve values as generic objects and convert the
-//                //values as necessary.
-//                Object o = res.getObject("password");
-//                System.out.println(t + " tmp:" + tmp);
-//            }
-
         return conn;
     }
 
