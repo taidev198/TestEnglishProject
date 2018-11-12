@@ -94,7 +94,7 @@ public class QuestionController implements Initializable {
         private VBox vBox;
         ChangeListener<Boolean> radioListener = (src, ov, nv) -> radioChanged(nv);
         WeakChangeListener weakRadioListener = new WeakChangeListener(radioListener);
-
+        private ToggleGroup group;
         public QuestionCell(){
             super();
             question = new Text();
@@ -112,7 +112,7 @@ public class QuestionController implements Initializable {
             HBox.setMargin(optionB, new Insets(60, 70, 30, 70));
             HBox.setMargin(optionC, new Insets(60, 70, 30, 70));
             HBox.setMargin(optionD, new Insets(60, 70, 30, 70));
-            final ToggleGroup group = new ToggleGroup();
+            group = new ToggleGroup();
             optionB.setToggleGroup(group);
             optionA.setToggleGroup(group);
             optionC.setToggleGroup(group);
@@ -124,9 +124,6 @@ public class QuestionController implements Initializable {
             choose.setAlignment(Pos.CENTER);
              vBox = new VBox(content, choose);
             vBox.setSpacing(10);
-            if (optionA.isSelected()){
-                System.out.println("thanh tai nguyen");
-            }
         }
 
         @Override
@@ -138,11 +135,20 @@ public class QuestionController implements Initializable {
                 optionB.setText(item.getOptionB());
                 optionC.setText(item.getOptionC());
                 optionD.setText(item.getOptionD());
+                optionA.setUserData(item.getOptionA());
+                optionB.setUserData(item.getOptionB());
+                optionC.setUserData(item.getOptionC());
+                optionD.setUserData(item.getOptionD());
                 number.setText(String.valueOf(item.getNumber()) + ": ");
                 setGraphic(vBox);
-                if (optionA.isSelected()){
-                    System.out.println("thanh tai nguyen");
-                }
+                group.selectedToggleProperty().addListener((obs, oldSel, newSel) -> {
+                    if (group.getSelectedToggle() != null) {
+                        if (group.getSelectedToggle().getUserData() != null )
+                        System.out.println(group.getSelectedToggle().getUserData().toString());
+                    }
+                    listView.getSelectionModel().select(getIndex());
+                    listView.getFocusModel().focus(listView.getSelectionModel().getSelectedIndex());
+                });
 
             }else setGraphic(null);
         }
@@ -150,7 +156,8 @@ public class QuestionController implements Initializable {
         protected void radioChanged(boolean selected) {
             if (selected && getListView() != null && !isEmpty() && getIndex() >= 0) {
                 getListView().getSelectionModel().select(getIndex());
-                System.out.println(getListView().getSelectionModel().getSelectedItem().getKey());
+                System.out.println(group.getSelectedToggle().getUserData().toString());
+                System.out.println(getIndex());
 
             }
         }
