@@ -10,7 +10,7 @@
    <children>
       <ListView fx:id="listView" layoutX="236.0" layoutY="57.0" prefHeight="502.0" prefWidth="746.0" styleClass="fx-list-cell" stylesheets="@../resource/stylehseet.css" />
       <ListView fx:id="grammarLists" layoutX="-4.0" layoutY="34.0" prefHeight="558.0" prefWidth="236.0" />
-      <Text fill="#a72a2a" layoutX="551.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DESCRIPTION" textAlignment="CENTER">
+      <Text fx:id="description" fill="#a72a2a" layoutX="551.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DESCRIPTION" textAlignment="CENTER">
          <font>
             <Font size="21.0" />
          </font>

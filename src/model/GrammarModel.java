@@ -14,13 +14,9 @@ import java.util.ResourceBundle;
 
 public class GrammarModel  {
 
-
-
     public GrammarModel() {
 
     }
-
-
 
     public void addGrammar(String description, String content){
         String query = "insert grammar(description, content) values(?, ?)";
