@@ -1,6 +1,8 @@
 package model;
 
 import helper.ConnectDataHelper;
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -216,6 +218,28 @@ public class TestGrammarModel {
 
         public void setKey(String key) {
             this.key = key;
+        }
+    }
+
+    public static class QuestionTableView extends Question{
+
+        private MenuButton action;
+
+        public QuestionTableView(String content, String question, String optionA, String optionB, String optionC, String optionD, String ans, String key, int number, String grammarid) {
+            super(content, question, optionA, optionB, optionC, optionD, ans, key, number, grammarid);
+            MenuItem edit = new MenuItem("edit");
+            MenuItem delete = new MenuItem("delete");
+            this.action = new MenuButton("...");
+            action.getItems().addAll(edit);
+            action.getItems().addAll(delete);
+        }
+
+        public MenuButton getAction() {
+            return action;
+        }
+
+        public void setAction(MenuButton action) {
+            this.action = action;
         }
     }
 

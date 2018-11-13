@@ -18,8 +18,8 @@
             <TableColumn fx:id="optionCCol" prefWidth="106.4000244140625" text="C" />
             <TableColumn fx:id="optionDCol" prefWidth="106.39996337890625" text="D" />
             <TableColumn fx:id="keyCol" maxWidth="177.5999755859375" prefWidth="69.60003662109375" text="KEY" />
-            <TableColumn fx:id="actionCol" maxWidth="188.00003662109373" prefWidth="87.2000732421875" text="ACTION" />
             <TableColumn fx:id="grammarIdCol" maxWidth="188.00003662109373" prefWidth="92.0001220703125" text="GRAMMARID" />
+            <TableColumn fx:id="actionCol" maxWidth="188.00003662109373" prefWidth="92.0001220703125" text="ACTION" />
          </columns>
       </TableView>
       <TextField layoutY="748.0" prefHeight="26.0" prefWidth="58.39999467134476" />
