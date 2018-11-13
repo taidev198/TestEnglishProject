@@ -8,13 +8,14 @@
    <children>
       <TableView fx:id="tableView" layoutY="27.0" prefHeight="600.0" prefWidth="800.0">
          <columns>
-            <TableColumn prefWidth="45.600006103515625" text="id" />
-            <TableColumn prefWidth="440.8000183105469" text="Question" />
-            <TableColumn minWidth="0.0" prefWidth="51.20001220703125" text="A" />
-            <TableColumn prefWidth="52.79998779296875" text="B" />
-            <TableColumn prefWidth="54.39996337890625" text="C" />
-            <TableColumn prefWidth="66.4000244140625" text="D" />
-            <TableColumn maxWidth="100.0" prefWidth="84.0" text="KEY" />
+            <TableColumn fx:id="idCol" prefWidth="45.600006103515625" text="id" />
+            <TableColumn fx:id="questionCol" prefWidth="382.3999938964844" text="Question" />
+            <TableColumn fx:id="optionACol" minWidth="0.0" prefWidth="72.79998779296875" text="A" />
+            <TableColumn fx:id="optionBCol" prefWidth="67.20001220703125" text="B" />
+            <TableColumn fx:id="optionCCol" prefWidth="53.5999755859375" text="C" />
+            <TableColumn fx:id="optionDCol" prefWidth="31.199951171875" text="D" />
+            <TableColumn fx:id="keyCol" maxWidth="146.4000244140625" prefWidth="67.19989013671875" text="KEY" />
+            <TableColumn fx:id="grammarIdCol" maxWidth="146.4000244140625" prefWidth="74.400146484375" text="GRAMMARID" />
          </columns>
       </TableView>
    </children>

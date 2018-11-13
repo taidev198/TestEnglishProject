@@ -12,7 +12,7 @@ public class TestGrammarModel {
     public TestGrammarModel(){}
 
 
-    public Map<String, List<List<String>>> getTestGrammar(){
+    public Map<String, List<List<String>>> getTestGrammarFollowGrammarId(){
         String query = "select description,testgrammarid, questtion, a, b, c, d, testgrammar.key from testgrammar join grammar on grammar.grammarid = testgrammar.grammarid;";
         Map<String, List<List<String>>> res = new LinkedHashMap<>();
         try(Statement statement = ConnectDataHelper.connectDB().createStatement()) {
@@ -68,6 +68,49 @@ public class TestGrammarModel {
 
     }
 
+    public  List<List<String>> getTestGrammar(){
+        String query = "select * from testgrammar ;";
+        List<List<String>> res = new ArrayList<>();
+        try(Statement statement = ConnectDataHelper.connectDB().createStatement()) {
+            statement.execute("use data");
+            ResultSet resultSet = statement.executeQuery(query);
+
+            List<String> testgrammarid = new ArrayList<>();
+            List<String> question = new ArrayList<>();
+            List<String> a = new ArrayList<>();
+            List<String> b = new ArrayList<>();
+            List<String> c = new ArrayList<>();
+            List<String> d = new ArrayList<>();
+            List<String> key = new ArrayList<>();
+            List<String> grammarid = new ArrayList<>();
+            while (resultSet.next()){
+                    testgrammarid.add(resultSet.getString("testgrammarid"));
+                    question.add(resultSet.getString("questtion"));
+                    a.add(resultSet.getString("a"));
+                    b.add(resultSet.getString("b"));
+                    c.add(resultSet.getString("c"));
+                    d.add(resultSet.getString("d"));
+                    key.add(resultSet.getString("key"));
+                    grammarid.add(resultSet.getString("grammarid"));
+
+            }
+            res.add(testgrammarid);
+            res.add(question);
+            res.add(a);
+            res.add(b);
+            res.add(c);
+            res.add(d);
+            res.add(key);
+            res.add(grammarid);
+        } catch (IllegalAccessException | InstantiationException | SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+
+        return res;
+
+    }
+
 
     public static class Question{
         private String content;
@@ -79,9 +122,10 @@ public class TestGrammarModel {
         private String ans;
         private String key;
         private int number;
+        private String grammarid;
 
         public Question(String content, String question, String optionA, String optionB,
-                        String optionC, String optionD, String ans, String key, int number) {
+                        String optionC, String optionD, String ans, String key, int number, String grammarid) {
             this.content = content;
             this.question = question;
             this.optionA = optionA;
@@ -91,6 +135,15 @@ public class TestGrammarModel {
             this.ans = ans;
             this.key = key;
             this.number = number;
+            this.grammarid = grammarid;
+        }
+
+        public String getGrammarid() {
+            return grammarid;
+        }
+
+        public void setGrammarid(String grammarid) {
+            this.grammarid = grammarid;
         }
 
         public int getNumber() {
