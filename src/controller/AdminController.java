@@ -12,6 +12,9 @@ import java.util.ResourceBundle;
 
 public class AdminController implements Initializable {
     @FXML
+    AnchorPane anchorPane1;
+
+    @FXML
     AnchorPane anchorPane;
 
     @Override
@@ -27,8 +30,8 @@ public class AdminController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        anchorPane.getChildren().clear();
-        anchorPane.getChildren().addAll(user);
+        anchorPane1.getChildren().clear();
+        anchorPane1.getChildren().addAll(user);
     }
 
     @FXML
@@ -39,8 +42,8 @@ public class AdminController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        anchorPane.getChildren().clear();
-        anchorPane.getChildren().addAll(user);
+        anchorPane1.getChildren().clear();
+        anchorPane1.getChildren().addAll(user);
     }
 
     @FXML
@@ -51,8 +54,8 @@ public class AdminController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        anchorPane.getChildren().clear();
-        anchorPane.getChildren().addAll(user);
+        anchorPane1.getChildren().clear();
+        anchorPane1.getChildren().addAll(user);
     }
 
     @FXML
@@ -63,7 +66,7 @@ public class AdminController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        anchorPane.getChildren().clear();
-        anchorPane.getChildren().addAll(user);
+        anchorPane1.getChildren().clear();
+        anchorPane1.getChildren().addAll(user);
     }
 }
