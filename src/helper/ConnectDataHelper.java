@@ -4,15 +4,25 @@ import java.sql.*;
 
 public class ConnectDataHelper {
    private  static Connection conn = null;
-   private  static String url = "jdbc:mysql://localhost/data";
-   private  static String userName = "root";
-   private  static String password = "03031998";
-    private static ResultSet res;
+   private static ConnectDataHelper instance= null;
 
-    public  static Connection connectDB() throws ClassNotFoundException, IllegalAccessException,
+    private ConnectDataHelper(){
+
+   }
+
+   public static ConnectDataHelper getInstance(){
+       if (instance == null)
+           instance = new ConnectDataHelper();
+       return instance;
+   }
+
+    public  Connection connectDB() throws ClassNotFoundException, IllegalAccessException,
             InstantiationException, SQLException {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
-           conn = DriverManager.getConnection(url, userName, password);
+        String password = "03031998";
+        String userName = "root";
+        String url = "jdbc:mysql://localhost/data";
+        conn = DriverManager.getConnection(url, userName, password);
         return conn;
     }
 
@@ -27,11 +37,4 @@ public class ConnectDataHelper {
         }
     }
 
-    public  ResultSet getDB(){
-        return res;
-    }
-
-    public Connection getConnection() {
-        return conn;
-    }
 }

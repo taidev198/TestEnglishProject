@@ -18,7 +18,7 @@ public class TestGrammarModel {
     public Map<String, List<List<String>>> getTestGrammarFollowGrammarId(){
         String query = "select description,testgrammarid, questtion, a, b, c, d, testgrammar.key from testgrammar join grammar on grammar.grammarid = testgrammar.grammarid;";
         Map<String, List<List<String>>> res = new LinkedHashMap<>();
-        try(Statement statement = ConnectDataHelper.connectDB().createStatement()) {
+        try(Statement statement = ConnectDataHelper.getInstance().connectDB().createStatement()) {
             statement.execute("use data");
             ResultSet resultSet = statement.executeQuery(query);
 
@@ -74,7 +74,7 @@ public class TestGrammarModel {
     public  List<List<String>> getTestGrammar(){
         String query = "select * from testgrammar ;";
         List<List<String>> res = new ArrayList<>();
-        try(Statement statement = ConnectDataHelper.connectDB().createStatement()) {
+        try(Statement statement = ConnectDataHelper.getInstance().connectDB().createStatement()) {
             statement.execute("use data");
             ResultSet resultSet = statement.executeQuery(query);
 
@@ -115,8 +115,8 @@ public class TestGrammarModel {
     }
 
     public boolean removeTestGrammar(int id){
-        String query = "delete from testgrammar where id = " + id;
-        try(PreparedStatement statement = ConnectDataHelper.connectDB().prepareStatement(query)) {
+        String query = "delete from testgrammar where testgrammarid = " + id;
+        try(PreparedStatement statement = ConnectDataHelper.getInstance().connectDB().prepareStatement(query)) {
             statement.execute("use data");
           statement.executeUpdate();
         } catch (IllegalAccessException | InstantiationException | ClassNotFoundException | SQLException e) {
@@ -129,7 +129,7 @@ public class TestGrammarModel {
     public boolean addNewTestGrammar(QuestionTableView question){
 
         String query = "insert into testgrammar(testgrammarid, questtion, a, b, c, d,testgrammar.key, grammarid) values(?, ?, ?, ?, ?, ?, ?, ?)";
-        try(PreparedStatement statement = ConnectDataHelper.connectDB().prepareStatement(query)) {
+        try(PreparedStatement statement = ConnectDataHelper.getInstance().connectDB().prepareStatement(query)) {
             statement.execute("use data");
             statement.setInt(1, Integer.parseInt(question.getNumber()));
             statement.setString(2, question.getQuestion());

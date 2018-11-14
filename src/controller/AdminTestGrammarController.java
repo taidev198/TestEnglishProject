@@ -82,12 +82,7 @@ public class AdminTestGrammarController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         model = new TestGrammarModel();
         Callback<TableColumn<TestGrammarModel.QuestionTableView, String>, TableCell<TestGrammarModel.QuestionTableView, String>> cellFactory =
-                new Callback<TableColumn<TestGrammarModel.QuestionTableView, String>, TableCell<TestGrammarModel.QuestionTableView, String>>() {
-                    @Override
-                    public TableCell<TestGrammarModel.QuestionTableView, String> call(TableColumn p) {
-                        return new EditingCell();
-                    }
-                };
+                p -> new EditingCell();
 
         //set celCellValueFactory for each cols.
         idCol.setCellValueFactory(

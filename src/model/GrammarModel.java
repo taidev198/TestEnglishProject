@@ -20,7 +20,7 @@ public class GrammarModel  {
 
     public void addGrammar(String description, String content){
         String query = "insert grammar(description, content) values(?, ?)";
-        try(PreparedStatement statement = ConnectDataHelper.connectDB().prepareStatement(query,
+        try(PreparedStatement statement = ConnectDataHelper.getInstance().connectDB().prepareStatement(query,
                 Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, description);
             statement.setString(2, content);
@@ -33,7 +33,7 @@ public class GrammarModel  {
 
     public void deleteGrammar(int id){
         String query = "delete from grammar where id = ?";
-        try(PreparedStatement statement = ConnectDataHelper.connectDB().prepareStatement(query)) {
+        try(PreparedStatement statement = ConnectDataHelper.getInstance().connectDB().prepareStatement(query)) {
 
             statement.setInt(1, id);
             statement.executeUpdate();
@@ -47,7 +47,7 @@ public class GrammarModel  {
     public List<List<String>> getGrammar(){
         String query = "select * from grammar";
         List<List<String>> ans = new ArrayList<>();
-        try(Statement statement = ConnectDataHelper.connectDB().createStatement()) {
+        try(Statement statement = ConnectDataHelper.getInstance().connectDB().createStatement()) {
 
             statement.execute("use data");
             ResultSet resultSet = statement.executeQuery(query);
