@@ -4,6 +4,7 @@ import helper.ConnectDataHelper;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -111,6 +112,39 @@ public class TestGrammarModel {
 
         return res;
 
+    }
+
+    public boolean removeTestGrammar(int id){
+        String query = "alter from testgrammar where id = " + id;
+        try(Statement statement = ConnectDataHelper.connectDB().createStatement()) {
+            statement.execute("use data");
+            int resultSet = statement.executeUpdate(query);
+        } catch (IllegalAccessException | InstantiationException | ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    public boolean addNewTestGrammar(QuestionTableView question){
+
+        String query = "insert testgrammar value(?, ?, ?, ?, ?, ?, ?, ?)";
+        try(PreparedStatement statement = ConnectDataHelper.connectDB().prepareStatement(query)) {
+            statement.execute("use data");
+            statement.setInt(1, Integer.parseInt(question.getNumber()));
+            statement.setString(2, question.getQuestion());
+            statement.setString(3, question.getOptionA());
+            statement.setString(4, question.getOptionB());
+            statement.setString(5, question.getOptionC());
+            statement.setString(6, question.getOptionD());
+            statement.setString(7, question.getKey());
+            statement.setInt(8, Integer.parseInt(question.getGrammarid()));
+            statement.executeUpdate(query);
+        } catch (IllegalAccessException | InstantiationException | ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 
 
@@ -225,7 +259,8 @@ public class TestGrammarModel {
 
         private MenuButton action;
 
-        public QuestionTableView(String content, String question, String optionA, String optionB, String optionC, String optionD, String ans, String key, String number, String grammarid, MenuButton menuButton) {
+        public QuestionTableView(String content, String question, String optionA, String optionB, String optionC, String optionD, String ans, String key,
+                                 String number, String grammarid, MenuButton menuButton) {
             super(content, question, optionA, optionB, optionC, optionD, ans, key, number, grammarid);
 //            MenuItem edit = new MenuItem("edit");
 //            MenuItem delete = new MenuItem("delete");
