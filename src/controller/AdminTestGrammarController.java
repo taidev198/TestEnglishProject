@@ -50,6 +50,23 @@ public class AdminTestGrammarController implements Initializable {
     @FXML
     TableColumn<TestGrammarModel.QuestionTableView, MenuButton> actionCol;
 
+    @FXML
+    TextField idText;
+    @FXML
+    TextField questionText;
+    @FXML
+    TextField optionAText;
+    @FXML
+    TextField optionBText;
+    @FXML
+    TextField optionCText;
+    @FXML
+    TextField optionDText;
+    @FXML
+    TextField keyText;
+    @FXML
+    TextField grammarIdText;
+
     MenuButton menuButton[];
     TestGrammarModel model;
     private  List<List<String>> listQuestion;
@@ -141,6 +158,16 @@ public class AdminTestGrammarController implements Initializable {
         tableView.getItems().removeAll(tableView.getSelectionModel().getSelectedItems());
 
         // table selects by index, so we have to clear the selection or else items with that index would be selected
+    }
+
+    @FXML
+    public void addRow(){
+        model.addNewTestGrammar(new TestGrammarModel.QuestionTableView(
+                questionText.getText(),questionText.getText(),optionAText.getText(),
+                optionAText.getText(),optionCText.getText(),optionDText.getText(),"",keyText.getText(),
+                idText.getText(), grammarIdText.getText(), new MenuButton()
+        ));
+
     }
 
     public class EditingCell<S, T> extends TableCell<S, T>{

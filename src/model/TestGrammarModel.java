@@ -128,7 +128,7 @@ public class TestGrammarModel {
 
     public boolean addNewTestGrammar(QuestionTableView question){
 
-        String query = "insert testgrammar value(?, ?, ?, ?, ?, ?, ?, ?)";
+        String query = "insert into testgrammar(testgrammarid, questtion, a, b, c, d,testgrammar.key, grammarid) values(?, ?, ?, ?, ?, ?, ?, ?)";
         try(PreparedStatement statement = ConnectDataHelper.connectDB().prepareStatement(query)) {
             statement.execute("use data");
             statement.setInt(1, Integer.parseInt(question.getNumber()));
@@ -139,7 +139,7 @@ public class TestGrammarModel {
             statement.setString(6, question.getOptionD());
             statement.setString(7, question.getKey());
             statement.setInt(8, Integer.parseInt(question.getGrammarid()));
-            statement.executeUpdate(query);
+            statement.executeUpdate();
         } catch (IllegalAccessException | InstantiationException | ClassNotFoundException | SQLException e) {
             e.printStackTrace();
             return false;
