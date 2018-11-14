@@ -61,4 +61,9 @@ public class AdminController implements Initializable, LoadSceneAble {
         ((AnchorPane) parent).getChildren().clear();
         ((AnchorPane) parent).getChildren().addAll(user);
     }
+
+    @Override
+    public void loadData() {
+
+    }
 }

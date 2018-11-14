@@ -39,7 +39,7 @@ public class GrammarController implements Initializable {
         model = new GrammarModel();
         List<List<String>> lists = model.getGrammar();
         for (int i = 0; i < lists.get(0).size(); i++) {
-            Label label = new Label(lists.get(0).get(i) );
+            Label label = new Label(lists.get(1).get(i) );
             label.setGraphic( new ImageView( new Image("/resource/avatar.png")));
             listView.getItems().add(label);
         }
@@ -50,8 +50,8 @@ public class GrammarController implements Initializable {
                     FXMLLoader loader=  new FXMLLoader(getClass().getResource("/view/MainContentView.fxml"));
                     Parent root =  loader.load();
                     MainContentController m = loader.getController();
-                    description.setText(lists.get(0).get(listView.getSelectionModel().getSelectedIndex()));
-                    m.setContent(lists.get(1).get(listView.getSelectionModel().getSelectedIndex()));
+                    description.setText(lists.get(1).get(listView.getSelectionModel().getSelectedIndex()));
+                    m.setContent(lists.get(2).get(listView.getSelectionModel().getSelectedIndex()));
                     content.getChildren().removeAll();
                     content.getChildren().addAll(root);
                 } catch (IOException e) {

@@ -6,4 +6,5 @@ package helper;
 public interface LoadSceneAble {
 
     void loadScene(String url, Object parent);
+    void loadData();
 }
