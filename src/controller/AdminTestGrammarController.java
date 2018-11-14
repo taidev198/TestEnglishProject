@@ -2,7 +2,9 @@ package controller;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
@@ -54,6 +56,8 @@ public class AdminTestGrammarController implements Initializable {
     @FXML
     TableColumn<TestGrammarModel.QuestionTableView, MenuButton> actionCol;
 
+    ObservableList<TestGrammarModel.QuestionTableView> data;
+
     @FXML
     TextField idText;
     @FXML
@@ -74,7 +78,7 @@ public class AdminTestGrammarController implements Initializable {
     TextField searchingField;
     @FXML
     Text filterText;
-    MenuButton menuButton[];
+    List<MenuButton> menuButton;
     TestGrammarModel model;
     FilteredList<TestGrammarModel.QuestionTableView> filteredList;
     private  List<List<String>> listQuestion;
@@ -108,14 +112,15 @@ public class AdminTestGrammarController implements Initializable {
                 new PropertyValueFactory<>("action"));
 
         listQuestion = model.getTestGrammar();
-        menuButton = new MenuButton[listQuestion.get(0).size()];
+        menuButton = new ArrayList<>();
+        data = FXCollections.observableArrayList();
         for (int i = 0; i < listQuestion.get(0).size(); i++) {
-            menuButton[i] = new MenuButton();
+           menuButton.add(new MenuButton());
             MenuItem edit = new MenuItem("edit");
             MenuItem delete = new MenuItem("delete");
-            menuButton[i].setText("...");
-            menuButton[i].getItems().addAll(edit);
-            menuButton[i].getItems().addAll(delete);
+            menuButton.get(i).setText("...");
+            menuButton.get(i).getItems().addAll(edit);
+            menuButton.get(i).getItems().addAll(delete);
             int id = i;
             edit.setOnAction(event -> {
                 editableCols();
@@ -123,23 +128,19 @@ public class AdminTestGrammarController implements Initializable {
             });
             delete.setOnAction(event -> {
                 System.out.println(id);
-                removeSelectedRows(Integer.parseInt(listQuestion.get(0).get(id)));
+                removeSelectedRows(Integer.parseInt(listQuestion.get(0).get(id)), tableView.getSelectionModel().getSelectedIndex());
                 System.out.println("remove row:" + tableView.getSelectionModel().getSelectedIndex());
             });
 
-            tableView.getItems().addAll(new TestGrammarModel.QuestionTableView(listQuestion.get(1).get(i),
+            data.addAll(new TestGrammarModel.QuestionTableView(listQuestion.get(1).get(i),
                     listQuestion.get(1).get(i), listQuestion.get(2).get(i),listQuestion.get(3).get(i),
                     listQuestion.get(4).get(i), listQuestion.get(5).get(i), "",
-                    listQuestion.get(6).get(i), (listQuestion.get(0).get(i)), listQuestion.get(7).get(i) , menuButton[i]) );
+                    listQuestion.get(6).get(i), (listQuestion.get(0).get(i)), listQuestion.get(7).get(i) , menuButton.get(i)) );
 
 
         }
-        tableView.setRowFactory(new Callback<TableView<TestGrammarModel.QuestionTableView>, TableRow<TestGrammarModel.QuestionTableView>>() {
-            @Override
-            public TableRow<TestGrammarModel.QuestionTableView> call(TableView<TestGrammarModel.QuestionTableView> param) {
-                return new rowQuestion();
-            }
-        });
+        tableView.setItems(data);
+        tableView.setRowFactory(param -> new rowQuestion());
         filter();
     }
 
@@ -180,20 +181,47 @@ public class AdminTestGrammarController implements Initializable {
      * Remove all selected rows.
      * no params.
      */
-    public void removeSelectedRows(int id) {
+    public void removeSelectedRows(int id, int idx) {
         model.removeTestGrammar(id);
-        tableView.getItems().removeAll(tableView.getSelectionModel().getSelectedItems());
-
+        data.remove(idx);
         // table selects by index, so we have to clear the selection or else items with that index would be selected
     }
 
     @FXML
     public void addRow(){
+
+        menuButton.add(new MenuButton());
+        MenuItem edit = new MenuItem("edit");
+        MenuItem delete = new MenuItem("delete");
+        edit.setOnAction(event -> {
+            editableCols();
+            System.out.println("edit");
+        });
+        delete.setOnAction(event -> {
+            removeSelectedRows(Integer.parseInt(listQuestion.get(0).get(Integer.parseInt((tableView.getSelectionModel().getSelectedItem().getNumber())))), tableView.getSelectionModel().getSelectedIndex());
+        });
+        menuButton.get(menuButton.size() -1).setText("...");
+        menuButton.get(menuButton.size() -1).getItems().addAll(edit);
+        menuButton.get(menuButton.size() -1).getItems().addAll(delete);
+        data.addAll(new TestGrammarModel.QuestionTableView(
+                questionText.getText(),questionText.getText(),optionAText.getText(),
+                optionAText.getText(),optionCText.getText(),optionDText.getText(),"",keyText.getText(),
+                idText.getText(), grammarIdText.getText(), menuButton.get(menuButton.size() -1))
+        );
         model.addNewTestGrammar(new TestGrammarModel.QuestionTableView(
                 questionText.getText(),questionText.getText(),optionAText.getText(),
                 optionAText.getText(),optionCText.getText(),optionDText.getText(),"",keyText.getText(),
-                idText.getText(), grammarIdText.getText(), new MenuButton()
-        ));
+                idText.getText(), grammarIdText.getText(), menuButton.get(menuButton.size() -1))
+        );
+
+        questionText.clear();
+        optionAText.clear();
+        optionBText.clear();
+        optionCText.clear();
+        optionDText.clear();
+        grammarIdText.clear();
+        idText.clear();
+        keyText.clear();
 
     }
 
