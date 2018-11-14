@@ -225,13 +225,15 @@ public class TestGrammarModel {
 
         private MenuButton action;
 
-        public QuestionTableView(String content, String question, String optionA, String optionB, String optionC, String optionD, String ans, String key, int number, String grammarid) {
+        public QuestionTableView(String content, String question, String optionA, String optionB, String optionC, String optionD, String ans, String key, int number, String grammarid, MenuButton menuButton) {
             super(content, question, optionA, optionB, optionC, optionD, ans, key, number, grammarid);
-            MenuItem edit = new MenuItem("edit");
-            MenuItem delete = new MenuItem("delete");
-            this.action = new MenuButton("...");
-            action.getItems().addAll(edit);
-            action.getItems().addAll(delete);
+//            MenuItem edit = new MenuItem("edit");
+//            MenuItem delete = new MenuItem("delete");
+
+//            action.setText("...");
+//            action.getItems().addAll(edit);
+//            action.getItems().addAll(delete);
+            this.action = menuButton;
         }
 
         public MenuButton getAction() {
