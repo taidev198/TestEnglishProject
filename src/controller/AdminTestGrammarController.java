@@ -154,7 +154,7 @@ public class AdminTestGrammarController implements Initializable {
      * no params.
      */
     public void removeSelectedRows(int id) {
-      //  model.removeTestGrammar(id);
+        model.removeTestGrammar(id);
         tableView.getItems().removeAll(tableView.getSelectionModel().getSelectedItems());
 
         // table selects by index, so we have to clear the selection or else items with that index would be selected
@@ -169,6 +169,8 @@ public class AdminTestGrammarController implements Initializable {
         ));
 
     }
+
+
 
     public class EditingCell<S, T> extends TableCell<S, T>{
         private TextField textField;

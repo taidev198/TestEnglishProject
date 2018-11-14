@@ -116,9 +116,9 @@ public class TestGrammarModel {
 
     public boolean removeTestGrammar(int id){
         String query = "alter from testgrammar where id = " + id;
-        try(Statement statement = ConnectDataHelper.connectDB().createStatement()) {
+        try(PreparedStatement statement = ConnectDataHelper.connectDB().prepareStatement(query)) {
             statement.execute("use data");
-            int resultSet = statement.executeUpdate(query);
+          statement.executeUpdate();
         } catch (IllegalAccessException | InstantiationException | ClassNotFoundException | SQLException e) {
             e.printStackTrace();
             return false;
