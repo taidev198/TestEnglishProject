@@ -115,7 +115,7 @@ public class TestGrammarModel {
     }
 
     public boolean removeTestGrammar(int id){
-        String query = "alter from testgrammar where id = " + id;
+        String query = "delete from testgrammar where id = " + id;
         try(PreparedStatement statement = ConnectDataHelper.connectDB().prepareStatement(query)) {
             statement.execute("use data");
           statement.executeUpdate();

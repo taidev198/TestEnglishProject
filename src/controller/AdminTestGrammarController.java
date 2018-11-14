@@ -3,6 +3,8 @@ package controller;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ListChangeListener;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -14,6 +16,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.text.Text;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
 import javafx.util.converter.DefaultStringConverter;
@@ -26,6 +29,7 @@ import java.util.*;
  * https://stackoverflow.com/questions/27468546/how-to-use-simpleintegerproperty-in-javafx</>
  * -editable tableview with dynamic :http://java-buddy.blogspot.com/2013/03/javafx-editable-tableview-with-dynamic.html
  * --- auto commit when user click outside :https://stackoverflow.com/questions/23632884/how-to-commit-when-clicking-outside-an-editable-tableview-cell-in-javafx
+ * --filter :https://code.makery.ch/blog/javafx-8-tableview-sorting-filtering/
  * */
 public class AdminTestGrammarController implements Initializable {
 
@@ -66,14 +70,17 @@ public class AdminTestGrammarController implements Initializable {
     TextField keyText;
     @FXML
     TextField grammarIdText;
-
+    @FXML
+    TextField searchingField;
+    @FXML
+    Text filterText;
     MenuButton menuButton[];
     TestGrammarModel model;
+    FilteredList<TestGrammarModel.QuestionTableView> filteredList;
     private  List<List<String>> listQuestion;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         model = new TestGrammarModel();
-
         Callback<TableColumn<TestGrammarModel.QuestionTableView, String>, TableCell<TestGrammarModel.QuestionTableView, String>> cellFactory =
                 new Callback<TableColumn<TestGrammarModel.QuestionTableView, String>, TableCell<TestGrammarModel.QuestionTableView, String>>() {
                     @Override
@@ -81,7 +88,7 @@ public class AdminTestGrammarController implements Initializable {
                         return new EditingCell();
                     }
                 };
-        tableView.setEditable(true);
+
         //set celCellValueFactory for each cols.
         idCol.setCellValueFactory(
                 new PropertyValueFactory<>("number"));
@@ -138,6 +145,31 @@ public class AdminTestGrammarController implements Initializable {
                 return new rowQuestion();
             }
         });
+        filter();
+    }
+
+    private void filter() {
+        filteredList = new FilteredList<>(tableView.getItems(), questionTableView -> true);
+        searchingField.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredList.setPredicate(questionTableView -> {
+                filterText.setVisible(false);
+                if (newValue == null || newValue.isEmpty())
+                    return true;
+                String lowerCaseFilter = newValue.toLowerCase();
+                if (questionTableView.getQuestion().contains(lowerCaseFilter))
+                    return true;
+                else return questionTableView.getNumber().contains(lowerCaseFilter);
+            });
+        });
+        filterText.setOnKeyPressed(event ->{
+            if (event.getEventType() != null)
+                filterText.setVisible(false);
+        } );
+
+        SortedList<TestGrammarModel.QuestionTableView> sortedList = new SortedList<>(filteredList);
+        sortedList.comparatorProperty().bind(tableView.comparatorProperty());
+        tableView.setItems(sortedList);
+
     }
 
     private void editableCols(){

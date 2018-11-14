@@ -39,5 +39,7 @@
       <TextField fx:id="grammarIdText" layoutX="935.0" layoutY="748.0" prefHeight="26.0" prefWidth="101.0" />
       <Text layoutX="940.0" layoutY="790.0" strokeType="OUTSIDE" strokeWidth="0.0" text="GRAMMARID" />
       <Button layoutX="1065.0" layoutY="749.0" mnemonicParsing="false" onAction="#addRow" text="ADD" />
+      <TextField fx:id="searchingField" layoutX="46.0" layoutY="14.0" prefHeight="26.0" prefWidth="354.0" />
+      <Text fx:id="filterText" layoutX="58.0" layoutY="32.0" opacity="0.3" strokeType="OUTSIDE" strokeWidth="0.0" text="Filter........." wrappingWidth="110.3999923914671" />
    </children>
 </AnchorPane>
