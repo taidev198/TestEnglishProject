@@ -2,6 +2,7 @@ package controller;
 
 import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -12,10 +13,7 @@ import javafx.util.StringConverter;
 import model.TestGrammarModel;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
 
 /**How to fix bug at TableColumn<nameClass, Integer> but TableView using String in column
  * https://stackoverflow.com/questions/27468546/how-to-use-simpleintegerproperty-in-javafx</>*/
@@ -24,7 +22,7 @@ public class AdminTestGrammarController implements Initializable {
     @FXML
     TableView<TestGrammarModel.QuestionTableView> tableView;
     @FXML
-    TableColumn<TestGrammarModel.QuestionTableView, Integer> idCol;
+    TableColumn<TestGrammarModel.QuestionTableView, String> idCol;
     @FXML
     TableColumn<TestGrammarModel.QuestionTableView, String> questionCol;
     @FXML
@@ -86,7 +84,7 @@ public class AdminTestGrammarController implements Initializable {
             tableView.getItems().addAll(new TestGrammarModel.QuestionTableView(listQuestion.get(1).get(i),
                     listQuestion.get(1).get(i), listQuestion.get(2).get(i),listQuestion.get(3).get(i),
                     listQuestion.get(4).get(i), listQuestion.get(5).get(i), "",
-                    listQuestion.get(6).get(i), Integer.valueOf(listQuestion.get(0).get(i)), listQuestion.get(7).get(i) , menuButton[i]) );
+                    listQuestion.get(6).get(i), (listQuestion.get(0).get(i)), listQuestion.get(7).get(i) , menuButton[i]) );
 
 
         }
@@ -96,32 +94,33 @@ public class AdminTestGrammarController implements Initializable {
                 return new rowQuestion();
             }
         });
-
     }
 
     private void editableCols(){
-        idCol.setCellFactory(TextFieldTableCell.forTableColumn(new StringConverter<Integer>() {
-            @Override
-            public String toString(Integer object) {
-                return object.toString();
-            }
-
-            @Override
-            public Integer fromString(String string) {
-                return Integer.valueOf(string);
-            }
-        }));
-        idCol.setOnEditCommit(event -> event.getTableView().getItems().
-                    get(event.getTablePosition().getRow()).setNumber(event.getNewValue()));
+        idCol.setCellFactory(TextFieldTableCell.forTableColumn());
+//        idCol.setOnEditCommit(event -> event.getTableView().getItems().
+//                    get(event.getTablePosition().getRow()).setNumber(event.getNewValue()));
         tableView.setEditable(true);
     }
 
 
-    private void handleEvent(ActionEvent event){
-        if (event.getSource().equals(menuButton[0])){
-            System.out.println("thanh tai nguyen");
-        }
+    /**
+     * Remove all selected rows.
+     */
+    public void removeSelectedRows() {
+
+        tableView.getItems().removeAll(tableView.getSelectionModel().getSelectedItems());
+
+        // table selects by index, so we have to clear the selection or else items with that index would be selected
+        tableView.getSelectionModel().clearSelection();
+
+
     }
+
+    public class EditingCell extends TableCell<TestGrammarModel.QuestionTableView, String>{
+
+    }
+
 
     public static class rowQuestion extends TableRow<TestGrammarModel.QuestionTableView>{
 
@@ -161,6 +160,17 @@ public class AdminTestGrammarController implements Initializable {
                 grammarid.setText(item.getAns());
             }else setGraphic(null);
 
+        }
+
+        @Override
+        public void commitEdit(TestGrammarModel.QuestionTableView newValue) {
+            TestGrammarModel.QuestionTableView currentItem = getItem();
+            if (currentItem == null || newValue == null || !Objects.equals(newValue, currentItem)) {
+                super.commitEdit(newValue);
+            } else {
+                // if the string is the same, keep the old value
+                super.commitEdit(currentItem);
+            }
         }
     }
 }

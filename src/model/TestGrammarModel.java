@@ -123,11 +123,11 @@ public class TestGrammarModel {
         private String optionD;
         private String ans;
         private String key;
-        private int number;
+        private String number;
         private String grammarid;
 
         public Question(String content, String question, String optionA, String optionB,
-                        String optionC, String optionD, String ans, String key, int number, String grammarid) {
+                        String optionC, String optionD, String ans, String key, String number, String grammarid) {
             this.content = content;
             this.question = question;
             this.optionA = optionA;
@@ -148,11 +148,11 @@ public class TestGrammarModel {
             this.grammarid = grammarid;
         }
 
-        public int getNumber() {
+        public String getNumber() {
             return number;
         }
 
-        public void setNumber(int number) {
+        public void setNumber(String number) {
             this.number = number;
         }
 
@@ -225,7 +225,7 @@ public class TestGrammarModel {
 
         private MenuButton action;
 
-        public QuestionTableView(String content, String question, String optionA, String optionB, String optionC, String optionD, String ans, String key, int number, String grammarid, MenuButton menuButton) {
+        public QuestionTableView(String content, String question, String optionA, String optionB, String optionC, String optionD, String ans, String key, String number, String grammarid, MenuButton menuButton) {
             super(content, question, optionA, optionB, optionC, optionD, ans, key, number, grammarid);
 //            MenuItem edit = new MenuItem("edit");
 //            MenuItem delete = new MenuItem("delete");

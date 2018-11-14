@@ -59,7 +59,7 @@ public class QuestionController implements Initializable {
             description.setText(key.get(index));
             for (int i =0; i< tmp.get(1).size(); i++ ) {
                 listView.getItems().addAll( new TestGrammarModel.Question(key.get(index), tmp.get(1).get(i), tmp.get(2).get(i),tmp.get(3).get(i),
-                        tmp.get(4).get(i), tmp.get(5).get(i), "", tmp.get(6).get(i), Integer.valueOf(tmp.get(0).get(i)),  tmp.get(6).get(i)));
+                        tmp.get(4).get(i), tmp.get(5).get(i), "", tmp.get(6).get(i), (tmp.get(0).get(i)),  tmp.get(6).get(i)));
             }
         });
         listView.setCellFactory(new Callback<ListView<TestGrammarModel.Question>, ListCell<TestGrammarModel.Question>>() {
