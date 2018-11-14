@@ -1,5 +1,6 @@
 package controller;
 
+import helper.LoadSceneAble;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -10,7 +11,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class AdminController implements Initializable {
+public class AdminController implements Initializable, LoadSceneAble {
     @FXML
     AnchorPane anchorPane1;
 
@@ -24,49 +25,40 @@ public class AdminController implements Initializable {
 
     @FXML
     private void user(){
-        Parent user = null;
-        try {
-            user = FXMLLoader.load(getClass().getResource("/view/UserView.fxml"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        anchorPane1.getChildren().clear();
-        anchorPane1.getChildren().addAll(user);
+       loadScene("/view/AdminGrammarView.fxml", anchorPane1);
     }
 
     @FXML
     private void grammar(){
-        Parent user = null;
-        try {
-            user = FXMLLoader.load(getClass().getResource("/view/AdminGrammarView.fxml"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        anchorPane1.getChildren().clear();
-        anchorPane1.getChildren().addAll(user);
+       loadScene("/view/AdminGrammarView.fxml", anchorPane1);
     }
 
     @FXML
     private void testGrammar(){
-        Parent user = null;
-        try {
-            user = FXMLLoader.load(getClass().getResource("/view/AdminTestGrammarView.fxml"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        anchorPane1.getChildren().clear();
-        anchorPane1.getChildren().addAll(user);
+        loadScene("/view/AdminTestGrammarView.fxml", anchorPane1);
     }
 
     @FXML
     private void quizTest(){
+        loadScene("/view/AdminQuizzTestView.fxml", anchorPane1);
+    }
+
+    @FXML
+    private void overView(){
+        loadScene("/view/AdminDashboardView.fxml", anchorPane1);
+    }
+
+    /**using this interface to load scene*/
+
+    @Override
+    public void loadScene(String url, Object parent) {
         Parent user = null;
         try {
-            user = FXMLLoader.load(getClass().getResource("/view/AdminQuizzTestView.fxml"));
+            user = FXMLLoader.load(getClass().getResource(url));
         } catch (IOException e) {
             e.printStackTrace();
         }
-        anchorPane1.getChildren().clear();
-        anchorPane1.getChildren().addAll(user);
+        ((AnchorPane) parent).getChildren().clear();
+        ((AnchorPane) parent).getChildren().addAll(user);
     }
 }

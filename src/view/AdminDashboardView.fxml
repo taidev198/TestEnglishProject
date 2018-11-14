@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="anchorPane1" minHeight="-Infinity" minWidth="-Infinity" prefHeight="810.0" prefWidth="1150.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AdminDashboardController">
+   <children>
+      <PieChart fx:id="pieChart" layoutX="30.0" layoutY="495.0" prefHeight="276.0" prefWidth="307.0" />
+      <PieChart fx:id="pieChart1" layoutX="401.0" layoutY="495.0" prefHeight="276.0" prefWidth="307.0" />
+      <LineChart fx:id="lineChart" layoutX="25.0" layoutY="35.0" prefHeight="404.0" prefWidth="1100.0">
+         <xAxis>
+            <CategoryAxis prefWidth="444.0" side="BOTTOM" />
+         </xAxis>
+         <yAxis>
+            <NumberAxis side="LEFT" />
+         </yAxis>
+      </LineChart>
+   </children>
+</AnchorPane>
