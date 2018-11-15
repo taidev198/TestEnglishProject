@@ -198,7 +198,7 @@ public class AdminTestGrammarController implements Initializable {
             System.out.println("edit");
         });
         delete.setOnAction(event -> {
-            removeSelectedRows(Integer.parseInt(listQuestion.get(0).get(Integer.parseInt((tableView.getSelectionModel().getSelectedItem().getNumber())))), tableView.getSelectionModel().getSelectedIndex());
+            removeSelectedRows(Integer.parseInt((tableView.getSelectionModel().getSelectedItem().getNumber())), tableView.getSelectionModel().getSelectedIndex());
         });
         menuButton.get(menuButton.size() -1).setText("...");
         menuButton.get(menuButton.size() -1).getItems().addAll(edit);
