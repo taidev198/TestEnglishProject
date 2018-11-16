@@ -1,7 +1,6 @@
 package controller;
 
 import helper.LoadSceneAble;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
@@ -11,44 +10,16 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class AdminController implements Initializable, LoadSceneAble {
-    @FXML
-    AnchorPane anchorPane1;
-
-    @FXML
-    AnchorPane anchorPane;
-
+/**
+ * Created by traig on 9:59 AM, 11/15/2018
+ */
+public class AdminUserController implements Initializable, LoadSceneAble {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
     }
 
-    @FXML
-    private void user(){
-       loadScene("/view/AdminUserView.fxml", anchorPane1);
-    }
 
-    @FXML
-    private void grammar(){
-       loadScene("/view/AdminGrammarView.fxml", anchorPane1);
-    }
-
-    @FXML
-    private void testGrammar(){
-        loadScene("/view/AdminTestGrammarView.fxml", anchorPane1);
-    }
-
-    @FXML
-    private void quizTest(){
-        loadScene("/view/AdminQuizzTestView.fxml", anchorPane1);
-    }
-
-    @FXML
-    private void overView(){
-        loadScene("/view/AdminDashboardView.fxml", anchorPane1);
-    }
-
-    /**using this interface to load scene*/
 
     @Override
     public void loadScene(String url, Object parent) {
@@ -64,6 +35,10 @@ public class AdminController implements Initializable, LoadSceneAble {
 
     @Override
     public void loadData() {
+
+    }
+
+    public void addRow(){
 
     }
 }
