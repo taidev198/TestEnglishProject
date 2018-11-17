@@ -37,8 +37,8 @@
       <Text layoutX="609.0" layoutY="800.0" strokeType="OUTSIDE" strokeWidth="0.0" text="address" />
       <TextField fx:id="phoneText" layoutX="761.0" layoutY="758.0" prefHeight="26.0" prefWidth="96.79998779296875" />
       <Text layoutX="782.0" layoutY="801.0" strokeType="OUTSIDE" strokeWidth="0.0" text="phone" />
-      <TextField fx:id="phoneText" layoutX="858.0" layoutY="758.0" prefHeight="26.0" prefWidth="100.7999267578125" />
-      <Text layoutX="891.0" layoutY="800.0" strokeType="OUTSIDE" strokeWidth="0.0" text="phone" />
+      <TextField fx:id="emailText" layoutX="858.0" layoutY="758.0" prefHeight="26.0" prefWidth="100.7999267578125" />
+      <Text layoutX="891.0" layoutY="800.0" strokeType="OUTSIDE" strokeWidth="0.0" text="email" />
       <Button layoutX="1075.0" layoutY="759.0" mnemonicParsing="false" onAction="#addRow" text="ADD" />
       <TextField fx:id="searchingField" layoutX="56.0" layoutY="24.0" prefHeight="26.0" prefWidth="354.0" />
       <Text fx:id="filterText" layoutX="68.0" layoutY="42.0" opacity="0.3" strokeType="OUTSIDE" strokeWidth="0.0" text="Filter........." wrappingWidth="110.3999923914671" />
