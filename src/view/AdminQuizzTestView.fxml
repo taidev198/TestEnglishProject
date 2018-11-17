@@ -17,9 +17,10 @@
             <TableColumn fx:id="optionBCol" prefWidth="108.0" text="B" />
             <TableColumn fx:id="optionCCol" prefWidth="106.4000244140625" text="C" />
             <TableColumn fx:id="optionDCol" prefWidth="106.39996337890625" text="D" />
-            <TableColumn fx:id="keyCol" maxWidth="177.5999755859375" prefWidth="138.39996337890625" text="KEY" />
-            <TableColumn fx:id="grammarIdCol" maxWidth="188.00003662109373" prefWidth="86.4000244140625" text="GRAMMARID" />
-            <TableColumn fx:id="actionCol" maxWidth="188.00003662109373" prefWidth="61.5999755859375" text="ACTION" />
+            <TableColumn fx:id="keyCol" maxWidth="177.5999755859375" prefWidth="64.79986572265625" text="KEY" />
+            <TableColumn fx:id="grammarIdCol" maxWidth="188.00003662109373" prefWidth="78.39996337890625" text="GRAMMARID" />
+            <TableColumn fx:id="contestidCol" maxWidth="188.00003662109373" text="CONTESTID" />
+            <TableColumn fx:id="actionCol" maxWidth="188.00003662109373" prefWidth="62.40000000000009" text="ACTION" />
          </columns>
       </TableView>
       <TextField fx:id="idText" layoutY="748.0" prefHeight="26.0" prefWidth="58.39999467134476" />
@@ -36,10 +37,12 @@
       <Text layoutX="815.0" layoutY="790.0" strokeType="OUTSIDE" strokeWidth="0.0" text="D" />
       <TextField fx:id="keyText" layoutX="869.0" layoutY="748.0" prefHeight="26.0" prefWidth="65.0" />
       <Text layoutX="890.0" layoutY="791.0" strokeType="OUTSIDE" strokeWidth="0.0" text="KEY" />
-      <TextField fx:id="grammarIdText" layoutX="935.0" layoutY="748.0" prefHeight="26.0" prefWidth="101.0" />
+      <TextField fx:id="grammarIdText" layoutX="935.0" layoutY="748.0" prefHeight="26.0" prefWidth="78.0" />
       <Text layoutX="940.0" layoutY="790.0" strokeType="OUTSIDE" strokeWidth="0.0" text="GRAMMARID" />
-      <Button layoutX="1065.0" layoutY="749.0" mnemonicParsing="false" onAction="#addRow" text="ADD" />
+      <Button layoutX="1095.0" layoutY="748.0" mnemonicParsing="false" onAction="#addRow" text="ADD" />
       <TextField fx:id="searchingField" layoutX="46.0" layoutY="14.0" prefHeight="26.0" prefWidth="354.0" />
       <Text fx:id="filterText" layoutX="58.0" layoutY="32.0" opacity="0.3" strokeType="OUTSIDE" strokeWidth="0.0" text="Filter........." wrappingWidth="110.3999923914671" />
+      <TextField fx:id="contestidText" layoutX="1013.0" layoutY="748.0" prefHeight="26.0" prefWidth="71.0" />
+      <Text layoutX="1021.0" layoutY="790.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CONTESTID" />
    </children>
 </AnchorPane>
