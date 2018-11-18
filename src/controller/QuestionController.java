@@ -1,5 +1,6 @@
 package controller;
 
+import animatefx.animation.FadeIn;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.WeakChangeListener;
 import javafx.collections.FXCollections;
@@ -7,11 +8,13 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Side;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
@@ -27,11 +30,13 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import model.TestGrammarModel;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
 
-/**Clone primitive list:https://stackoverflow.com/questions/8441664/how-do-i-copy-the-contents-of-one-arraylist-into-another/29033799*/
+/**Clone primitive list:https://stackoverflow.com/questions/8441664/how-do-i-copy-the-contents-of-one-arraylist-into-another/29033799
+ * custom dialog:https://stackoverflow.com/questions/40031632/custom-javafx-dialog*/
 public class QuestionController implements Initializable {
 
     @FXML
@@ -104,6 +109,65 @@ public class QuestionController implements Initializable {
         }
         return newList;
     }
+
+    @FXML
+    private void back(){
+        final Stage dialog = new Stage();
+        dialog.setTitle("Confirmation");
+        Button back = new Button("BACK");
+        Button no = new Button("NO");
+
+        Label displayLabel = new Label("What do you want to do ?");
+        displayLabel.setFont(Font.font(null, FontWeight.BOLD, 14));
+
+        dialog.initModality(Modality.NONE);
+        dialog.initOwner( grammarLists.getScene().getWindow());
+
+        HBox dialogHbox = new HBox(20);
+        dialogHbox.setAlignment(Pos.CENTER);
+
+        VBox dialogVbox1 = new VBox(20);
+        dialogVbox1.setAlignment(Pos.CENTER_LEFT);
+
+        VBox dialogVbox2 = new VBox(20);
+        dialogVbox2.setAlignment(Pos.CENTER_RIGHT);
+
+        dialogHbox.getChildren().add(displayLabel);
+        dialogVbox1.getChildren().add(back);
+        dialogVbox2.getChildren().add(no);
+
+        back.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent e) {
+                        // inside here you can use the minimize or close the previous stage//
+                        dialog.close();
+                        try {
+                            Parent parent = FXMLLoader.load(getClass().getResource("/view/UserView.fxml"));
+                            anchorPane.getChildren().clear();
+                            anchorPane.getChildren().addAll(parent);
+                            new FadeIn(parent).play();
+                        } catch (IOException e1) {
+                            e1.printStackTrace();
+                        }
+                        System.out.println("Main view");
+                    }
+                });
+        no.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                e -> {
+
+                    dialog.close();
+                    submit.setVisible(true);
+                });
+
+        dialogHbox.getChildren().addAll(dialogVbox1, dialogVbox2);
+        Scene dialogScene = new Scene(dialogHbox, 500, 200);
+        dialogScene.getStylesheets().add("//style sheet of your choice");
+        dialog.setScene(dialogScene);
+        dialog.show();
+        submit.setVisible(false);
+    }
+
 
     @FXML
     public void OnSubmit(){
