@@ -30,7 +30,7 @@
             </LineChart>
          </children>
       </AnchorPane>
-      <AnchorPane prefHeight="810.0" prefWidth="350.0" styleClass="sidebar" stylesheets="@../resource/stylehseet.css">
+      <AnchorPane prefHeight="810.0" prefWidth="296.0" styleClass="sidebar" stylesheets="@../resource/stylehseet.css">
          <children>
             <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="250.0">
                <children>
@@ -39,14 +39,14 @@
                         <Image url="@../resource/user-icon.png" />
                      </image>
                      <VBox.margin>
-                        <Insets left="85.0" />
+                        <Insets left="35.0" />
                      </VBox.margin>
                   </ImageView>
                   <HBox prefHeight="46.0" prefWidth="338.0">
                      <children>
                         <Label styleClass="sidebar-btn-icon" stylesheets="@../resource/stylehseet.css" text="Nguyen Thanh Tai">
                            <HBox.margin>
-                              <Insets left="70.0" top="5.0" />
+                              <Insets left="35.0" top="5.0" />
                            </HBox.margin>
                            <opaqueInsets>
                               <Insets />
@@ -62,15 +62,21 @@
                   <Label text="MAIN" />
                   <HBox prefHeight="46.0" prefWidth="250.0" styleClass="sidebar-btn" stylesheets="@../resource/stylehseet.css">
                      <children>
-                        <FontAwesomeIcon fill="#b8b1b1" iconName="HOME" size="1.5em" styleClass="sidebar-btn-icon">
+                        <FontAwesomeIcon fill="#b8b1b1" iconName="HOME" size="1.5em" styleClass="sidebar-btn-icon" text="">
                            <HBox.margin>
-                              <Insets left="10.0" top="10.0" />
+                              <Insets left="10.0" top="15.0" />
                            </HBox.margin>
+                           <font>
+                              <Font size="19.0" />
+                           </font>
                         </FontAwesomeIcon>
-                        <Label onMouseClicked="#overView" styleClass="sidebar-btn-icon" text="OVERVIEW">
+                        <Label onMouseClicked="#overView" styleClass="sidebar-btn" text="OVERVIEW">
                            <HBox.margin>
                               <Insets left="20.0" top="10.0" />
                            </HBox.margin>
+                           <font>
+                              <Font size="19.0" />
+                           </font>
                         </Label>
                      </children>
                   </HBox>
@@ -78,13 +84,19 @@
                      <children>
                         <FontAwesomeIcon fill="#b8b1b1" iconName="ARCHIVE" size="1.5em" styleClass="sidebar-btn-icon" text="">
                            <HBox.margin>
-                              <Insets left="10.0" top="10.0" />
+                              <Insets left="10.0" top="15.0" />
                            </HBox.margin>
+                           <font>
+                              <Font size="19.0" />
+                           </font>
                         </FontAwesomeIcon>
                         <Label onMouseClicked="#user" styleClass="sidebar-btn-icon" text="USER">
                            <HBox.margin>
                               <Insets left="20.0" top="10.0" />
                            </HBox.margin>
+                           <font>
+                              <Font size="19.0" />
+                           </font>
                         </Label>
                      </children>
                   </HBox>
@@ -92,15 +104,18 @@
                      <children>
                         <FontAwesomeIcon fill="#b8b1b1" iconName="TASKS" size="1.5em" styleClass="sidebar-btn-icon">
                            <HBox.margin>
-                              <Insets left="10.0" top="10.0" />
+                              <Insets left="10.0" top="15.0" />
                            </HBox.margin>
+                           <font>
+                              <Font size="19.0" />
+                           </font>
                         </FontAwesomeIcon>
                         <Label onMouseClicked="#grammar" styleClass="sidebar-btn-icon" text="GRAMMAR">
                            <HBox.margin>
                               <Insets left="20.0" top="10.0" />
                            </HBox.margin>
                            <font>
-                              <Font name="Arial" size="12.0" />
+                              <Font size="19.0" />
                            </font>
                         </Label>
                      </children>
@@ -109,15 +124,18 @@
                      <children>
                         <FontAwesomeIcon fill="#b8b1b1" iconName="ARCHIVE" size="1.5em" styleClass="sidebar-btn-icon">
                            <HBox.margin>
-                              <Insets left="10.0" top="10.0" />
+                              <Insets left="10.0" top="15.0" />
                            </HBox.margin>
+                           <font>
+                              <Font size="19.0" />
+                           </font>
                         </FontAwesomeIcon>
                         <Label onMouseClicked="#quizTest" styleClass="sidebar-btn-icon" text="QUIZ TEST">
                            <HBox.margin>
                               <Insets left="20.0" top="10.0" />
                            </HBox.margin>
                            <font>
-                              <Font name="Arial" size="12.0" />
+                              <Font size="19.0" />
                            </font>
                         </Label>
                      </children>
@@ -126,13 +144,19 @@
                      <children>
                         <FontAwesomeIcon fill="#b8b1b1" iconName="HOME" size="1.5em" styleClass="sidebar-btn-icon">
                            <HBox.margin>
-                              <Insets left="10.0" top="10.0" />
+                              <Insets left="10.0" top="15.0" />
                            </HBox.margin>
+                           <font>
+                              <Font size="19.0" />
+                           </font>
                         </FontAwesomeIcon>
                         <Label onMouseClicked="#testGrammar" styleClass="sidebar-btn-icon" text="TEST GRAMMAR">
                            <HBox.margin>
                               <Insets left="20.0" top="10.0" />
                            </HBox.margin>
+                           <font>
+                              <Font size="19.0" />
+                           </font>
                         </Label>
                      </children>
                   </HBox>
@@ -140,15 +164,18 @@
                      <children>
                         <FontAwesomeIcon fill="#b8b1b1" iconName="ARCHIVE" size="1.5em" styleClass="sidebar-btn-icon" text="">
                            <HBox.margin>
-                              <Insets left="10.0" top="10.0" />
+                              <Insets left="10.0" top="15.0" />
                            </HBox.margin>
+                           <font>
+                              <Font size="19.0" />
+                           </font>
                         </FontAwesomeIcon>
                         <Label styleClass="sidebar-btn-icon" text="CHAT">
                            <HBox.margin>
                               <Insets left="20.0" top="10.0" />
                            </HBox.margin>
                            <font>
-                              <Font name="Arial" size="12.0" />
+                              <Font size="19.0" />
                            </font>
                         </Label>
                      </children>
@@ -157,15 +184,18 @@
                      <children>
                         <FontAwesomeIcon fill="#b8b1b1" iconName="TASKS" size="1.5em" styleClass="sidebar-btn-icon">
                            <HBox.margin>
-                              <Insets left="10.0" top="10.0" />
+                              <Insets left="10.0" top="15.0" />
                            </HBox.margin>
+                           <font>
+                              <Font size="19.0" />
+                           </font>
                         </FontAwesomeIcon>
                         <Label styleClass="sidebar-btn-icon" text="CALENDER">
                            <HBox.margin>
                               <Insets left="20.0" top="10.0" />
                            </HBox.margin>
                            <font>
-                              <Font name="Arial" size="12.0" />
+                              <Font size="19.0" />
                            </font>
                         </Label>
                      </children>
@@ -174,20 +204,26 @@
                      <children>
                         <FontAwesomeIcon fill="#b8b1b1" iconName="ARCHIVE" size="1.5em" styleClass="sidebar-btn-icon">
                            <HBox.margin>
-                              <Insets left="10.0" top="10.0" />
+                              <Insets left="10.0" top="15.0" />
                            </HBox.margin>
+                           <font>
+                              <Font size="19.0" />
+                           </font>
                         </FontAwesomeIcon>
                         <Label styleClass="sidebar-btn-icon" text="TASK">
                            <HBox.margin>
                               <Insets left="20.0" top="10.0" />
                            </HBox.margin>
                            <font>
-                              <Font name="Arial" size="12.0" />
+                              <Font size="19.0" />
                            </font>
                         </Label>
                      </children>
                   </HBox>
                </children>
+               <padding>
+                  <Insets left="50.0" />
+               </padding>
             </VBox>
          </children>
       </AnchorPane>

@@ -1,7 +1,6 @@
 package controller;
 
 import animatefx.animation.FadeIn;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -74,7 +73,7 @@ public class GrammarController implements Initializable {
     @FXML
     private void backHome(){
         try {
-            Parent parent = FXMLLoader.load(getClass().getResource("/view/MainView.fxml"));
+            Parent parent = FXMLLoader.load(getClass().getResource("/view/UserView.fxml"));
             anchorPane.getChildren().clear();
             anchorPane.getChildren().addAll(parent);
             new FadeIn(parent).play();

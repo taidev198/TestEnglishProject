@@ -27,7 +27,7 @@ public class loginController implements Initializable {
 
     public void goHome(){
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/view/MainView.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/view/UserView.fxml"));
            anchorPane.getChildren().clear();
            anchorPane.getChildren().addAll(root);
             new FadeIn(root).play();

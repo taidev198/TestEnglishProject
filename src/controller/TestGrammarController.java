@@ -56,7 +56,7 @@ public class TestGrammarController implements Initializable {
     @FXML
     private void backHome(){
         try {
-            Parent parent = FXMLLoader.load(getClass().getResource("/view/MainView.fxml"));
+            Parent parent = FXMLLoader.load(getClass().getResource("/view/UserView.fxml"));
             anchorPane.getChildren().clear();
             anchorPane.getChildren().addAll(parent);
             new FadeIn(parent).play();

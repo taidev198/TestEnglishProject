@@ -3,8 +3,8 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="pane" prefHeight="473.0" prefWidth="747.0" style="-fx-background-color: #CDCDCD;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainContentController">
+<AnchorPane fx:id="pane" prefHeight="700.0" prefWidth="1111.0" style="-fx-background-color: #CDCDCD;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainContentController">
    <children>
-      <TextArea fx:id="content" layoutX="8.0" layoutY="8.0" prefHeight="473.0" prefWidth="747.0" />
+      <TextArea fx:id="content" layoutX="8.0" layoutY="8.0" prefHeight="680.0" prefWidth="1100.0" />
    </children>
 </AnchorPane>
