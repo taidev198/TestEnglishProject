@@ -1,27 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.RadioButton?>
-<?import javafx.scene.control.ScrollBar?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.QuizTestController">
+<AnchorPane fx:id="anchorPane" prefHeight="800.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.QuizTestController">
    <children>
-      <Pane layoutX="52.0" layoutY="68.0" prefHeight="466.0" prefWidth="900.0" style="-fx-background-color: #E9E9E9;">
-         <children>
-            <ScrollBar layoutX="886.0" orientation="VERTICAL" prefHeight="466.0" prefWidth="14.0" />
-            <Text layoutX="15.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="870.1367950439453" />
-            <RadioButton layoutX="279.0" layoutY="62.0" mnemonicParsing="false" text="RadioButton" />
-            <RadioButton layoutX="55.0" layoutY="62.0" mnemonicParsing="false" text="RadioButton" />
-            <RadioButton layoutX="534.0" layoutY="62.0" mnemonicParsing="false" text="RadioButton" />
-            <RadioButton layoutX="737.0" layoutY="62.0" mnemonicParsing="false" text="RadioButton" />
-         </children>
-      </Pane>
-      <Button layoutX="456.0" layoutY="551.0" mnemonicParsing="false" text="SUBMIT" />
-      <Button layoutX="556.0" layoutY="551.0" mnemonicParsing="false" text="REVIEW" />
-      <Button layoutX="52.0" layoutY="30.0" mnemonicParsing="false" text="BACK TO HOME" />
+      <ListView fx:id="listView" layoutX="403.0" layoutY="93.0" prefHeight="649.0" prefWidth="1050.0" styleClass="fx-list-cell" stylesheets="@../resource/stylehseet.css" />
+      <ListView fx:id="contestLists" layoutX="-4.0" layoutY="44.0" prefHeight="748.0" prefWidth="346.0" />
+      <Text fx:id="description" fill="#a72a2a" layoutX="865.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DESCRIPTION" textAlignment="CENTER">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Text>
+      <Button fx:id="submit" layoutX="900.0" layoutY="760.0" mnemonicParsing="false" onAction="#OnSubmit" text="SUBMIT" />
+      <Text fx:id="welcomeText" fill="#9f2828" layoutX="532.0" layoutY="224.0" strokeType="OUTSIDE" strokeWidth="0.0" text="YOU'RE HERE . YOU CAN ENTER TO CHOOSE CONTEST IN ORDER TO PRACTICE" wrappingWidth="793.3365478515625">
+         <font>
+            <Font size="39.0" />
+         </font>
+      </Text>
+      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#back" text="BACK" />
+      <ProgressBar fx:id="progressBar" layoutX="553.0" layoutY="70.0" prefHeight="18.0" prefWidth="771.0" progress="0.0" />
+      <Text fx:id="min" layoutX="908.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="15" />
+      <Text fx:id="dot" layoutX="927.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text=":" />
+      <Text fx:id="sec" layoutX="938.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" />
    </children>
 </AnchorPane>
