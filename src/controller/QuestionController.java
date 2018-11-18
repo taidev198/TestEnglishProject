@@ -2,24 +2,36 @@ package controller;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.WeakChangeListener;
+import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.Side;
 import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 import model.TestGrammarModel;
 
 import java.net.URL;
 import java.util.*;
 
+
+/**Clone primitive list:https://stackoverflow.com/questions/8441664/how-do-i-copy-the-contents-of-one-arraylist-into-another/29033799*/
 public class QuestionController implements Initializable {
 
     @FXML
@@ -28,14 +40,20 @@ public class QuestionController implements Initializable {
     ListView<TestGrammarModel.Question> listView;
     @FXML
     AnchorPane anchorPane;
-
+    @FXML
+    Text welcomeText;
+    @FXML
+    Button submit;
     @FXML
     Text description;
+    private List<String[]> answer;
+    private List<String[]> clone;
 
     private TestGrammarModel model;
     private Map<String, List<List<String>>> listQuestion;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        submit.setVisible(false);
         model = new TestGrammarModel();
         listQuestion = model.getTestGrammarFollowGrammarId();
         List<Map.Entry<String, List<List<String>>>> entryList = new ArrayList<>(listQuestion.entrySet());
@@ -47,6 +65,7 @@ public class QuestionController implements Initializable {
             label.setGraphic( new ImageView( new Image("/resource/avatar.png")));
             grammarLists.getItems().add(label);
         }
+        answer = new ArrayList<>();
 
         for (int i = 0; i < 14; i++) {
             Label label = new Label("AS, When Or While ,AS, When Or While" );
@@ -54,31 +73,100 @@ public class QuestionController implements Initializable {
             grammarLists.getItems().add(label);
         }
         grammarLists.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            submit.setVisible(true);
             int index = grammarLists.getSelectionModel().getSelectedIndex();
+            System.out.println(index);
+
             List<List<String>> tmp = entryList.get(index).getValue();
+            welcomeText.setVisible(false);
             description.setText(key.get(index));
+            answer.add(new String[tmp.get(1).size() +2]);
+            answer.get(index)[tmp.get(1).size()+1] = String.valueOf(tmp.get(1).size());
+            answer.get(index)[tmp.get(1).size()] = String.valueOf("0");
+            clone = saveList(answer);
             for (int i =0; i< tmp.get(1).size(); i++ ) {
                 listView.getItems().addAll( new TestGrammarModel.Question(key.get(index), tmp.get(1).get(i), tmp.get(2).get(i),tmp.get(3).get(i),
                         tmp.get(4).get(i), tmp.get(5).get(i), "", tmp.get(6).get(i), (tmp.get(0).get(i)),  tmp.get(6).get(i)));
             }
         });
-        listView.setCellFactory(new Callback<ListView<TestGrammarModel.Question>, ListCell<TestGrammarModel.Question>>() {
-            @Override
-            public ListCell<TestGrammarModel.Question> call(ListView<TestGrammarModel.Question> param) {
-                return new QuestionCell();
-            }
-        });
-         listView.getItems().addListener(new ListChangeListener<TestGrammarModel.Question>() {
-             @Override
-             public void onChanged(Change<? extends TestGrammarModel.Question> c) {
-                 while (c.next()){
-                 //    System.out.println(c.getFrom());
-                 }
-             }
-         });
+        listView.setCellFactory(param -> new QuestionCell(false));
         listView.setFocusTraversable( false );
+
     }
 
+    private List<String[]> saveList(List<String[]> list){
+
+        List<String[]> newList = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            newList.add(new  String[list.get(i).length]);
+            newList.get(grammarLists.getSelectionModel().getSelectedIndex())[list.get(i).length-1] = String.valueOf(list.get(i).length-2);
+            newList.get(grammarLists.getSelectionModel().getSelectedIndex())[list.get(i).length-2] = String.valueOf("0");
+        }
+        return newList;
+    }
+
+    @FXML
+    public void OnSubmit(){
+        final Stage dialog = new Stage();
+        dialog.setTitle("RESULT");
+        Button review = new Button("REVIEW");
+        Button restart = new Button("RESTART");
+        //init piechart
+        ObservableList<PieChart.Data> list = FXCollections.observableArrayList();
+        PieChart res = new PieChart();
+        int numberOfWrong = Integer.valueOf( answer.get(grammarLists.getSelectionModel().getSelectedIndex())[answer.get(grammarLists.getSelectionModel().getSelectedIndex()).length -1]);
+        int numberOfCorrect = Integer.valueOf( answer.get(grammarLists.getSelectionModel().getSelectedIndex())[answer.get(grammarLists.getSelectionModel().getSelectedIndex()).length -2]);
+        list.addAll(new PieChart.Data("Correct :" +numberOfCorrect +" question", numberOfCorrect),
+                new PieChart.Data("Wrong :" + numberOfWrong + " question", numberOfWrong));
+        res.setData(list);
+        res.setStartAngle(90);
+
+        res.setTitle("OverView");
+        res.setLegendSide(Side.TOP);
+
+
+        Label displayLabel = new Label("What do you want to do ?");
+        displayLabel.setFont(Font.font(null, FontWeight.BOLD, 14));
+
+        dialog.initModality(Modality.NONE);
+        dialog.initOwner(listView.getScene().getWindow());
+
+        HBox dialogHbox = new HBox(20);
+        dialogHbox.setAlignment(Pos.CENTER);
+
+        VBox dialogVbox1 = new VBox(20);
+        dialogVbox1.setAlignment(Pos.CENTER);
+
+        //add children
+        dialogVbox1.getChildren().addAll(res);
+        dialogVbox1.getChildren().addAll(displayLabel);
+        dialogVbox1.getChildren().addAll(dialogHbox);
+        dialogHbox.getChildren().add(review);
+        dialogHbox.getChildren().add(restart);
+        review.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                e -> {
+                    answer = saveList(clone);
+                    listView.setCellFactory(param -> new QuestionCell(true));
+                    // inside here you can use the minimize or close the previous stage//
+                    dialog.close();
+                    submit.setVisible(true);
+                });
+        restart.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                e -> {
+                    answer = saveList(clone);
+                    System.out.println(Arrays.toString(answer.get(0)));
+                    //refresh listview when user restart contest.
+                    listView.setCellFactory(param -> new QuestionCell(false));
+                    dialog.close();
+                    submit.setVisible(true);
+                });
+        Scene dialogScene = new Scene(dialogVbox1, 600, 450);
+//        dialogScene.getStylesheets().add("//style sheet of your choice");
+        dialog.setScene(dialogScene);
+        dialog.show();
+        submit.setVisible(false);
+
+    }
 
     private class QuestionCell extends ListCell<TestGrammarModel.Question>{
         private HBox content;
@@ -92,10 +180,9 @@ public class QuestionController implements Initializable {
         private Text key;
         private Text number;
         private VBox vBox;
-        ChangeListener<Boolean> radioListener = (src, ov, nv) -> radioChanged(nv);
-        WeakChangeListener weakRadioListener = new WeakChangeListener(radioListener);
         private ToggleGroup group;
-        public QuestionCell(){
+        private boolean isSummitted;
+        public QuestionCell(boolean isSummitted){
             super();
             question = new Text();
             optionA = new RadioButton();
@@ -117,49 +204,103 @@ public class QuestionController implements Initializable {
             optionA.setToggleGroup(group);
             optionC.setToggleGroup(group);
             optionD.setToggleGroup(group);
-            optionA.selectedProperty().addListener(weakRadioListener);
-            optionB.selectedProperty().addListener(weakRadioListener);
-            optionC.selectedProperty().addListener(weakRadioListener);
-            optionD.selectedProperty().addListener(weakRadioListener);
             choose.setAlignment(Pos.CENTER);
              vBox = new VBox(content, choose);
             vBox.setSpacing(10);
+            this.isSummitted = isSummitted;
         }
 
         @Override
         protected void updateItem(TestGrammarModel.Question item, boolean empty) {
             super.updateItem(item, empty);
-            if (item !=null && !empty){
+            if (item !=null && !empty ){
+                //set text
                 question.setText(item.getQuestion());
-                optionA.setText(item.getOptionA());
-                optionB.setText(item.getOptionB());
-                optionC.setText(item.getOptionC());
-                optionD.setText(item.getOptionD());
+                optionA.setText("A:  "+item.getOptionA());
+                optionB.setText("B:  "+item.getOptionB());
+                optionC.setText("C:  "+item.getOptionC());
+                optionD.setText("D:  "+item.getOptionD());
+                //set font
+                optionA.setFont(Font.font(18));
+                optionB.setFont(Font.font(18));
+                optionC.setFont(Font.font(18));
+                optionD.setFont(Font.font(18));
+                question.setFont(Font.font(18));
+                number.setFont(Font.font(18));
+                //set user date
                 optionA.setUserData(item.getOptionA());
                 optionB.setUserData(item.getOptionB());
                 optionC.setUserData(item.getOptionC());
                 optionD.setUserData(item.getOptionD());
                 number.setText(String.valueOf(item.getNumber()) + ": ");
                 setGraphic(vBox);
-                group.selectedToggleProperty().addListener((obs, oldSel, newSel) -> {
-                    if (group.getSelectedToggle() != null) {
-                        if (group.getSelectedToggle().getUserData() != null )
-                        System.out.println(group.getSelectedToggle().getUserData().toString());
+                //handling event of group radio button.
+                if (!isSummitted){
+                    group.selectedToggleProperty().addListener((obs, oldSel, newSel) -> {
+                        if (group.getSelectedToggle() != null) {
+                            if (group.getSelectedToggle().getUserData() != null )
+//                                System.out.println(group.getSelectedToggle().getUserData().toString());
+                            //get topic's index is selected
+                            if (optionA.isSelected())
+                                answer.get(grammarLists.getSelectionModel().getSelectedIndex())[getIndex()]  = "A";
+                            else  if (optionB.isSelected())
+                                answer.get(grammarLists.getSelectionModel().getSelectedIndex())[getIndex()]  = "B";
+                            else  if (optionC.isSelected())
+                                answer.get(grammarLists.getSelectionModel().getSelectedIndex())[getIndex()]  = "C";
+                            else
+                                answer.get(grammarLists.getSelectionModel().getSelectedIndex())[getIndex()]  = "D";
+                            System.out.println(answer.get(grammarLists.getSelectionModel().getSelectedIndex())[getIndex()]);
+                        }
+
+                        if (answer.get(grammarLists.getSelectionModel().getSelectedIndex())[getIndex()].equals(item.getKey())){
+                            answer.get(grammarLists.getSelectionModel().getSelectedIndex())[answer.get(grammarLists.getSelectionModel().getSelectedIndex()).length -2] =
+                                    Integer.toString(Integer.parseInt(answer.get(grammarLists.getSelectionModel().getSelectedIndex())[answer.get(grammarLists.getSelectionModel().getSelectedIndex()).length -2 ])+1);
+                            answer.get(grammarLists.getSelectionModel().getSelectedIndex())[answer.get(grammarLists.getSelectionModel().getSelectedIndex()).length -1] =
+                                    Integer.toString(Integer.parseInt(answer.get(grammarLists.getSelectionModel().getSelectedIndex())[answer.get(grammarLists.getSelectionModel().getSelectedIndex()).length-1]) -1) ;
+                        }
+//                        listView.getSelectionModel().select(getIndex());
+//                        listView.getFocusModel().focus(listView.getSelectionModel().getSelectedIndex());
+                    });
+                }else {
+
+                    //check user's answer
+                    if (answer.get(grammarLists.getSelectionModel().getSelectedIndex())[Integer.parseInt(item.getNumber())-1] != null){
+                        switch (answer.get(grammarLists.getSelectionModel().getSelectedIndex())[Integer.parseInt(item.getNumber())-1]){
+                            case "A": optionA.setSelected(true);
+                                optionA.setStyle("-fx-background-color: #FF6A53");
+                                break;
+                            case "B": optionB.setSelected(true);
+                                optionB.setStyle("-fx-background-color: #FF6A53");
+                                break;
+                            case "C": optionC.setSelected(true);
+                                optionC.setStyle("-fx-background-color: #FF6A53");
+                                break;
+                            case "D": optionD.setSelected(true);
+                                optionD.setStyle("-fx-background-color: #FF6A53");
+                                break;
+                        }
+                        System.out.println(answer.get(grammarLists.getSelectionModel().getSelectedIndex())[getIndex()]);
                     }
-                    listView.getSelectionModel().select(getIndex());
-                    listView.getFocusModel().focus(listView.getSelectionModel().getSelectedIndex());
-                });
-
-            }else setGraphic(null);
-        }
-
-        protected void radioChanged(boolean selected) {
-            if (selected && getListView() != null && !isEmpty() && getIndex() >= 0) {
-                getListView().getSelectionModel().select(getIndex());
-                System.out.println(group.getSelectedToggle().getUserData().toString());
-                System.out.println(getIndex());
-
+                    //show key
+                    switch (item.getKey()){
+                        case "A":
+                            optionA.setStyle("-fx-background-color: #499C54");
+                            break;
+                        case "B":
+                            optionB.setStyle("-fx-background-color: #499C54");
+                            break;
+                        case "C":
+                            optionC.setStyle("-fx-background-color: #499C54");
+                            break;
+                        case "D":
+                            optionD.setStyle("-fx-background-color: #499C54");
+                            break;
+                    }
+                }
+            }else {
+                   setGraphic(null);
             }
+
         }
     }
 }

@@ -6,15 +6,20 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="anchorPane" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.QuestionController">
+<AnchorPane fx:id="anchorPane" prefHeight="800.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.QuestionController">
    <children>
-      <ListView fx:id="listView" layoutX="236.0" layoutY="57.0" prefHeight="502.0" prefWidth="746.0" styleClass="fx-list-cell" stylesheets="@../resource/stylehseet.css" />
-      <ListView fx:id="grammarLists" layoutX="-4.0" layoutY="34.0" prefHeight="558.0" prefWidth="236.0" />
-      <Text fx:id="description" fill="#a72a2a" layoutX="551.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DESCRIPTION" textAlignment="CENTER">
+      <ListView fx:id="listView" layoutX="368.0" layoutY="44.0" prefHeight="698.0" prefWidth="1122.0" styleClass="fx-list-cell" stylesheets="@../resource/stylehseet.css" />
+      <ListView fx:id="grammarLists" layoutX="-4.0" layoutY="34.0" prefHeight="758.0" prefWidth="346.0" />
+      <Text fx:id="description" fill="#a72a2a" layoutX="865.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DESCRIPTION" textAlignment="CENTER">
          <font>
             <Font size="21.0" />
          </font>
       </Text>
-      <Button fx:id="submit" layoutX="585.0" layoutY="566.0" mnemonicParsing="false" text="SUBMIT" />
+      <Button fx:id="submit" layoutX="900.0" layoutY="760.0" mnemonicParsing="false" onAction="#OnSubmit" text="SUBMIT" />
+      <Text fx:id="welcomeText" fill="#9f2828" layoutX="532.0" layoutY="224.0" strokeType="OUTSIDE" strokeWidth="0.0" text="YOU'RE HERE . YOU CAN ENTER TO CHOOSE TOPIC GRAMMAR IN ORDER TO PRACTICE" wrappingWidth="793.3365478515625">
+         <font>
+            <Font size="39.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>
