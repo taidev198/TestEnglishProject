@@ -38,7 +38,8 @@ import java.util.logging.Logger;
 /**Progressingbar:http://java-buddy.blogspot.com/2014/02/update-javafx-ui-in-scheduled-task-of.html
  * https://github.com/HanSolo/timer
  * Custom Progress bar:https://stackoverflow.com/questions/19417246/how-can-i-style-the-progressbar-component-in-javafx
- * docs oracle:https://docs.oracle.com/javase/8/javafx/user-interface-tutorial/progress.htm*/
+ * docs oracle:https://docs.oracle.com/javase/8/javafx/user-interface-tutorial/progress.htm
+ * stop/start/restart/interrupt thread:https://stackoverflow.com/questions/1881714/how-to-start-stop-restart-a-thread-in-java*/
 public class QuizTestController implements Initializable {
 
     @FXML
