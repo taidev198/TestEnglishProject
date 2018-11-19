@@ -17,6 +17,25 @@ import java.util.ResourceBundle;
 public class UserModel  {
 
 
+    public boolean isValidUser(String username, String password){
+        List<List<String>> listUsers = getUserInfo();
+        boolean validUsername = false;
+        boolean validPassword = false;
+        for (int i = 0; i < listUsers.get(1).size(); i++) {
+            if (listUsers.get(1).get(i).equals(username)){
+                validUsername = true;
+                break;
+            }
+        }
+        for (int i = 0; i < listUsers.get(2).size(); i++) {
+            if (listUsers.get(2).get(i).equals(password)){
+                validPassword = true;
+                break;
+            }
+        }
+        return validPassword && validUsername;
+    }
+
     public List<List<String>> getUserInfo(){
         String query = "select * from userinfo";
         List<List<String>> ans = new ArrayList<>();
