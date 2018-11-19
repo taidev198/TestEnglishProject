@@ -2,6 +2,7 @@ package controller;
 
 
 import animatefx.animation.FadeIn;
+import helper.LoadSceneHelper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -21,7 +22,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class MainController implements Initializable {
+public class MainController implements Initializable, LoadSceneHelper {
 
     private double xOffset = 0;
     private double yOffset = 0;
@@ -102,42 +103,35 @@ public class MainController implements Initializable {
     }
     @FXML
     private void goToGrammar(){
-        try {
-            Parent parent = FXMLLoader.load(getClass().getResource("/view/grammarView.fxml"));
-            anchorPane.getChildren().clear();
-            anchorPane.getChildren().addAll(parent);
-            new FadeIn(parent).play();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        System.out.println("Grammar View");
+        switchScene("/view/grammarView.fxml", anchorPane);
     }
 
     @FXML
     private void goToTestGrammar(){
-        try {
-            Parent parent = FXMLLoader.load(getClass().getResource("/view/TestGrammar1View.fxml"));
-            anchorPane.getChildren().clear();
-            anchorPane.getChildren().addAll(parent);
-            new FadeIn(parent).play();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        System.out.println("TestGrammar view");
+    switchScene("/view/TestGrammar1View.fxml", anchorPane);
 
     }
 
     @FXML
     private void goToQuizTest(){
+
+        switchScene("/view/QuizTestView", anchorPane);
+    }
+
+    @Override
+    public void switchScene(String url, Object parent) {
         try {
-            Parent parent = FXMLLoader.load(getClass().getResource("/view/QuizTestView.fxml"));
-            anchorPane.getChildren().clear();
-            anchorPane.getChildren().addAll(parent);
-            new FadeIn(parent).play();
+            Parent root = FXMLLoader.load(getClass().getResource(url));
+            ((AnchorPane) parent).getChildren().clear();
+            ((AnchorPane) parent).getChildren().addAll(root);
+            new FadeIn((Parent)parent).play();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("QuizTest view");
+    }
+
+    @Override
+    public void loadData() {
 
     }
 }

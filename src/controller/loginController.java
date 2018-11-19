@@ -30,6 +30,10 @@ public class loginController implements Initializable {
             Parent root = FXMLLoader.load(getClass().getResource("/view/UserView.fxml"));
            anchorPane.getChildren().clear();
            anchorPane.getChildren().addAll(root);
+           anchorPane.setPrefWidth(1500);
+           anchorPane.setMaxWidth(1500);
+           anchorPane.setMaxHeight(800);
+           anchorPane.setPrefHeight(800);
             new FadeIn(root).play();
         } catch (IOException e) {
             e.printStackTrace();

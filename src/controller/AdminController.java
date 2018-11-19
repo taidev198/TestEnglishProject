@@ -1,6 +1,6 @@
 package controller;
 
-import helper.LoadSceneAble;
+import helper.LoadSceneHelper;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class AdminController implements Initializable, LoadSceneAble {
+public class AdminController implements Initializable, LoadSceneHelper {
     @FXML
     AnchorPane anchorPane1;
 
@@ -25,33 +25,33 @@ public class AdminController implements Initializable, LoadSceneAble {
 
     @FXML
     private void user(){
-       loadScene("/view/AdminUserView.fxml", anchorPane1);
+       switchScene("/view/AdminUserView.fxml", anchorPane1);
     }
 
     @FXML
     private void grammar(){
-       loadScene("/view/AdminGrammarView.fxml", anchorPane1);
+       switchScene("/view/AdminGrammarView.fxml", anchorPane1);
     }
 
     @FXML
     private void testGrammar(){
-        loadScene("/view/AdminTestGrammarView.fxml", anchorPane1);
+        switchScene("/view/AdminTestGrammarView.fxml", anchorPane1);
     }
 
     @FXML
     private void quizTest(){
-        loadScene("/view/AdminQuizzTestView.fxml", anchorPane1);
+        switchScene("/view/AdminQuizzTestView.fxml", anchorPane1);
     }
 
     @FXML
     private void overView(){
-        loadScene("/view/AdminDashboardView.fxml", anchorPane1);
+        switchScene("/view/AdminDashboardView.fxml", anchorPane1);
     }
 
     /**using this interface to load scene*/
 
     @Override
-    public void loadScene(String url, Object parent) {
+    public void switchScene(String url, Object parent) {
         Parent user = null;
         try {
             user = FXMLLoader.load(getClass().getResource(url));

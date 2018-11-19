@@ -1,7 +1,7 @@
 package controller;
 
 import animatefx.animation.FadeIn;
-import helper.LoadSceneAble;
+import helper.LoadSceneHelper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-public class AdminGrammarController implements Initializable, LoadSceneAble {
+public class AdminGrammarController implements Initializable, LoadSceneHelper {
 
     @FXML
     TableView<GrammarModel.Grammar> tableView;
@@ -103,7 +103,7 @@ public class AdminGrammarController implements Initializable, LoadSceneAble {
     }
 
     @Override
-    public void loadScene(String url, Object parent) {
+    public void switchScene(String url, Object parent) {
 
     }
 

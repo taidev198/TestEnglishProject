@@ -45,8 +45,8 @@
                   <Font size="18.0" />
                </font>
             </Button>
-            <PasswordField layoutX="175.0" layoutY="313.0" prefHeight="25.0" prefWidth="189.0" />
-            <TextField layoutX="175.0" layoutY="216.0" prefHeight="25.0" prefWidth="189.0" />
+            <PasswordField fx:id="password" layoutX="175.0" layoutY="313.0" prefHeight="25.0" prefWidth="189.0" />
+            <TextField fx:id="username" layoutX="175.0" layoutY="216.0" prefHeight="25.0" prefWidth="189.0" />
             <Label layoutX="84.0" layoutY="221.0" text="USERNAME" textFill="#893737" />
             <Label layoutX="83.0" layoutY="318.0" text="PASSWORD" textFill="#893737" />
             <Label layoutX="232.0" layoutY="352.0" text="FORGOTTEN PASSWORD" textFill="#893737" />

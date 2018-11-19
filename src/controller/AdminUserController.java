@@ -1,6 +1,6 @@
 package controller;
 
-import helper.LoadSceneAble;
+import helper.LoadSceneHelper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -25,7 +25,7 @@ import java.util.ResourceBundle;
 /**
  * Created by traig on 9:59 AM, 11/15/2018
  */
-public class AdminUserController implements Initializable, LoadSceneAble {
+public class AdminUserController implements Initializable, LoadSceneHelper {
     @FXML
      TableView<UserModel.User> tableView;
      UserModel model;
@@ -191,7 +191,7 @@ public class AdminUserController implements Initializable, LoadSceneAble {
         birthText.clear();
     }
     @Override
-    public void loadScene(String url, Object parent) {
+    public void switchScene(String url, Object parent) {
         Parent user = null;
         try {
             user = FXMLLoader.load(getClass().getResource(url));
