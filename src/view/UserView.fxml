@@ -105,7 +105,7 @@
                               <Insets left="10.0" top="10.0" />
                            </HBox.margin>
                         </FontAwesomeIcon>
-                        <Label styleClass="sidebar-btn-icon" text="QUIZ TEST">
+                        <Label onMouseClicked="#goToQuizTest" styleClass="sidebar-btn-icon" text="QUIZ TEST">
                            <HBox.margin>
                               <Insets left="40.0" top="10.0" />
                            </HBox.margin>
@@ -188,7 +188,7 @@
             </VBox>
          </children>
       </AnchorPane>
-      <Pane layoutX="372.0" layoutY="86.0" prefHeight="700.0" prefWidth="1100.0" style="-fx-background-color: #F2F2F2;">
+      <Pane layoutX="372.0" layoutY="86.0" onMouseClicked="#goToQuizTest" prefHeight="700.0" prefWidth="1100.0" style="-fx-background-color: #F2F2F2;">
          <children>
             <PieChart fx:id="pieChart" layoutX="43.0" layoutY="410.0" prefHeight="276.0" prefWidth="307.0" />
             <PieChart fx:id="pieChart1" layoutX="743.0" layoutY="410.0" prefHeight="276.0" prefWidth="307.0" />

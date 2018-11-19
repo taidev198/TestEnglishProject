@@ -126,4 +126,18 @@ public class MainController implements Initializable {
         System.out.println("TestGrammar view");
 
     }
+
+    @FXML
+    private void goToQuizTest(){
+        try {
+            Parent parent = FXMLLoader.load(getClass().getResource("/view/QuizTestView.fxml"));
+            anchorPane.getChildren().clear();
+            anchorPane.getChildren().addAll(parent);
+            new FadeIn(parent).play();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println("QuizTest view");
+
+    }
 }

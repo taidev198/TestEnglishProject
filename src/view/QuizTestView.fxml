@@ -22,7 +22,7 @@
             <Font size="39.0" />
          </font>
       </Text>
-      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#back" text="BACK" />
+      <Button layoutX="14.0" layoutY="1.0" mnemonicParsing="false" onAction="#back" text="BACK" />
       <ProgressBar fx:id="progressBar" layoutX="553.0" layoutY="70.0" prefHeight="18.0" prefWidth="771.0" progress="0.0" styleClass="track" stylesheets="@../resource/stylehseet.css" />
       <Text fx:id="min" layoutX="908.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" />
       <Text fx:id="dot" layoutX="927.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text=":" />
