@@ -26,6 +26,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import model.TestGrammarModel;
 
 import java.io.IOException;
@@ -35,7 +36,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**Progressingbar:http://java-buddy.blogspot.com/2014/02/update-javafx-ui-in-scheduled-task-of.html
- * https://github.com/HanSolo/timer */
+ * https://github.com/HanSolo/timer
+ * Custom Progress bar:https://stackoverflow.com/questions/19417246/how-can-i-style-the-progressbar-component-in-javafx
+ * docs oracle:https://docs.oracle.com/javase/8/javafx/user-interface-tutorial/progress.htm*/
 public class QuizTestController implements Initializable {
 
     @FXML
@@ -61,6 +64,7 @@ public class QuizTestController implements Initializable {
     private List<String[]> answer;
     private List<String[]> clone;
     Thread myRunnableThread;
+    MyRunnable myRunnable;
 
     private TestGrammarModel model;
     private Map<String, List<List<String>>> listQuestion;
@@ -68,6 +72,7 @@ public class QuizTestController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         submit.setVisible(false);
         model = new TestGrammarModel();
+        min.setText("15");
         listQuestion = model.getTestGrammarFollowGrammarId();
         List<Map.Entry<String, List<List<String>>>> entryList = new ArrayList<>(listQuestion.entrySet());
         List<String> key = new ArrayList<>();
@@ -91,7 +96,7 @@ public class QuizTestController implements Initializable {
             System.out.println(index);
             progressBar.setVisible(true);
             progressBar.setProgress(0);
-            MyRunnable myRunnable  =new MyRunnable(progressBar);
+            myRunnable  =new MyRunnable(progressBar);
             myRunnableThread = new Thread(myRunnable);
             myRunnableThread.start();
             List<List<String>> tmp = entryList.get(index).getValue();
@@ -227,6 +232,8 @@ public class QuizTestController implements Initializable {
         dialogVbox1.getChildren().addAll(dialogHbox);
         dialogHbox.getChildren().add(review);
         dialogHbox.getChildren().add(restart);
+        dialog.initStyle(StageStyle.TRANSPARENT);
+
         review.addEventHandler(MouseEvent.MOUSE_CLICKED,
                 e -> {
                     answer = saveList(clone);
@@ -243,12 +250,18 @@ public class QuizTestController implements Initializable {
                     listView.setCellFactory(param -> new QuestionCell(false));
                     dialog.close();
                     submit.setVisible(true);
+                    if (!myRunnableThread.isAlive()){
+                        myRunnableThread = new Thread(myRunnable);
+                        myRunnableThread.start();
+                    }
+
                 });
         Scene dialogScene = new Scene(dialogVbox1, 600, 450);
 //        dialogScene.getStylesheets().add("//style sheet of your choice");
         dialog.setScene(dialogScene);
         dialog.show();
         submit.setVisible(false);
+        myRunnableThread.stop();
 
     }
 
@@ -398,21 +411,26 @@ public class QuizTestController implements Initializable {
 
         @Override
         public void run() {
-            for (int i = 100; i >= 0; i--) {
 
-
+            for (float i = 1; i <=100; i ++) {
                 final double update_i = i;
+                final int updateSec = (int) (i % 60);
                 //Update JavaFX UI with runLater() in UI thread
                 Platform.runLater(new Runnable(){
-
+                    final int minValue = Integer.valueOf(min.getText());
+                final int s = (60- updateSec) % 60;
+                final int m = s == 0 ? minValue-1: minValue;
                     @Override
                     public void run() {
-                        bar.setProgress(update_i%100);
-                        System.out.println(update_i);
+                        bar.setProgress(update_i / 100);
+                        min.setText(String.valueOf(m));
+                        sec.setText(String.valueOf(s));
+                        if (m == 0 && s == 0)
+                            OnSubmit();
                     }
                 });
                 try {
-                    Thread.sleep(100);
+                    Thread.sleep(1000);
                 } catch (InterruptedException ex) {
                     Logger.getLogger(QuizTestController.class.getName()).log(Level.SEVERE, null, ex);
                 }
