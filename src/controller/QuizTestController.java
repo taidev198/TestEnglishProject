@@ -191,6 +191,7 @@ public class QuizTestController implements Initializable {
         dialog.setScene(dialogScene);
         dialog.show();
         submit.setVisible(false);
+        myRunnableThread.stop();
     }
 
 
