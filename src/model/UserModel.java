@@ -93,12 +93,14 @@ public class UserModel  {
     public boolean addUser(User user, boolean isSignup){
         String query = "insert into userinfo values(?, ?, ?, ?, ?, ?, ?, ?, ?)";
         if (isSignup)
-            query = "insert into userinfo(username, password) values(?, ?)";
+            query = "insert into userinfo(username, password, email, phone) values(?, ?, ?, ?)";
         try(PreparedStatement statement = ConnectDataHelper.getInstance().connectDB().prepareStatement(query)) {
             statement.execute("use data");
             if (isSignup){
                 statement.setString(1, user.getUsername());
                 statement.setString(2, user.getPassword());
+                statement.setString(3,user.getEmail());
+                statement.setInt(4, Integer.parseInt(user.getPhone()));
             }else {
                 statement.setInt(1, Integer.parseInt(user.getUserInfoid()));
                 statement.setString(2,user.getUsername());
@@ -146,11 +148,12 @@ public class UserModel  {
             this.menuButton = menuButton;
         }
 
-        public User(String userInfoid, String username, String password, MenuButton menuButton) {
-            this.userInfoid = userInfoid;
+        public User( String username, String password, String email, String phone) {
             this.username = username;
             this.password = password;
-            this.menuButton = menuButton;
+            this.email = email;
+            this.phone = phone;
+
         }
 
         public String getUserInfoid() {
