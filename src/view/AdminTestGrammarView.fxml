@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -22,23 +21,6 @@
             <TableColumn fx:id="actionCol" maxWidth="188.00003662109373" prefWidth="92.0001220703125" text="ACTION" />
          </columns>
       </TableView>
-      <TextField fx:id="idText" layoutY="748.0" prefHeight="26.0" prefWidth="58.39999467134476" />
-      <Text layoutX="21.0" layoutY="791.0" strokeType="OUTSIDE" strokeWidth="0.0" text="id" />
-      <TextField fx:id="questionText" layoutX="58.0" layoutY="748.0" prefHeight="26.0" prefWidth="371.20002365112305" />
-      <Text layoutX="223.0" layoutY="791.0" strokeType="OUTSIDE" strokeWidth="0.0" text="question" />
-      <TextField fx:id="optionAText" layoutX="430.0" layoutY="748.0" prefHeight="26.0" prefWidth="110.0" />
-      <Text layoutX="477.0" layoutY="790.0" strokeType="OUTSIDE" strokeWidth="0.0" text="A" />
-      <TextField fx:id="optionBText" layoutX="540.0" layoutY="748.0" prefHeight="26.0" prefWidth="110.0" />
-      <Text layoutX="582.0" layoutY="790.0" strokeType="OUTSIDE" strokeWidth="0.0" text="B" />
-      <TextField fx:id="optionCText" layoutX="649.0" layoutY="748.0" prefHeight="26.0" prefWidth="110.0" />
-      <Text layoutX="701.0" layoutY="790.0" strokeType="OUTSIDE" strokeWidth="0.0" text="C" />
-      <TextField fx:id="optionDText" layoutX="759.0" layoutY="748.0" prefHeight="26.0" prefWidth="110.0" />
-      <Text layoutX="815.0" layoutY="790.0" strokeType="OUTSIDE" strokeWidth="0.0" text="D" />
-      <TextField fx:id="keyText" layoutX="869.0" layoutY="748.0" prefHeight="26.0" prefWidth="65.0" />
-      <Text layoutX="890.0" layoutY="791.0" strokeType="OUTSIDE" strokeWidth="0.0" text="KEY" />
-      <TextField fx:id="grammarIdText" layoutX="935.0" layoutY="748.0" prefHeight="26.0" prefWidth="101.0" />
-      <Text layoutX="940.0" layoutY="790.0" strokeType="OUTSIDE" strokeWidth="0.0" text="GRAMMARID" />
-      <Button layoutX="1065.0" layoutY="749.0" mnemonicParsing="false" onAction="#addRow" text="ADD" />
       <TextField fx:id="searchingField" layoutX="46.0" layoutY="14.0" prefHeight="26.0" prefWidth="354.0" />
       <Text fx:id="filterText" layoutX="58.0" layoutY="32.0" opacity="0.3" strokeType="OUTSIDE" strokeWidth="0.0" text="Filter........." wrappingWidth="110.3999923914671" />
    </children>

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -17,13 +16,6 @@
             <TableColumn fx:id="actionCol" maxWidth="582.39990234375" prefWidth="72.7999267578125" text="ACTION" />
          </columns>
       </TableView>
-      <TextField fx:id="idText" layoutY="748.0" prefHeight="26.0" prefWidth="58.39999467134476" />
-      <Text layoutX="21.0" layoutY="791.0" strokeType="OUTSIDE" strokeWidth="0.0" text="id" />
-      <TextField fx:id="descriptionText" layoutX="100.0" layoutY="748.0" prefHeight="26.0" prefWidth="371.20002365112305" />
-      <Text layoutX="265.0" layoutY="791.0" strokeType="OUTSIDE" strokeWidth="0.0" text="description" />
-      <TextField fx:id="contentText" layoutX="487.0" layoutY="748.0" prefHeight="26.0" prefWidth="562.0" />
-      <Text layoutX="704.0" layoutY="791.0" strokeType="OUTSIDE" strokeWidth="0.0" text="content" />
-      <Button layoutX="1065.0" layoutY="749.0" mnemonicParsing="false" onAction="#addRow" text="ADD" />
       <TextField fx:id="searchingField" layoutX="46.0" layoutY="14.0" prefHeight="26.0" prefWidth="354.0" />
       <Text fx:id="filterText" layoutX="58.0" layoutY="32.0" opacity="0.3" strokeType="OUTSIDE" strokeWidth="0.0" text="Filter........." wrappingWidth="110.3999923914671" />
    </children>

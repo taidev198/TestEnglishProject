@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -23,26 +22,7 @@
             <TableColumn fx:id="actionCol" maxWidth="192.800048828125" prefWidth="80.7999267578125" text="ACTION" />
          </columns>
       </TableView>
-      <TextField fx:id="idText" layoutX="10.0" layoutY="758.0" prefHeight="26.0" prefWidth="58.39999467134476" />
-      <Text layoutX="31.0" layoutY="801.0" strokeType="OUTSIDE" strokeWidth="0.0" text="id" />
-      <TextField fx:id="usernameText" layoutX="68.0" layoutY="758.0" prefHeight="26.0" prefWidth="112.00003051757812" />
-      <Text layoutX="100.0" layoutY="799.0" strokeType="OUTSIDE" strokeWidth="0.0" text="username" />
-      <TextField fx:id="passwordText" layoutX="181.0" layoutY="758.0" prefHeight="26.0" prefWidth="117.59996032714844" />
-      <Text layoutX="228.0" layoutY="800.0" strokeType="OUTSIDE" strokeWidth="0.0" text="password" />
-      <TextField fx:id="firstnameText" layoutX="299.0" layoutY="758.0" prefHeight="26.0" prefWidth="123.20001220703125" />
-      <Text layoutX="341.0" layoutY="800.0" strokeType="OUTSIDE" strokeWidth="0.0" text="firstname" />
-      <TextField fx:id="lastnameText" layoutX="423.0" layoutY="758.0" prefHeight="26.0" prefWidth="129.5999755859375" />
-      <Text layoutX="464.0" layoutY="801.0" strokeType="OUTSIDE" strokeWidth="0.0" text="lastname" />
-      <TextField fx:id="addressText" layoutX="553.0" layoutY="758.0" prefHeight="26.0" prefWidth="207.20001220703125" />
-      <Text layoutX="609.0" layoutY="800.0" strokeType="OUTSIDE" strokeWidth="0.0" text="address" />
-      <TextField fx:id="phoneText" layoutX="761.0" layoutY="758.0" prefHeight="26.0" prefWidth="96.79998779296875" />
-      <Text layoutX="782.0" layoutY="801.0" strokeType="OUTSIDE" strokeWidth="0.0" text="phone" />
-      <TextField fx:id="emailText" layoutX="858.0" layoutY="758.0" prefHeight="26.0" prefWidth="100.7999267578125" />
-      <Text layoutX="891.0" layoutY="800.0" strokeType="OUTSIDE" strokeWidth="0.0" text="email" />
-      <Button layoutX="1075.0" layoutY="759.0" mnemonicParsing="false" onAction="#addRow" text="ADD" />
       <TextField fx:id="searchingField" layoutX="56.0" layoutY="24.0" prefHeight="26.0" prefWidth="354.0" />
       <Text fx:id="filterText" layoutX="68.0" layoutY="42.0" opacity="0.3" strokeType="OUTSIDE" strokeWidth="0.0" text="Filter........." wrappingWidth="110.3999923914671" />
-      <TextField fx:id="birthText" layoutX="959.0" layoutY="758.0" prefHeight="26.0" prefWidth="100.7999267578125" />
-      <Text layoutX="992.0" layoutY="800.0" strokeType="OUTSIDE" strokeWidth="0.0" text="birth" />
    </children>
 </AnchorPane>
