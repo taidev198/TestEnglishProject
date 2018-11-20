@@ -17,7 +17,7 @@
 
 <AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
    <children>
-      <AnchorPane prefHeight="800.0" prefWidth="350.0" styleClass="sidebar" stylesheets="@../resource/stylehseet.css">
+      <AnchorPane prefHeight="800.0" prefWidth="350.0" styleClass="sidebar" stylesheets="@../resource/stylesheet.css">
          <children>
             <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="350.0">
                <children>
@@ -31,7 +31,7 @@
                   </ImageView>
                   <HBox prefHeight="46.0" prefWidth="338.0">
                      <children>
-                        <Label styleClass="sidebar-btn-icon" stylesheets="@../resource/stylehseet.css" text="Nguyen Thanh Tai">
+                        <Label styleClass="sidebar-btn-icon" stylesheets="@../resource/stylesheet.css" text="Nguyen Thanh Tai">
                            <HBox.margin>
                               <Insets left="70.0" top="5.0" />
                            </HBox.margin>
@@ -47,7 +47,7 @@
                      </children>
                   </HBox>
                   <Label text="MAIN" />
-                  <HBox prefHeight="46.0" prefWidth="250.0" styleClass="sidebar-btn" stylesheets="@../resource/stylehseet.css">
+                  <HBox prefHeight="46.0" prefWidth="250.0" styleClass="sidebar-btn" stylesheets="@../resource/stylesheet.css">
                      <children>
                         <FontAwesomeIcon fill="#b8b1b1" iconName="HOME" size="2em" styleClass="sidebar-btn-icon">
                            <HBox.margin>
@@ -64,7 +64,7 @@
                         </Label>
                      </children>
                   </HBox>
-                  <HBox layoutX="10.0" layoutY="154.0" prefHeight="46.0" prefWidth="250.0" styleClass="sidebar-btn" stylesheets="@../resource/stylehseet.css">
+                  <HBox layoutX="10.0" layoutY="154.0" prefHeight="46.0" prefWidth="250.0" styleClass="sidebar-btn" stylesheets="@../resource/stylesheet.css">
                      <children>
                         <FontAwesomeIcon fill="#b8b1b1" iconName="ARCHIVE" size="2em" styleClass="sidebar-btn-icon" text="">
                            <HBox.margin>
@@ -81,7 +81,7 @@
                         </Label>
                      </children>
                   </HBox>
-                  <HBox layoutX="10.0" layoutY="200.0" prefHeight="46.0" prefWidth="250.0" styleClass="sidebar-btn" stylesheets="@../resource/stylehseet.css">
+                  <HBox layoutX="10.0" layoutY="200.0" prefHeight="46.0" prefWidth="250.0" styleClass="sidebar-btn" stylesheets="@../resource/stylesheet.css">
                      <children>
                         <FontAwesomeIcon fill="#b8b1b1" iconName="TASKS" size="2em" styleClass="sidebar-btn-icon">
                            <HBox.margin>
@@ -98,7 +98,7 @@
                         </Label>
                      </children>
                   </HBox>
-                  <HBox layoutX="10.0" layoutY="247.0" prefHeight="46.0" prefWidth="250.0" styleClass="sidebar-btn" stylesheets="@../resource/stylehseet.css">
+                  <HBox layoutX="10.0" layoutY="247.0" prefHeight="46.0" prefWidth="250.0" styleClass="sidebar-btn" stylesheets="@../resource/stylesheet.css">
                      <children>
                         <FontAwesomeIcon fill="#b8b1b1" iconName="ARCHIVE" size="2em" styleClass="sidebar-btn-icon">
                            <HBox.margin>
@@ -116,7 +116,7 @@
                      </children>
                   </HBox>
                   <Label layoutX="10.0" layoutY="136.0" text="SHARE" />
-                  <HBox layoutX="10.0" layoutY="154.0" prefHeight="46.0" prefWidth="250.0" styleClass="sidebar-btn" stylesheets="@../resource/stylehseet.css">
+                  <HBox layoutX="10.0" layoutY="154.0" prefHeight="46.0" prefWidth="250.0" styleClass="sidebar-btn" stylesheets="@../resource/stylesheet.css">
                      <children>
                         <FontAwesomeIcon fill="#b8b1b1" iconName="HOME" size="2em" styleClass="sidebar-btn-icon">
                            <HBox.margin>
@@ -133,7 +133,7 @@
                         </Label>
                      </children>
                   </HBox>
-                  <HBox layoutX="10.0" layoutY="200.0" prefHeight="46.0" prefWidth="250.0" styleClass="sidebar-btn" stylesheets="@../resource/stylehseet.css">
+                  <HBox layoutX="10.0" layoutY="200.0" prefHeight="46.0" prefWidth="250.0" styleClass="sidebar-btn" stylesheets="@../resource/stylesheet.css">
                      <children>
                         <FontAwesomeIcon fill="#b8b1b1" iconName="ARCHIVE" size="2em" styleClass="sidebar-btn-icon" text="">
                            <HBox.margin>
@@ -150,7 +150,7 @@
                         </Label>
                      </children>
                   </HBox>
-                  <HBox layoutX="10.0" layoutY="247.0" prefHeight="46.0" prefWidth="250.0" styleClass="sidebar-btn" stylesheets="@../resource/stylehseet.css">
+                  <HBox layoutX="10.0" layoutY="247.0" prefHeight="46.0" prefWidth="250.0" styleClass="sidebar-btn" stylesheets="@../resource/stylesheet.css">
                      <children>
                         <FontAwesomeIcon fill="#b8b1b1" iconName="TASKS" size="2em" styleClass="sidebar-btn-icon">
                            <HBox.margin>
@@ -167,7 +167,7 @@
                         </Label>
                      </children>
                   </HBox>
-                  <HBox layoutX="10.0" layoutY="293.0" prefHeight="46.0" prefWidth="250.0" styleClass="sidebar-btn" stylesheets="@../resource/stylehseet.css">
+                  <HBox layoutX="10.0" layoutY="293.0" prefHeight="46.0" prefWidth="250.0" styleClass="sidebar-btn" stylesheets="@../resource/stylesheet.css">
                      <children>
                         <FontAwesomeIcon fill="#b8b1b1" iconName="ARCHIVE" size="2em" styleClass="sidebar-btn-icon">
                            <HBox.margin>

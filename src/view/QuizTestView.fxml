@@ -9,7 +9,7 @@
 
 <AnchorPane fx:id="anchorPane" prefHeight="800.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.QuizTestController">
    <children>
-      <ListView fx:id="listView" layoutX="403.0" layoutY="93.0" prefHeight="649.0" prefWidth="1050.0" styleClass="fx-list-cell" stylesheets="@../resource/stylehseet.css" />
+      <ListView fx:id="listView" layoutX="403.0" layoutY="93.0" prefHeight="649.0" prefWidth="1050.0" styleClass="fx-list-cell" stylesheets="@../resource/stylesheet.css" />
       <ListView fx:id="contestLists" layoutX="-4.0" layoutY="44.0" prefHeight="748.0" prefWidth="346.0" />
       <Text fx:id="description" fill="#a72a2a" layoutX="865.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DESCRIPTION" textAlignment="CENTER">
          <font>
@@ -23,7 +23,7 @@
          </font>
       </Text>
       <Button layoutX="14.0" layoutY="1.0" mnemonicParsing="false" onAction="#back" text="BACK" />
-      <ProgressBar fx:id="progressBar" layoutX="553.0" layoutY="70.0" prefHeight="18.0" prefWidth="771.0" progress="0.0" styleClass="track" stylesheets="@../resource/stylehseet.css" />
+      <ProgressBar fx:id="progressBar" layoutX="553.0" layoutY="70.0" prefHeight="18.0" prefWidth="771.0" progress="0.0" styleClass="track" stylesheets="@../resource/stylesheet.css" />
       <Text fx:id="min" layoutX="908.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" />
       <Text fx:id="dot" layoutX="927.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text=":" />
       <Text fx:id="sec" layoutX="938.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" />

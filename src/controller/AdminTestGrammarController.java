@@ -12,18 +12,35 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.geometry.Side;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Popup;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
 import javafx.util.converter.DefaultStringConverter;
 import model.TestGrammarModel;
+import sun.security.krb5.internal.PAData;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
@@ -31,7 +48,8 @@ import java.util.*;
  * https://stackoverflow.com/questions/27468546/how-to-use-simpleintegerproperty-in-javafx</>
  * -editable tableview with dynamic :http://java-buddy.blogspot.com/2013/03/javafx-editable-tableview-with-dynamic.html
  * --- auto commit when user click outside :https://stackoverflow.com/questions/23632884/how-to-commit-when-clicking-outside-an-editable-tableview-cell-in-javafx
- * --filter :https://code.makery.ch/blog/javafx-8-tableview-sorting-filtering/
+ * --filter :https://code.makery.ch/blog/javafx-8-tableview-sorting-filtering
+ * Set Style for scene:https://www.programcreek.com/java-api-examples/?class=javafx.scene.layout.BorderPane&method=setStyle/
  * */
 public class AdminTestGrammarController implements Initializable {
 
@@ -85,14 +103,10 @@ public class AdminTestGrammarController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         model = new TestGrammarModel();
-        Callback<TableColumn<TestGrammarModel.QuestionTableView, String>, TableCell<TestGrammarModel.QuestionTableView, String>> cellFactory =
-                p -> new EditingCell();
 
         //set celCellValueFactory for each cols.
         idCol.setCellValueFactory(
                 new PropertyValueFactory<>("number"));
-        idCol.setCellFactory(cellFactory);
-
         questionCol.setCellValueFactory(
                 new PropertyValueFactory<>("question"));
         optionACol.setCellValueFactory(
@@ -125,6 +139,7 @@ public class AdminTestGrammarController implements Initializable {
             edit.setOnAction(event -> {
                 editableCols();
                 System.out.println("edit");
+                OnEdit(true);
             });
             delete.setOnAction(event -> {
                 System.out.println(id);
@@ -225,252 +240,6 @@ public class AdminTestGrammarController implements Initializable {
 
     }
 
-
-
-    public class EditingCell<S, T> extends TableCell<S, T>{
-        private TextField textField;
-        private boolean escapePressed=false;
-
-        private TablePosition<S, ?> tablePos=null;
-        public EditingCell(){
-            this(null);
-        }
-
-        /**
-         * Creates a TextFieldTableCell that provides a {@link TextField} when put
-         * into editing mode that allows editing of the cell content. This method
-         * will work on any TableColumn instance, regardless of its generic type.
-         * However, to enable this, a {@link StringConverter} must be provided that
-         * will convert the given String (from what the user typed in) into an
-         * instance of type T. This item will then be passed along to the
-         * {@link TableColumn#onEditCommitProperty()} callback.
-         *
-         * @param converter A {@link StringConverter converter} that can convert
-         *      the given String (from what the user typed in) into an instance of
-         *      type T.
-         */
-        public EditingCell(StringConverter<T> converter) {
-            this.getStyleClass().add("text-field-table-cell");
-            setConverter(converter);
-        }
-
-        /**
-         * Provides a {@link TextField} that allows editing of the cell content when
-         * the cell is double-clicked, or when
-         * {@link TableView#edit(int, javafx.scene.control.TableColumn)} is called.
-         * This method will only  work on {@link TableColumn} instances which are of
-         * type String.
-         *
-         * @return A {@link Callback} that can be inserted into the
-         *      {@link TableColumn#cellFactoryProperty() cell factory property} of a
-         *      TableColumn, that enables textual editing of the content.
-         */
-        public  <S> Callback<TableColumn<S,String>, TableCell<S,String>> forTableColumn() {
-            return forTableColumn(new DefaultStringConverter());
-        }
-
-        /**
-         * Provides a {@link TextField} that allows editing of the cell content when
-         * the cell is double-clicked, or when
-         * {@link TableView#edit(int, javafx.scene.control.TableColumn) } is called.
-         * This method will work  on any {@link TableColumn} instance, regardless of
-         * its generic type. However, to enable this, a {@link StringConverter} must
-         * be provided that will convert the given String (from what the user typed
-         * in) into an instance of type T. This item will then be passed along to the
-         * {@link TableColumn#onEditCommitProperty()} callback.
-         *
-         * @param converter A {@link StringConverter} that can convert the given String
-         *      (from what the user typed in) into an instance of type T.
-         * @return A {@link Callback} that can be inserted into the
-         *      {@link TableColumn#cellFactoryProperty() cell factory property} of a
-         *      TableColumn, that enables textual editing of the content.
-         */
-        public  <S,T> Callback<TableColumn<S,T>, TableCell<S,T>> forTableColumn(
-                final StringConverter<T> converter) {
-            return list -> new EditingCell<S,T>(converter);
-        }
-
-
-        // --- converter
-        private ObjectProperty<StringConverter<T>> converter =
-                new SimpleObjectProperty<StringConverter<T>>(this, "converter");
-
-        /**
-         * The {@link StringConverter} property.
-         */
-        public final ObjectProperty<StringConverter<T>> converterProperty() {
-            return converter;
-        }
-
-        /**
-         * Sets the {@link StringConverter} to be used in this cell.
-         */
-        public final void setConverter(StringConverter<T> value) {
-            converterProperty().set(value);
-        }
-
-        /**
-         * Returns the {@link StringConverter} used in this cell.
-         */
-        public final StringConverter<T> getConverter() {
-            return converterProperty().get();
-        }
-
-        @Override
-        public void startEdit() {
-            if (! isEditable()
-                    || ! getTableView().isEditable()
-                    || ! getTableColumn().isEditable()) {
-                return;
-            }
-            super.startEdit();
-
-            if (isEditing()) {
-                if (textField == null) {
-                    textField = getTextField();
-                }
-                escapePressed=false;
-                if (textField != null) {
-                    textField.setText(getString());
-                }
-                setText(null);
-                setGraphic(textField);
-                textField.selectAll();
-
-                // requesting focus so that key input can immediately go into the
-                // TextField (see RT-28132)
-                textField.requestFocus();
-                final TableView<S> table = getTableView();
-                tablePos=table.getEditingCell();
-            }
-        }
-
-
-
-        @Override
-        public void commitEdit(T newValue) {
-            // This block is necessary to support commit on losing focus, because
-            // the baked-in mechanism sets our editing state to false before we can
-            // intercept the loss of focus. The default commitEdit(...) method
-            // simply bails if we are not editing...
-
-            if (! isEditing())
-                return;
-            final TableView<S> table = getTableView();
-            if (table != null) {
-                // Inform the TableView of the edit being ready to be committed.
-                TableColumn.CellEditEvent editEvent = new TableColumn.CellEditEvent(
-                        table,
-                        tablePos,
-                        TableColumn.editCommitEvent(),
-                        newValue
-                );
-
-                Event.fireEvent(getTableColumn(), editEvent);
-            }
-
-            super.cancelEdit();
-            // update the item within this cell, so that it represents the new value
-            updateItem(newValue, false);
-
-            if (table != null) {
-                // reset the editing cell on the TableView
-                table.edit(-1, null);
-
-                // request focus back onto the table, only if the current focus
-                // owner has the table as a parent (otherwise the user might have
-                // clicked out of the table entirely and given focus to something else.
-                // It would be rude of us to request it back again.
-                // requestFocusOnControlOnlyIfCurrentFocusOwnerIsChild(table);
-            }
-
-        }
-
-        @Override
-        public void cancelEdit() {
-            if(escapePressed) {
-                // this is a cancel event after escape key
-                super.cancelEdit();
-                setText(getString()); // restore the original text in the view
-            }
-            else {
-                // this is not a cancel event after escape key
-                // we interpret it as commit.
-                String newText=textField.getText(); // get the new text from the view
-                this.commitEdit(getConverter().fromString(newText)); // commit the new text to the model
-            }
-            setGraphic(null); // stop editing with TextField
-        }
-
-        @Override
-        protected void updateItem(T item, boolean empty) {
-            super.updateItem(item, empty);
-            if (empty) {
-                setText(null);
-                setGraphic(null);
-            } else {
-                if (isEditing()) {
-                    if (textField != null) {
-                        textField.setText(getString());
-                    }
-                    setGraphic(textField);
-                    setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
-                } else {
-                    setText(getString());
-                    setContentDisplay(ContentDisplay.TEXT_ONLY);
-                }
-            }
-        }
-
-
-//        private void createTextField() {
-//            textField = new TextField(getString());
-//            textField.setMinWidth(this.getWidth() - this.getGraphicTextGap()*2);
-//            textField.setOnKeyPressed(new EventHandler<KeyEvent>() {
-//
-//                @Override
-//                public void handle(KeyEvent t) {
-//                    if (t.getCode() == KeyCode.ENTER) {
-//                        commitEdit(textField.getText());
-//                    } else if (t.getCode() == KeyCode.ESCAPE) {
-//                        cancelEdit();
-//                    }
-//                }
-//            });
-//        }
-
-        private String getString() {
-            return getItem() == null ? "" : getItem().toString();
-        }
-        private TextField getTextField() {
-
-            final TextField textField = new TextField(getString());
-
-            // Use onAction here rather than onKeyReleased (with check for Enter),
-            // as otherwise we encounter RT-34685
-            textField.setOnAction(event -> {
-                if (converter == null) {
-                    throw new IllegalStateException(
-                            "Attempting to convert text input into Object, but provided "
-                                    + "StringConverter is null. Be sure to set a StringConverter "
-                                    + "in your cell factory.");
-                }
-                this.commitEdit(getConverter().fromString(textField.getText()));
-                event.consume();
-            });
-            textField.setOnKeyPressed(t -> { if (t.getCode() == KeyCode.ESCAPE) escapePressed = true; else escapePressed = false; });
-            textField.setOnKeyReleased(t -> {
-                if (t.getCode() == KeyCode.ESCAPE) {
-                    // djw the code may depend on java version / expose incompatibilities:
-                    throw new IllegalArgumentException("did not expect esc key releases here.");
-                }
-            });
-            return textField;
-        }
-
-    }
-
-
     public static class rowQuestion extends TableRow<TestGrammarModel.QuestionTableView>{
 
         private Label id;
@@ -521,5 +290,111 @@ public class AdminTestGrammarController implements Initializable {
                 super.commitEdit(currentItem);
             }
         }
+    }
+
+    public void OnEdit(boolean isEditable){
+        final Stage dialog = new Stage();
+        dialog.setTitle("RESULT");
+        Button update = new Button("UPDATE");
+        //update.setPadding(new Insets(0, 100,0, 0));
+        Button add = new Button("ADD");
+        //init piechart
+        AnchorPane root = new AnchorPane();
+
+        dialog.initModality(Modality.NONE);
+        dialog.initOwner(tableView.getScene().getWindow());
+
+        VBox dialogVbox1 = new VBox(30);
+        dialogVbox1.setAlignment(Pos.CENTER);
+        dialogVbox1.setFillWidth(true);
+        dialogVbox1.setPadding(new Insets(40, 0, 0, 70));
+
+        HBox idHbox = new HBox(90);
+        Label idlabel = new Label("ID");
+        TextField idText = new TextField();
+        idText.setPromptText("ID");
+        idHbox.getChildren().addAll(idlabel, idText);
+
+
+        HBox questionHbox = new HBox(30);
+        Label questionlabel = new Label("QUESTION");
+        TextArea questionText = new TextArea();
+        questionText.setPromptText("QUESTION");
+        questionText.setPrefWidth(350);
+
+        questionHbox.getChildren().addAll(questionlabel, questionText);
+
+        HBox optionAHbox = new HBox(30);
+        Label optionAlabel = new Label("OPTION A");
+        TextField optionAText = new TextField();
+        optionAText.setPromptText("OPTION A");
+        optionAHbox.getChildren().addAll(optionAlabel, optionAText);
+
+        HBox optionBHbox = new HBox(30);
+        Label optionBlabel = new Label("OPTION B");
+        TextField optionBText = new TextField();
+        optionBText.setPromptText("OPTION B");
+        optionBHbox.getChildren().addAll(optionBlabel, optionBText);
+
+        HBox optionCHbox = new HBox(30);
+        Label optionClabel = new Label("OPTION C");
+        TextField optionCText = new TextField();
+        optionCText.setPromptText("OPTION C");
+        optionCHbox.getChildren().addAll(optionClabel, optionCText);
+
+        HBox optionDHbox = new HBox(30);
+        Label optionDlabel = new Label("OPTION D");
+        TextField optionDText = new TextField();
+        optionDText.setPromptText("OPTION D");
+        optionDHbox.getChildren().addAll(optionDlabel, optionDText);
+
+        HBox keyHbox = new HBox(70);
+        Label keylabel = new Label("KEY");
+        TextField keyText = new TextField();
+        keyText.setPromptText("KEY");
+        keyHbox.getChildren().addAll(keylabel, keyText);
+
+        HBox grammaridHbox = new HBox(5);
+        Label grammaridlabel = new Label("GRAMMAR ID");
+        TextField grammaridText = new TextField();
+        grammarIdText.setPromptText("GRAMMAR ID");
+        grammaridHbox.getChildren().addAll(grammaridlabel, grammaridText);
+
+        update.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                e -> {
+
+                });
+        add.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                e -> {
+
+
+                });
+        dialogVbox1.getChildren().addAll(idHbox);
+        dialogVbox1.getChildren().addAll(questionHbox);
+        dialogVbox1.getChildren().addAll(optionAHbox);
+        dialogVbox1.getChildren().addAll(optionBHbox);
+        dialogVbox1.getChildren().addAll(optionCHbox);
+        dialogVbox1.getChildren().addAll(optionDHbox);
+        dialogVbox1.getChildren().addAll(keyHbox);
+        dialogVbox1.getChildren().addAll(grammaridHbox);
+        if (isEditable)
+            dialogVbox1.getChildren().addAll(update);
+        else dialogVbox1.getChildren().addAll(add);
+
+
+        root.getChildren().addAll(dialogVbox1);
+        Scene dialogScene = new Scene(root, 600, 800);
+        dialog.setScene(dialogScene);
+        root.setStyle(
+                "   -fx-background-color: rgb(58,69,88);\n" +
+                "    -fx-background-radius: 0px;\n" +
+                "    -fx-text-fill: #b8b1b1;\n");
+        update.setStyle("-fx-background-color: rgb(22,169,250);\n" +
+                "    -fx-background-radius: 0px;\n" +
+                "    -fx-text-fill: #0099ff;");
+        add.setStyle("-fx-background-color: rgb(22,169,250);\n" +
+                "    -fx-background-radius: 0px;\n" +
+                "    -fx-text-fill: #0099ff;");
+        dialog.show();
     }
 }

@@ -8,11 +8,21 @@ import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import model.TestGrammarModel;
 import model.UserModel;
 
@@ -249,5 +259,124 @@ public class AdminUserController implements Initializable, LoadSceneHelper {
                 birth.setText(item.getBirth());
             }
         }
+    }
+
+    public void OnEdit(boolean isEditable){
+        final Stage dialog = new Stage();
+        dialog.setTitle("RESULT");
+        Button update = new Button("UPDATE");
+        Button add = new Button("ADD");
+        //init piechart
+        AnchorPane root = new AnchorPane();
+
+        Label displayLabel = new Label("What do you want to do ?");
+        displayLabel.setFont(Font.font(null, FontWeight.BOLD, 14));
+
+        dialog.initModality(Modality.NONE);
+        dialog.initOwner(tableView.getScene().getWindow());
+
+        VBox dialogVbox1 = new VBox(30);
+        dialogVbox1.setAlignment(Pos.CENTER);
+        dialogVbox1.setFillWidth(true);
+        dialogVbox1.setSpacing(30);
+        dialogVbox1.setPadding(new Insets(40, 0, 0, 80));
+
+        HBox idHbox = new HBox(80);
+        Label idlabel = new Label("ID");
+        TextField idText = new TextField();
+        idText.setPromptText("ID");
+        idHbox.getChildren().addAll(idlabel, idText);
+
+
+        HBox usernameHbox = new HBox(20);
+        Label usernamelabel = new Label("USERNAME");
+        TextField usernameText = new TextField();
+        usernameText.setPromptText("USERNAME");
+        usernameHbox.getChildren().addAll(usernamelabel, usernameText);
+
+        HBox passwordHbox = new HBox(20);
+        Label passwordlabel = new Label("PASSWORD");
+        TextField passwordText = new TextField();
+        passwordText.setPromptText("PASSWORD");
+        passwordHbox.getChildren().addAll(passwordlabel, passwordText);
+
+        HBox firstnameHbox = new HBox(20);
+        Label firstnameLabel = new Label("FIRSTNAME");
+        TextField firstnameText = new TextField();
+        firstnameText.setPromptText("FIRSTNAME");
+        firstnameHbox.getChildren().addAll(firstnameLabel, firstnameText);
+
+        HBox lastnameHbox = new HBox(20);
+        Label lastnameLabel = new Label("LASTNAME");
+        TextField lastnameText = new TextField();
+        lastnameText.setPromptText("LASTNAME");
+        lastnameHbox.getChildren().addAll(lastnameLabel, lastnameText);
+
+        HBox addressHbox = new HBox(30);
+        Label addressLabel = new Label("ADDRESS");
+        TextField addressText = new TextField();
+        addressText.setPromptText("ADDRESS");
+
+        addressHbox.getChildren().addAll(addressLabel, addressText);
+
+        HBox phoneHbox = new HBox(42);
+        Label phonelabel = new Label("PHONE");
+        TextField phoneText = new TextField();
+        phoneText.setPromptText("PHONE");
+
+        phoneHbox.getChildren().addAll(phonelabel, phoneText);
+
+        HBox emailHbox = new HBox(50);
+        Label emaillabel = new Label("EMAIL");
+        TextField emailText = new TextField();
+        emailText.setPromptText("EMAIL");
+
+        emailHbox.getChildren().addAll(emaillabel, emailText);
+
+        HBox birthHbox = new HBox(50);
+        Label birthLabel = new Label("BIRTH");
+        DatePicker birthText = new DatePicker();
+        birthText.setPromptText("BIRTH");
+
+        birthHbox.getChildren().addAll(birthLabel, birthText);
+
+
+        update.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                e -> {
+
+                });
+        add.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                e -> {
+
+
+                });
+        dialogVbox1.getChildren().addAll(idHbox);
+        dialogVbox1.getChildren().addAll(usernameHbox);
+        dialogVbox1.getChildren().addAll(passwordHbox);
+        dialogVbox1.getChildren().addAll(firstnameHbox);
+        dialogVbox1.getChildren().addAll(lastnameHbox);
+        dialogVbox1.getChildren().addAll(addressHbox);
+        dialogVbox1.getChildren().addAll(phoneHbox);
+        dialogVbox1.getChildren().addAll(emailHbox);
+        dialogVbox1.getChildren().addAll(birthHbox);
+        if (isEditable)
+            dialogVbox1.getChildren().addAll(update);
+        else dialogVbox1.getChildren().addAll(add);
+
+
+        root.getChildren().addAll(dialogVbox1);
+        Scene dialogScene = new Scene(root, 500, 700);
+        root.setStyle(
+                "   -fx-background-color: rgb(58,69,88);\n" +
+                        "    -fx-background-radius: 0px;\n" +
+                        "    -fx-text-fill: #b8b1b1;\n");
+        update.setStyle("-fx-background-color: rgb(22,169,250);\n" +
+                "    -fx-background-radius: 0px;\n" +
+                "    -fx-text-fill: #0099ff;");
+        add.setStyle("-fx-background-color: rgb(22,169,250);\n" +
+                "    -fx-background-radius: 0px;\n" +
+                "    -fx-text-fill: #0099ff;");
+        dialog.setScene(dialogScene);
+        dialog.show();
     }
 }

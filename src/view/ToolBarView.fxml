@@ -5,9 +5,9 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.HBox?>
 
-<HBox alignment="CENTER" styleClass="sidebar" stylesheets="@../resource/stylehseet.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ContentAreaController">
+<HBox alignment="CENTER" styleClass="sidebar" stylesheets="@../resource/stylesheet.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ContentAreaController">
    <children>
-      <HBox prefHeight="100.0" prefWidth="95.0" styleClass="menu-bar-btns-icon" stylesheets="@../resource/stylehseet.css">
+      <HBox prefHeight="100.0" prefWidth="95.0" styleClass="menu-bar-btns-icon" stylesheets="@../resource/stylesheet.css">
          <children>
             <Button mnemonicParsing="false" onAction="#open_sidebar" styleClass="sidebar-btn">
                <graphic>

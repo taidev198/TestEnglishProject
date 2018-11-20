@@ -8,7 +8,7 @@
 
 <AnchorPane fx:id="anchorPane" prefHeight="800.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.QuestionController">
    <children>
-      <ListView fx:id="listView" layoutX="368.0" layoutY="44.0" prefHeight="698.0" prefWidth="1122.0" styleClass="fx-list-cell" stylesheets="@../resource/stylehseet.css" />
+      <ListView fx:id="listView" layoutX="368.0" layoutY="44.0" prefHeight="698.0" prefWidth="1122.0" styleClass="fx-list-cell" stylesheets="@../resource/stylesheet.css" />
       <ListView fx:id="grammarLists" layoutX="-4.0" layoutY="44.0" prefHeight="748.0" prefWidth="346.0" />
       <Text fx:id="description" fill="#a72a2a" layoutX="865.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DESCRIPTION" textAlignment="CENTER">
          <font>
