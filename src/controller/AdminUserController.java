@@ -113,7 +113,7 @@ public class AdminUserController implements Initializable, LoadSceneHelper {
             menuButton.get(i).getItems().addAll(delete);
             int id = i;
             edit.setOnAction(event -> {
-                editableCols();
+                OnEdit(false);
                 System.out.println("edit");
             });
             delete.setOnAction(event -> {

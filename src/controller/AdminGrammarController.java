@@ -9,11 +9,19 @@ import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import model.GrammarModel;
 import model.TestGrammarModel;
 
@@ -125,7 +133,7 @@ public class AdminGrammarController implements Initializable, LoadSceneHelper {
             menuButton.get(i).getItems().addAll(delete);
             int id = i;
             edit.setOnAction(event -> {
-                editableCols();
+                OnEdit(false);
                 System.out.println("edit");
             });
             delete.setOnAction(event -> {
@@ -207,5 +215,75 @@ public class AdminGrammarController implements Initializable, LoadSceneHelper {
                 super.commitEdit(currentItem);
             }
         }
+    }
+
+    public void OnEdit(boolean isEditable){
+        final Stage dialog = new Stage();
+        dialog.setTitle("RESULT");
+        Button update = new Button("UPDATE");
+        Button add = new Button("ADD");
+        AnchorPane root = new AnchorPane();
+
+        dialog.initModality(Modality.NONE);
+        dialog.initOwner(tableView.getScene().getWindow());
+
+        VBox dialogVbox1 = new VBox(30);
+        dialogVbox1.setAlignment(Pos.CENTER);
+        dialogVbox1.setFillWidth(true);
+        dialogVbox1.setPadding(new Insets(50, 0, 0, 70));
+
+        HBox idHbox = new HBox(90);
+        Label idlabel = new Label("ID");
+        TextField idText = new TextField();
+        idText.setPromptText("ID");
+        idHbox.getChildren().addAll(idlabel, idText);
+
+        HBox desHbox = new HBox(10);
+        Label deslabel = new Label("DESCRIPTION");
+        TextField desAText = new TextField();
+        desAText.setPromptText("DESCRIPTION");
+        desHbox.getChildren().addAll(deslabel, desAText);
+
+        HBox contentHbox = new HBox(35);
+        Label contentlabel = new Label("CONTENT");
+        TextArea contentText = new TextArea();
+        contentText.setPromptText("CONTENT");
+        contentText.setPrefWidth(500);
+
+        contentHbox.setPrefHeight(500);
+        contentHbox.getChildren().addAll(contentlabel, contentText);
+
+        update.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                e -> {
+
+                });
+        add.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                e -> {
+
+
+                });
+        dialogVbox1.getChildren().addAll(idHbox);
+        dialogVbox1.getChildren().addAll(desHbox);
+        dialogVbox1.getChildren().addAll(contentHbox);
+
+        if (isEditable)
+            dialogVbox1.getChildren().addAll(update);
+        else dialogVbox1.getChildren().addAll(add);
+
+
+        root.getChildren().addAll(dialogVbox1);
+        Scene dialogScene = new Scene(root, 700, 800);
+        dialog.setScene(dialogScene);
+        root.setStyle(
+                "   -fx-background-color: rgb(58,69,88);\n" +
+                        "    -fx-background-radius: 0px;\n" +
+                        "    -fx-text-fill: #b8b1b1;\n");
+        update.setStyle("-fx-background-color: rgb(22,169,250);\n" +
+                "    -fx-background-radius: 0px;\n" +
+                "    -fx-text-fill: #0099ff;");
+        add.setStyle("-fx-background-color: rgb(22,169,250);\n" +
+                "    -fx-background-radius: 0px;\n" +
+                "    -fx-text-fill: #0099ff;");
+        dialog.show();
     }
 }
