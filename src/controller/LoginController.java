@@ -136,6 +136,9 @@ public class LoginController implements Initializable, LoadSceneHelper {
             Parent root = FXMLLoader.load(getClass().getResource(url));
             ((AnchorPane) parent).getChildren().clear();
             ((AnchorPane) parent).getChildren().addAll(root);
+            Stage stage = (Stage)((AnchorPane)parent).getScene().getWindow();
+            stage.setHeight(850);
+            stage.setWidth(1500);
             new FadeIn((Parent)parent).play();
         } catch (IOException e) {
             e.printStackTrace();

@@ -115,7 +115,7 @@ public class MainController implements Initializable, LoadSceneHelper {
     @FXML
     private void goToQuizTest(){
 
-        switchScene("/view/QuizTestView", anchorPane);
+        switchScene("/view/QuizTestView.fxml", anchorPane);
     }
 
     @Override
