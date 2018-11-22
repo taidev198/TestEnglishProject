@@ -20,8 +20,8 @@ public class ConnectDataHelper {
             InstantiationException, SQLException {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
         String password = "03031998";
-        String userName = "root";
-        String url = "jdbc:mysql://localhost/data";
+        String userName = "taiadmin";
+        String url = "jdbc:mysql://db4free.net:3306/testenglish";
         conn = DriverManager.getConnection(url, userName, password);
         return conn;
     }
