@@ -15,6 +15,22 @@ public class TestGrammarModel {
     public TestGrammarModel(){}
 
 
+    public void update(String id, Question question){
+
+        String query = "update testgrammar SET testgrammarid = " +question.getNumber() +
+                ", questtion = "+ question.getQuestion() + ", a = "+ question.getOptionA()+", b = "+
+                question.getOptionB()+", c= "+ question.getOptionC() +", d = "+ question.getOptionD()
+                +", testgrammar.key = " +question.getKey() +", grammarid = " + question.getGrammarid()+
+                " WHERE testgrammarid =" +id;
+        try(PreparedStatement statement = ConnectDataHelper.getInstance().connectDB().prepareStatement(query)) {
+            statement.execute("use data");
+            statement.executeUpdate();
+        } catch (IllegalAccessException | InstantiationException | ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
     public Map<String, List<List<String>>> getTestGrammarFollowGrammarId(){
         String query = "select description,testgrammarid, questtion, a, b, c, d, testgrammar.key from testgrammar join grammar on grammar.grammarid = testgrammar.grammarid;";
         Map<String, List<List<String>>> res = new LinkedHashMap<>();
