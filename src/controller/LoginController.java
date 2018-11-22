@@ -1,10 +1,12 @@
 package controller;
 
 import animatefx.animation.FadeIn;
+import helper.IResult;
 import helper.LoadSceneHelper;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -24,9 +26,10 @@ import model.UserModel;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
-public class LoginController implements Initializable, LoadSceneHelper {
+public class LoginController implements Initializable, LoadSceneHelper, IResult {
     @FXML
     Pane pane;
     @FXML
@@ -52,7 +55,7 @@ public class LoginController implements Initializable, LoadSceneHelper {
     @FXML
     Label errorLabel;
     UserModel model;
-
+    List<List<String>> listUsers;
 
 
     @Override
@@ -62,17 +65,36 @@ public class LoginController implements Initializable, LoadSceneHelper {
 
     public void goHome(){
         if (username.getText().equals("") && password.getText().equals(""))
-        caution.setText("ERROR: USERNAME AND PASSWORD IS EMPTY");
+        OnMessage("ERROR: USERNAME AND PASSWORD IS EMPTY");
     else if (username.getText().equals(""))
-        caution.setText("ERROR: USERNAME IS EMPTY");
-    else caution.setText("ERROR: PASSWORD IS EMPTY");
-        if (!username.getText().equals("") && !password.getText().equals("")){
-            if (model.isValidUser(username.getText(), password.getText()))
+        OnMessage("ERROR: USERNAME IS EMPTY");
+    else if (password.getText().equals(""))OnMessage("ERROR: PASSWORD IS EMPTY");
+       else {
+            if (isValidUser(username.getText(), password.getText()))
                 switchScene("/view/UserView.fxml", anchorPane);
             else
                 PopUp();
         }
 
+    }
+
+
+    public boolean isValidUser(String username, String password){
+         listUsers = model.getUserInfo();
+        boolean validUsername = false;
+        boolean validPassword = false;
+
+            if (listUsers.get(1).contains(username))
+                validUsername = true;
+            if (listUsers.get(2).contains(password))
+                validPassword = true;
+        if (!validUsername && !validPassword)
+            OnMessage("USERNAME AND PASSWORD ARE INCORRECT");
+        else if (!validPassword)
+            OnMessage("PASSWORD IS INCORRECT");
+        else if (!validUsername)
+            OnMessage("USERNAME IS INCORRECT");
+        return validPassword && validUsername;
     }
 
     public void PopUp(){
@@ -115,16 +137,27 @@ public class LoginController implements Initializable, LoadSceneHelper {
     }
     public void OnSignUp(){
          if (usernameSignUp.getText().equals(""))
-            errorLabel.setText("ERROR: USERNAME IS EMPTY");
+            OnMessage("ERROR: USERNAME IS EMPTY");
         else if (passwordSignUp.getText().equals(""))
-            errorLabel.setText("ERROR: PASSWORD IS EMPTY");
+            OnMessage("ERROR: PASSWORD IS EMPTY");
         else if (emailSignUp.getText().equals(""))
-             errorLabel.setText("ERROR: EMAIL IS EMPTY");
+             OnMessage("ERROR: EMAIL IS EMPTY");
          else if (phoneSignUp.getText().equals(""))
-             errorLabel.setText("ERROR: PHONE IS EMPTY");
+             OnMessage("ERROR: PHONE IS EMPTY");
          else if (!passwordSignUp.getText().equals(confirmSignUp.getText()))
-             errorLabel.setText("ERROR: PASSWORD AND CONFIRM PASSWORD IS NOT MATCHED");
+             OnMessage("ERROR: PASSWORD AND CONFIRM PASSWORD IS NOT MATCHED");
         else {
+            String email  = emailSignUp.getText();
+            if (!phoneSignUp.getText().matches("^[0-9]"))
+                OnMessage("PHONE NUMBER IS INCORRECT");
+            else if (!passwordSignUp.getText().matches("[a-zA-Z0-9._]*"))
+                OnMessage("PASSWORD IS INCORRECT");
+            else if (!email.contains("@"))
+                OnMessage("EMAIL IS INCORRECT");
+            else if (!email.substring(email.indexOf("@")+1).matches("[a-z.]*"))
+                OnMessage("EMAIL IS INCORRECT");
+            else   if (listUsers.get(1).contains(usernameSignUp.getText()))
+                OnMessage("USERNAME WAS EXISTED");
             model.addUser(new UserModel.User(usernameSignUp.getText(), passwordSignUp.getText(), emailSignUp.getText(), phoneSignUp.getText()),true);
                 switchScene("/view/UserView.fxml", anchorPaneSignUp);
         }
@@ -147,6 +180,37 @@ public class LoginController implements Initializable, LoadSceneHelper {
 
     @Override
     public void loadData() {
+
+    }
+
+
+    @Override
+    public void OnMessage(String message) {
+        final Stage dialog = new Stage();
+        dialog.setTitle("RESULT");
+        Button ok = new Button("OK");
+
+        Label mess = new Label(message);
+        AnchorPane root = new AnchorPane();
+        dialog.initModality(Modality.NONE);
+        dialog.initOwner(anchorPane.getScene().getWindow());
+
+        ok.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                e -> {
+            dialog.close();
+
+                });
+        HBox hBox = new HBox(10);
+        hBox.getChildren().add(ok);
+        hBox.setPadding(new Insets(0,0,0,120));
+
+        VBox vBox = new VBox(80);
+        vBox.setPadding(new Insets(30,0,0,100));
+        vBox.getChildren().addAll(mess, hBox);
+        root.getChildren().addAll(vBox);
+        Scene dialogScene = new Scene(root, 400, 200);
+        dialog.setScene(dialogScene);
+        dialog.show();
 
     }
 }
