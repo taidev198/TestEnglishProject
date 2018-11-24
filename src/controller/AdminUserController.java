@@ -28,9 +28,7 @@ import model.UserModel;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 /**
  * Created by traig on 9:59 AM, 11/15/2018
@@ -106,15 +104,27 @@ public class AdminUserController implements Initializable, LoadSceneHelper {
         data = FXCollections.observableArrayList();
         for (int i = 0; i < listUser.get(0).size(); i++) {
             menuButton.add(new MenuButton());
-            MenuItem edit = new MenuItem("edit");
-            MenuItem delete = new MenuItem("delete");
+            MenuItem edit = new MenuItem("EDIT");
+            MenuItem delete = new MenuItem("DELETE");
+            MenuItem add = new MenuItem("ADD");
             menuButton.get(i).setText("...");
             menuButton.get(i).getItems().addAll(edit);
+            menuButton.get(i).getItems().addAll(add);
             menuButton.get(i).getItems().addAll(delete);
             int id = i;
+            add.setOnAction(event -> {
+
+                if (tableView.getSelectionModel().getSelectedIndex() == -1)
+                    OnMessage("YOU HAVE NOT CHOSEN ANY ROW", Alert.AlertType.ERROR, "ERORR", "YOU HAVE ENTERED SOMETHINGS WRONG:");
+                else OnEdit(false);
+            });
+
             edit.setOnAction(event -> {
-                OnEdit(false);
-                System.out.println("edit");
+
+                if (tableView.getSelectionModel().getSelectedIndex() == -1)
+                    OnMessage("YOU HAVE NOT CHOSEN ANY ROW", Alert.AlertType.ERROR, "ERORR", "YOU HAVE ENTERED SOMETHINGS WRONG:");
+                else
+                    OnEdit(true);
             });
             delete.setOnAction(event -> {
                 System.out.println(id);
@@ -132,6 +142,14 @@ public class AdminUserController implements Initializable, LoadSceneHelper {
         tableView.setItems(data);
         tableView.setRowFactory(param -> new rowUser());
         filter();
+    }
+
+    public void OnMessage(String message, Alert.AlertType type, String title, String header) {
+        Alert alert  = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
     private void filter() {
@@ -167,39 +185,6 @@ public class AdminUserController implements Initializable, LoadSceneHelper {
 
     }
 
-    public void addRow(){
-        menuButton.add(new MenuButton());
-        MenuItem edit = new MenuItem("edit");
-        MenuItem delete = new MenuItem("delete");
-        edit.setOnAction(event -> {
-            editableCols();
-            System.out.println("edit");
-        });
-        delete.setOnAction(event -> {
-            removeSelectedRows(Integer.parseInt((tableView.getSelectionModel().getSelectedItem().getUserInfoid())), tableView.getSelectionModel().getSelectedIndex());
-        });
-        menuButton.get(menuButton.size() -1).setText("...");
-        menuButton.get(menuButton.size() -1).getItems().addAll(edit);
-        menuButton.get(menuButton.size() -1).getItems().addAll(delete);
-        data.addAll(new UserModel.User(
-                idText.getText(),usernameText.getText(),passwordText.getText(),
-                addressText.getText(),emailText.getText(),phoneText.getText(),firstnameText.getText(),lastnameText.getText(),
-                birthText.getText(), menuButton.get(menuButton.size() -1))
-        );
-        model.addUser(new UserModel.User( idText.getText(),usernameText.getText(),passwordText.getText(),
-                addressText.getText(),emailText.getText(),phoneText.getText(),firstnameText.getText(),lastnameText.getText(),
-                birthText.getText(), menuButton.get(menuButton.size() -1)), false);
-
-        idText.clear();
-        usernameText.clear();
-        passwordText.clear();
-        firstnameText.clear();
-        lastnameText.clear();
-        addressText.clear();
-        phoneText.clear();
-        emailText.clear();
-        birthText.clear();
-    }
     @Override
     public void switchScene(String url, Object parent) {
         Parent user = null;
@@ -339,6 +324,19 @@ public class AdminUserController implements Initializable, LoadSceneHelper {
         birthText.setPromptText("BIRTH");
 
         birthHbox.getChildren().addAll(birthLabel, birthText);
+        if (isEditable){
+            int selectedIdx = tableView.getSelectionModel().getSelectedIndex();
+            idText.setText(listUser.get(0).get(selectedIdx));
+            usernameText.setText(listUser.get(1).get(selectedIdx));
+            passwordText.setText(listUser.get(2).get(selectedIdx));
+            addressText.setText(listUser.get(3).get(selectedIdx));
+            emailText.setText(listUser.get(4).get(selectedIdx));
+            phoneText.setText(listUser.get(5).get(selectedIdx));
+            firstnameText.setText(listUser.get(6).get(selectedIdx));
+            lastnameText.setText(listUser.get(7).get(selectedIdx));
+            Queue<Integer> queue = new LinkedList<>();
+            ((LinkedList<Integer>) queue).addAll(queue.size()-1, new ArrayList<>());
+        }
 
 
         update.addEventHandler(MouseEvent.MOUSE_CLICKED,
