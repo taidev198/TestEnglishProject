@@ -17,12 +17,17 @@ public class TestGrammarModel {
 
     public void update(String id, Question question){
 
-        String query = "update testgrammar SET testgrammarid = " +question.getNumber() +
-                ", questtion = "+ question.getQuestion() + ", a = "+ question.getOptionA()+", b = "+
-                question.getOptionB()+", c= "+ question.getOptionC() +", d = "+ question.getOptionD()
-                +", testgrammar.key = " +question.getKey() +", grammarid = " + question.getGrammarid()+
-                " WHERE testgrammarid =" +id;
+        String query = "update testgrammar SET testgrammarid = ?, questtion =  ?, a = ?, b = ?, c= ?, d = ?, testgrammar.key = ?, grammarid = ? WHERE testgrammarid = ?";
         try(PreparedStatement statement = ConnectDataHelper.getInstance().connectDB().prepareStatement(query)) {
+            statement.setInt(1, Integer.parseInt(question.getNumber()));
+            statement.setString(2, question.getQuestion());
+            statement.setString(3, question.getOptionA());
+            statement.setString(4, question.getOptionB());
+            statement.setString(5, question.getOptionC());
+            statement.setString(6, question.getOptionD());
+            statement.setString(7, question.getKey());
+            statement.setInt(8, Integer.parseInt(question.getGrammarid()));
+            statement.setInt(9, Integer.parseInt(id));
             statement.execute("use data");
             statement.executeUpdate();
         } catch (IllegalAccessException | InstantiationException | ClassNotFoundException | SQLException e) {
@@ -38,15 +43,15 @@ public class TestGrammarModel {
             statement.execute("use data");
             ResultSet resultSet = statement.executeQuery(query);
 
-            List<String> testgrammarid = new ArrayList<>();
-            List<String> question = new ArrayList<>();
-            List<String> a = new ArrayList<>();
-            List<String> b = new ArrayList<>();
-            List<String> c = new ArrayList<>();
-            List<String> d = new ArrayList<>();
-            List<String> key = new ArrayList<>();
-            while (resultSet.next()){
 
+            while (resultSet.next()){
+                List<String> testgrammarid = new ArrayList<>();
+                List<String> question = new ArrayList<>();
+                List<String> a = new ArrayList<>();
+                List<String> b = new ArrayList<>();
+                List<String> c = new ArrayList<>();
+                List<String> d = new ArrayList<>();
+                List<String> key = new ArrayList<>();
                 if (!res.containsKey(resultSet.getString("description"))){
                     List<List<String>> tmp = new ArrayList<>();
                     testgrammarid.add(resultSet.getString("testgrammarid"));
