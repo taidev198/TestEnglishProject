@@ -552,27 +552,11 @@ public class AdminTestGrammarController implements Initializable {
             OnMessage("YOU MUST ENTER NUMBER ", Alert.AlertType.ERROR, "ERROR", "ERROR");
             return false;
         }
-        if (!key.matches("[ABCD]*")) {
+        if (!key.matches("[A-D]")) {
             OnMessage("YOU MUST ENTER A, B, C OR D ", Alert.AlertType.ERROR, "ERROR", "ERROR");
             return false;
         }
 
-        if (!optionA.matches("[ABCD]*")) {
-            OnMessage("YOU MUST ENTER A, B, C OR D ", Alert.AlertType.ERROR, "ERROR", "ERROR");
-            return false;
-        }
-        if (!optionB.matches("[ABCD]*")) {
-            OnMessage("YOU MUST ENTER A, B, C OR D ", Alert.AlertType.ERROR, "ERROR", "ERROR");
-            return false;
-        }
-        if (!optionC.matches("[ABCD]*")) {
-            OnMessage("YOU MUST ENTER A, B, C OR D ", Alert.AlertType.ERROR, "ERROR", "ERROR");
-            return false;
-        }
-        if (!optionD.matches("[ABCD]*")) {
-            OnMessage("YOU MUST ENTER A, B, C OR D ", Alert.AlertType.ERROR, "ERROR", "ERROR");
-            return false;
-        }
 
 
         if (listQuestion.get(0).contains(id) && !isEdit){
@@ -582,10 +566,10 @@ public class AdminTestGrammarController implements Initializable {
             OnMessage("YOU HAVE ENTER DUPLICATE ID ", Alert.AlertType.ERROR, "ERROR", "ERROR");
             return false;
         }
-        if (!listQuestion.get(7).contains(grammarid)){
-            OnMessage("YOU HAVE ENTER INVALID GRAMMAR ID ", Alert.AlertType.ERROR, "ERROR", "ERROR");
-            return false;
-        }
+//        if (!listQuestion.get(7).contains(grammarid)){
+//            OnMessage("YOU HAVE ENTER INVALID GRAMMAR ID ", Alert.AlertType.ERROR, "ERROR", "ERROR");
+//            return false;
+//        }
         return true;
     }
 
