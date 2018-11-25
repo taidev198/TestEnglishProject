@@ -8,13 +8,15 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
+import java.util.PriorityQueue;
+
 public class Main extends Application {
 
     public static Stage stage = null;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("/view/UserView.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/view/AdminView.fxml"));
         primaryStage.setResizable(false);
         //    primaryStage.initStyle(StageStyle.TRANSPARENT);
         primaryStage.setTitle("Login");

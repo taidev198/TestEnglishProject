@@ -1,10 +1,7 @@
 package controller;
 
 import animatefx.animation.FadeIn;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.WeakChangeListener;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -13,7 +10,6 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Side;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
@@ -27,7 +23,6 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 import model.TestGrammarModel;
 
 import java.io.IOException;
@@ -36,7 +31,8 @@ import java.util.*;
 
 
 /**Clone primitive list:https://stackoverflow.com/questions/8441664/how-do-i-copy-the-contents-of-one-arraylist-into-another/29033799
- * custom dialog:https://stackoverflow.com/questions/40031632/custom-javafx-dialog*/
+ * custom dialog:https://stackoverflow.com/questions/40031632/custom-javafx-dialog
+ * Focus a table row dynamically:https://stackoverflow.com/questions/20413419/javafx-2-how-to-focus-a-table-row-programmatically/20433947*/
 public class QuestionController implements Initializable {
 
     @FXML
@@ -52,17 +48,21 @@ public class QuestionController implements Initializable {
     @FXML
     Text description;
     private List<String[]> answer;
-    private List<String[]> clone;
+    private String[] clone;
 
     private TestGrammarModel model;
     private Map<String, List<List<String>>> listQuestion;
+    List<Map.Entry<String, List<List<String>>>> entryList;
+    List<String> key = new ArrayList<>();
+    Boolean isSubmited ;
+    Integer selectedIdx ;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         submit.setVisible(false);
         model = new TestGrammarModel();
         listQuestion = model.getTestGrammarFollowGrammarId();
-        List<Map.Entry<String, List<List<String>>>> entryList = new ArrayList<>(listQuestion.entrySet());
-        List<String> key = new ArrayList<>();
+        entryList = new ArrayList<>(listQuestion.entrySet());
+        isSubmited = true;
         for (Map.Entry<String, List<List<String>>> entry :
                entryList ) {
             Label label = new Label(entry.getKey() );
@@ -72,41 +72,56 @@ public class QuestionController implements Initializable {
         }
         answer = new ArrayList<>();
 
-        for (int i = 0; i < 14; i++) {
-            Label label = new Label("AS, When Or While ,AS, When Or While" );
-            label.setGraphic( new ImageView( new Image("/resource/avatar.png")));
-            grammarLists.getItems().add(label);
-        }
-        grammarLists.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            submit.setVisible(true);
-            int index = grammarLists.getSelectionModel().getSelectedIndex();
-            System.out.println(index);
-
-            List<List<String>> tmp = entryList.get(index).getValue();
-            welcomeText.setVisible(false);
-            description.setText(key.get(index));
-            answer.add(new String[tmp.get(1).size() +2]);
-            answer.get(index)[tmp.get(1).size()+1] = String.valueOf(tmp.get(1).size());
-            answer.get(index)[tmp.get(1).size()] = String.valueOf("0");
-            clone = saveList(answer);
-            for (int i =0; i< tmp.get(1).size(); i++ ) {
-                listView.getItems().addAll( new TestGrammarModel.Question(key.get(index), tmp.get(1).get(i), tmp.get(2).get(i),tmp.get(3).get(i),
-                        tmp.get(4).get(i), tmp.get(5).get(i), "", tmp.get(6).get(i), (tmp.get(0).get(i)),  tmp.get(6).get(i)));
-            }
-        });
-        listView.setCellFactory(param -> new QuestionCell(false));
+        initQuestion();
+       addListenerToListView();
         listView.setFocusTraversable( false );
 
     }
 
-    private List<String[]> saveList(List<String[]> list){
+    private void addListenerToListView(){
+        grammarLists.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            welcomeText.setVisible(false);
+            selectedIdx = grammarLists.getSelectionModel().getSelectedIndex();
+            if (this.isSubmited){
+                submit.setVisible(true);
 
-        List<String[]> newList = new ArrayList<>();
-        for (int i = 0; i < list.size(); i++) {
-            newList.add(new  String[list.get(i).length]);
-            newList.get(grammarLists.getSelectionModel().getSelectedIndex())[list.get(i).length-1] = String.valueOf(list.get(i).length-2);
-            newList.get(grammarLists.getSelectionModel().getSelectedIndex())[list.get(i).length-2] = String.valueOf("0");
+                System.out.println(selectedIdx);
+                this.isSubmited = false;
+                List<List<String>> tmp = entryList.get(selectedIdx).getValue();
+                System.out.println(tmp);
+                clone = saveList(answer.get(selectedIdx), selectedIdx);
+                initQuestion();
+                listView.getItems().clear();
+                grammarLists.setFocusTraversable( false );
+                listView.setCellFactory(param -> new QuestionCell(false));
+                for (int i =0; i< tmp.get(1).size(); i++ ) {
+                    listView.getItems().add( new TestGrammarModel.Question(key.get(selectedIdx), tmp.get(1).get(i), tmp.get(2).get(i),tmp.get(3).get(i),
+                            tmp.get(4).get(i), tmp.get(5).get(i), "", tmp.get(6).get(i), (tmp.get(0).get(i)),  tmp.get(6).get(i)));
+                }
+            }else {
+                grammarLists.requestFocus();
+                grammarLists.getSelectionModel().select(selectedIdx);
+                grammarLists.getFocusModel().focus(selectedIdx);
+            }
+        });
+    }
+
+    private void initQuestion(){
+        for (int i = 0; i < entryList.size(); i++) {
+            List<List<String>> tmp = entryList.get(i).getValue();
+            answer.add(new String[tmp.get(1).size() +2]);
+            answer.get(i)[tmp.get(1).size()+1] = String.valueOf(tmp.get(1).size());
+            answer.get(i)[tmp.get(1).size()] = String.valueOf("0");
         }
+    }
+
+    private String[] saveList(String[] list, int selectedIdx){
+
+        String[] newList = new String[list.length];
+        System.out.println("list:" + Arrays.toString(list));
+            newList[list.length-1] = String.valueOf(list.length-2);
+            newList[list.length-2] = String.valueOf("0");
+
         return newList;
     }
 
@@ -178,8 +193,8 @@ public class QuestionController implements Initializable {
         //init piechart
         ObservableList<PieChart.Data> list = FXCollections.observableArrayList();
         PieChart res = new PieChart();
-        int numberOfWrong = Integer.valueOf( answer.get(grammarLists.getSelectionModel().getSelectedIndex())[answer.get(grammarLists.getSelectionModel().getSelectedIndex()).length -1]);
-        int numberOfCorrect = Integer.valueOf( answer.get(grammarLists.getSelectionModel().getSelectedIndex())[answer.get(grammarLists.getSelectionModel().getSelectedIndex()).length -2]);
+        int numberOfWrong = Integer.valueOf( answer.get(selectedIdx)[answer.get(selectedIdx).length -1]);
+        int numberOfCorrect = Integer.valueOf( answer.get(selectedIdx)[answer.get(selectedIdx).length -2]);
         list.addAll(new PieChart.Data("Correct :" +numberOfCorrect +" question", numberOfCorrect),
                 new PieChart.Data("Wrong :" + numberOfWrong + " question", numberOfWrong));
         res.setData(list);
@@ -209,27 +224,28 @@ public class QuestionController implements Initializable {
         dialogHbox.getChildren().add(restart);
         review.addEventHandler(MouseEvent.MOUSE_CLICKED,
                 e -> {
-                    answer = saveList(clone);
+                    answer.set(selectedIdx, saveList(clone, selectedIdx))  ;
                     listView.setCellFactory(param -> new QuestionCell(true));
                     // inside here you can use the minimize or close the previous stage//
                     dialog.close();
                     submit.setVisible(true);
+                    grammarLists.setFocusTraversable( true );
                 });
         restart.addEventHandler(MouseEvent.MOUSE_CLICKED,
                 e -> {
-                    answer = saveList(clone);
-                    System.out.println(Arrays.toString(answer.get(0)));
+                    answer.set(selectedIdx, saveList(clone, selectedIdx))  ;
                     //refresh listview when user restart contest.
                     listView.setCellFactory(param -> new QuestionCell(false));
                     dialog.close();
                     submit.setVisible(true);
+                    grammarLists.setFocusTraversable( true );
                 });
         Scene dialogScene = new Scene(dialogVbox1, 600, 450);
 //        dialogScene.getStylesheets().add("//style sheet of your choice");
         dialog.setScene(dialogScene);
         dialog.show();
         submit.setVisible(false);
-
+        this.isSubmited = true;
     }
 
     private class QuestionCell extends ListCell<TestGrammarModel.Question>{
@@ -302,34 +318,34 @@ public class QuestionController implements Initializable {
                 if (!isSummitted){
                     group.selectedToggleProperty().addListener((obs, oldSel, newSel) -> {
                         if (group.getSelectedToggle() != null) {
-                            if (group.getSelectedToggle().getUserData() != null )
-//                                System.out.println(group.getSelectedToggle().getUserData().toString());
-                            //get topic's index is selected
-                            if (optionA.isSelected())
-                                answer.get(grammarLists.getSelectionModel().getSelectedIndex())[getIndex()]  = "A";
-                            else  if (optionB.isSelected())
-                                answer.get(grammarLists.getSelectionModel().getSelectedIndex())[getIndex()]  = "B";
-                            else  if (optionC.isSelected())
-                                answer.get(grammarLists.getSelectionModel().getSelectedIndex())[getIndex()]  = "C";
-                            else
-                                answer.get(grammarLists.getSelectionModel().getSelectedIndex())[getIndex()]  = "D";
-                            System.out.println(answer.get(grammarLists.getSelectionModel().getSelectedIndex())[getIndex()]);
-                        }
+                            if (group.getSelectedToggle().getUserData() != null ){
 
-                        if (answer.get(grammarLists.getSelectionModel().getSelectedIndex())[getIndex()].equals(item.getKey())){
-                            answer.get(grammarLists.getSelectionModel().getSelectedIndex())[answer.get(grammarLists.getSelectionModel().getSelectedIndex()).length -2] =
-                                    Integer.toString(Integer.parseInt(answer.get(grammarLists.getSelectionModel().getSelectedIndex())[answer.get(grammarLists.getSelectionModel().getSelectedIndex()).length -2 ])+1);
-                            answer.get(grammarLists.getSelectionModel().getSelectedIndex())[answer.get(grammarLists.getSelectionModel().getSelectedIndex()).length -1] =
-                                    Integer.toString(Integer.parseInt(answer.get(grammarLists.getSelectionModel().getSelectedIndex())[answer.get(grammarLists.getSelectionModel().getSelectedIndex()).length-1]) -1) ;
+                                if (optionA.isSelected())
+                                    answer.get(selectedIdx)[getIndex()]  = "A";
+                                else  if (optionB.isSelected())
+                                    answer.get(selectedIdx)[getIndex()]  = "B";
+                                else  if (optionC.isSelected())
+                                    answer.get(selectedIdx)[getIndex()]  = "C";
+                                else
+                                    answer.get(selectedIdx)[getIndex()]  = "D";
+                                System.out.println(answer.get(selectedIdx)[getIndex()]);
+                            }
+                               System.out.println(group.getSelectedToggle().getUserData().toString());
+                            //get topic's index is selected
+
                         }
-//                        listView.getSelectionModel().select(getIndex());
-//                        listView.getFocusModel().focus(listView.getSelectionModel().getSelectedIndex());
+                        if (answer.get(selectedIdx)[getIndex()].equals(item.getKey())){
+                            answer.get(selectedIdx)[answer.get(selectedIdx).length -2] =
+                                    Integer.toString(Integer.parseInt(answer.get(selectedIdx)[answer.get(selectedIdx).length -2 ])+1);
+                            answer.get(selectedIdx)[answer.get(selectedIdx).length -1] =
+                                    Integer.toString(Integer.parseInt(answer.get(selectedIdx)[answer.get(selectedIdx).length-1]) -1) ;
+                        }
                     });
                 }else {
 
                     //check user's answer
-                    if (answer.get(grammarLists.getSelectionModel().getSelectedIndex())[Integer.parseInt(item.getNumber())-1] != null){
-                        switch (answer.get(grammarLists.getSelectionModel().getSelectedIndex())[Integer.parseInt(item.getNumber())-1]){
+                    if (answer.get(selectedIdx)[getIndex()] != null){
+                        switch (answer.get(selectedIdx)[getIndex()]){
                             case "A": optionA.setSelected(true);
                                 optionA.setStyle("-fx-background-color: #FF6A53");
                                 break;
@@ -343,7 +359,6 @@ public class QuestionController implements Initializable {
                                 optionD.setStyle("-fx-background-color: #FF6A53");
                                 break;
                         }
-                        System.out.println(answer.get(grammarLists.getSelectionModel().getSelectedIndex())[getIndex()]);
                     }
                     //show key
                     switch (item.getKey()){

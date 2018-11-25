@@ -312,6 +312,7 @@ public class AdminTestGrammarController implements Initializable {
             optionDText.setText(listQuestion.get(5).get(selectedIdx));
             keyText.setText(listQuestion.get(6).get(selectedIdx));
             grammaridText.setText(listQuestion.get(7).get(selectedIdx));
+            listQuestion.get(0).set(selectedIdx, String.valueOf(-1));
         }
 
         update.addEventHandler(MouseEvent.MOUSE_CLICKED,
@@ -335,9 +336,8 @@ public class AdminTestGrammarController implements Initializable {
                         listQuestion.get(6).set(selectedIdx, keyText.getText());
                         listQuestion.get(7).set(selectedIdx, grammaridText.getText());
                         OnMessage("", Alert.AlertType.INFORMATION, "SUCCESS", "DONE!");
-                        tableView.refresh();
-                        data.remove(data.size()-1);
-                        data.addAll(new TestGrammarModel.QuestionTableView(listQuestion.get(1).get(selectedIdx),
+
+                        data.set(selectedIdx,new TestGrammarModel.QuestionTableView(listQuestion.get(1).get(selectedIdx),
                                 listQuestion.get(1).get(selectedIdx), listQuestion.get(2).get(selectedIdx),listQuestion.get(3).get(selectedIdx),
                                 listQuestion.get(4).get(selectedIdx), listQuestion.get(5).get(selectedIdx), "",
                                 listQuestion.get(6).get(selectedIdx), (listQuestion.get(0).get(selectedIdx)), listQuestion.get(7).get(selectedIdx) , menuButton.get(selectedIdx)) );
@@ -356,7 +356,6 @@ public class AdminTestGrammarController implements Initializable {
                 MenuItem delete = new MenuItem("DELETE");
                 MenuItem addBtn = new MenuItem("ADD");
                 add.setOnAction(event -> {
-
                     if (tableView.getSelectionModel().getSelectedIndex() == -1)
                         OnMessage("YOU HAVE NOT CHOSEN ANY ROW", Alert.AlertType.ERROR, "ERORR", "YOU HAVE ENTERED SOMETHINGS WRONG:");
                     else OnEdit(false);
@@ -378,15 +377,14 @@ public class AdminTestGrammarController implements Initializable {
                 menuButton.get(menuButton.size() -1).getItems().addAll(edit);
                 menuButton.get(menuButton.size() -1).getItems().addAll(addBtn);
                 menuButton.get(menuButton.size() -1).getItems().addAll(delete);
-                data.add(new TestGrammarModel.QuestionTableView(
-                        questionText.getText(),questionText.getText(),optionAText.getText(),
-                        optionAText.getText(),optionCText.getText(),optionDText.getText(),"",keyText.getText(),
-                        idText.getText(), grammaridText.getText(), menuButton.get(menuButton.size() -1)));
-
-                model.addNewTestGrammar(new TestGrammarModel.QuestionTableView(
-                        questionText.getText(),questionText.getText(),optionAText.getText(),
-                        optionAText.getText(),optionCText.getText(),optionDText.getText(),"",keyText.getText(),
-                        idText.getText(), grammaridText.getText(), menuButton.get(menuButton.size() -1)));
+                TestGrammarModel.QuestionTableView questionTableView =
+                        new TestGrammarModel.QuestionTableView(
+                                questionText.getText(),questionText.getText(),optionAText.getText(),
+                                optionAText.getText(),optionCText.getText(),optionDText.getText(),"",keyText.getText(),
+                                idText.getText(), grammaridText.getText(), menuButton.get(menuButton.size() -1));
+                data.add(questionTableView);
+                listQuestion = model.getTestGrammar();
+                model.addNewTestGrammar(questionTableView);
                 questionText.clear();
                 idText.clear();
                 optionAText.clear();
@@ -562,8 +560,9 @@ public class AdminTestGrammarController implements Initializable {
         if (listQuestion.get(0).contains(id) && !isEdit){
             OnMessage("YOU HAVE ENTER DUPLICATE ID ", Alert.AlertType.ERROR, "ERROR", "ERROR");
             return false;
-        }else if (listQuestion.get(0).indexOf(id) != listQuestion.get(0).size()-1 && isEdit){
+        }else if (listQuestion.get(0).contains(id) && isEdit){
             OnMessage("YOU HAVE ENTER DUPLICATE ID ", Alert.AlertType.ERROR, "ERROR", "ERROR");
+
             return false;
         }
 //        if (!listQuestion.get(7).contains(grammarid)){
