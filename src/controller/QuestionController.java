@@ -89,7 +89,7 @@ public class QuestionController implements Initializable {
                 this.isSubmited = false;
                 List<List<String>> tmp = entryList.get(selectedIdx).getValue();
                 System.out.println(tmp);
-                clone = saveList(answer.get(selectedIdx), selectedIdx);
+                clone = saveList(answer.get(selectedIdx));
                 initQuestion();
                 listView.getItems().clear();
                 grammarLists.setFocusTraversable( false );
@@ -115,7 +115,7 @@ public class QuestionController implements Initializable {
         }
     }
 
-    private String[] saveList(String[] list, int selectedIdx){
+    private String[] saveList(String[] list){
 
         String[] newList = new String[list.length];
         System.out.println("list:" + Arrays.toString(list));
@@ -224,7 +224,7 @@ public class QuestionController implements Initializable {
         dialogHbox.getChildren().add(restart);
         review.addEventHandler(MouseEvent.MOUSE_CLICKED,
                 e -> {
-                    answer.set(selectedIdx, saveList(clone, selectedIdx))  ;
+                    answer.set(selectedIdx, saveList(clone))  ;
                     listView.setCellFactory(param -> new QuestionCell(true));
                     // inside here you can use the minimize or close the previous stage//
                     dialog.close();
@@ -233,7 +233,7 @@ public class QuestionController implements Initializable {
                 });
         restart.addEventHandler(MouseEvent.MOUSE_CLICKED,
                 e -> {
-                    answer.set(selectedIdx, saveList(clone, selectedIdx))  ;
+                    answer.set(selectedIdx, saveList(clone))  ;
                     //refresh listview when user restart contest.
                     listView.setCellFactory(param -> new QuestionCell(false));
                     dialog.close();
@@ -294,6 +294,7 @@ public class QuestionController implements Initializable {
         protected void updateItem(TestGrammarModel.Question item, boolean empty) {
             super.updateItem(item, empty);
             if (item !=null && !empty ){
+                System.out.println("thanh tai nguyen");
                 //set text
                 question.setText(item.getQuestion());
                 optionA.setText("A:  "+item.getOptionA());

@@ -32,6 +32,7 @@ import model.TestGrammarModel;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -63,20 +64,23 @@ public class QuizTestController implements Initializable {
     @FXML
     Text dot;
     private List<String[]> answer;
-    private List<String[]> clone;
+    private String[] clone;
     Thread myRunnableThread;
     MyRunnable myRunnable;
-
+    private AtomicBoolean isRunning = new AtomicBoolean(false);
     private TestGrammarModel model;
     private Map<String, List<List<String>>> listQuestion;
+    List<Map.Entry<String, List<List<String>>>> entryList;
+    List<String> key;
+    int selectedIdx;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         submit.setVisible(false);
         model = new TestGrammarModel();
         min.setText("15");
         listQuestion = model.getTestGrammarFollowGrammarId();
-        List<Map.Entry<String, List<List<String>>>> entryList = new ArrayList<>(listQuestion.entrySet());
-        List<String> key = new ArrayList<>();
+         entryList = new ArrayList<>(listQuestion.entrySet());
+         key = new ArrayList<>();
         for (Map.Entry<String, List<List<String>>> entry :
                 entryList ) {
             Label label = new Label(entry.getKey() );
@@ -85,38 +89,7 @@ public class QuizTestController implements Initializable {
             contestLists.getItems().add(label);
         }
         answer = new ArrayList<>();
-
-        for (int i = 0; i < 14; i++) {
-            Label label = new Label("AS, When Or While ,AS, When Or While" );
-            label.setGraphic( new ImageView( new Image("/resource/avatar.png")));
-            contestLists.getItems().add(label);
-        }
-        contestLists.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            submit.setVisible(true);
-            int index = contestLists.getSelectionModel().getSelectedIndex();
-            System.out.println(index);
-            progressBar.setVisible(true);
-            progressBar.setProgress(0);
-            myRunnable  =new MyRunnable(progressBar);
-            myRunnableThread = new Thread(myRunnable);
-            myRunnableThread.start();
-            List<List<String>> tmp = entryList.get(index).getValue();
-            welcomeText.setVisible(false);
-            description.setText(key.get(index));
-            answer.add(new String[tmp.get(1).size() +2]);
-            answer.get(index)[tmp.get(1).size()+1] = String.valueOf(tmp.get(1).size());
-            answer.get(index)[tmp.get(1).size()] = String.valueOf("0");
-            min.setVisible(true);
-            sec.setVisible(true);
-            dot.setVisible(true);
-            clone = saveList(answer);
-            for (int i =0; i< tmp.get(1).size(); i++ ) {
-
-                listView.getItems().addAll( new TestGrammarModel.Question(key.get(index), tmp.get(1).get(i), tmp.get(2).get(i),tmp.get(3).get(i),
-                        tmp.get(4).get(i), tmp.get(5).get(i), "", tmp.get(6).get(i), (tmp.get(0).get(i)),  tmp.get(6).get(i)));
-            }
-        });
-        listView.setCellFactory(param -> new QuestionCell(false));
+        addListener();
         listView.setFocusTraversable( false );
         //set disable
         min.setVisible(false);
@@ -125,14 +98,50 @@ public class QuizTestController implements Initializable {
         progressBar.setVisible(false);
     }
 
-    private List<String[]> saveList(List<String[]> list){
+    private void addListener(){
+        contestLists.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            submit.setVisible(true);
+           selectedIdx = contestLists.getSelectionModel().getSelectedIndex();
+            System.out.println(selectedIdx);
+            progressBar.setVisible(true);
+            progressBar.setProgress(0);
+            myRunnable  =new MyRunnable(progressBar);
+            myRunnableThread = new Thread(myRunnable);
+            myRunnableThread.start();
+            isRunning.set(true);
+            List<List<String>> tmp = entryList.get(selectedIdx).getValue();
+            welcomeText.setVisible(false);
+            description.setText(key.get(selectedIdx));
+            initQuestion();
+            min.setVisible(true);
+            sec.setVisible(true);
+            dot.setVisible(true);
+            listView.getItems().clear();
+            clone = saveList(answer.get(selectedIdx));
+            listView.setCellFactory(param -> new QuestionCell(false));
+            for (int i =0; i< tmp.get(1).size(); i++ ) {
+                listView.getItems().add( new TestGrammarModel.Question(key.get(selectedIdx), tmp.get(1).get(i), tmp.get(2).get(i),tmp.get(3).get(i),
+                        tmp.get(4).get(i), tmp.get(5).get(i), "", tmp.get(6).get(i), (tmp.get(0).get(i)),  tmp.get(6).get(i)));
+            }
+        });
 
-        List<String[]> newList = new ArrayList<>();
-        for (int i = 0; i < list.size(); i++) {
-            newList.add(new  String[list.get(i).length]);
-            newList.get(contestLists.getSelectionModel().getSelectedIndex())[list.get(i).length-1] = String.valueOf(list.get(i).length-2);
-            newList.get(contestLists.getSelectionModel().getSelectedIndex())[list.get(i).length-2] = String.valueOf("0");
+    }
+
+    private void initQuestion(){
+        for (int i = 0; i < entryList.size(); i++) {
+            List<List<String>> tmp = entryList.get(i).getValue();
+            answer.add(new String[tmp.get(1).size() +2]);
+            answer.get(i)[tmp.get(1).size()+1] = String.valueOf(tmp.get(1).size());
+            answer.get(i)[tmp.get(1).size()] = String.valueOf("0");
         }
+    }
+
+    private String[] saveList(String[] list){
+
+        String[] newList = new String[list.length];
+        System.out.println("list:" + Arrays.toString(list));
+        newList[list.length-1] = String.valueOf(list.length-2);
+        newList[list.length-2] = String.valueOf("0");
         return newList;
     }
 
@@ -177,6 +186,7 @@ public class QuizTestController implements Initializable {
                             e1.printStackTrace();
                         }
                         System.out.println("Main view");
+                        isRunning.set(false);
                     }
                 });
         no.addEventHandler(MouseEvent.MOUSE_CLICKED,
@@ -184,6 +194,7 @@ public class QuizTestController implements Initializable {
 
                     dialog.close();
                     submit.setVisible(true);
+                    isRunning.set(false);
                 });
 
         dialogHbox.getChildren().addAll(dialogVbox1, dialogVbox2);
@@ -192,7 +203,6 @@ public class QuizTestController implements Initializable {
         dialog.setScene(dialogScene);
         dialog.show();
         submit.setVisible(false);
-        myRunnableThread.stop();
     }
 
 
@@ -205,8 +215,8 @@ public class QuizTestController implements Initializable {
         //init piechart
         ObservableList<PieChart.Data> list = FXCollections.observableArrayList();
         PieChart res = new PieChart();
-        int numberOfWrong = Integer.valueOf( answer.get(contestLists.getSelectionModel().getSelectedIndex())[answer.get(contestLists.getSelectionModel().getSelectedIndex()).length -1]);
-        int numberOfCorrect = Integer.valueOf( answer.get(contestLists.getSelectionModel().getSelectedIndex())[answer.get(contestLists.getSelectionModel().getSelectedIndex()).length -2]);
+        int numberOfWrong = Integer.valueOf( answer.get(selectedIdx)[answer.get(selectedIdx).length -1]);
+        int numberOfCorrect = Integer.valueOf( answer.get(selectedIdx)[answer.get(selectedIdx).length -2]);
         list.addAll(new PieChart.Data("Correct :" +numberOfCorrect +" question", numberOfCorrect),
                 new PieChart.Data("Wrong :" + numberOfWrong + " question", numberOfWrong));
         res.setData(list);
@@ -235,23 +245,26 @@ public class QuizTestController implements Initializable {
         dialogHbox.getChildren().add(review);
         dialogHbox.getChildren().add(restart);
         dialog.initStyle(StageStyle.TRANSPARENT);
-
+        isRunning.set(false);
         review.addEventHandler(MouseEvent.MOUSE_CLICKED,
                 e -> {
-                    answer = saveList(clone);
+                    answer.set(selectedIdx, clone);
                     listView.setCellFactory(param -> new QuestionCell(true));
                     // inside here you can use the minimize or close the previous stage//
                     dialog.close();
                     submit.setVisible(true);
+                    isRunning.set(false);
                 });
         restart.addEventHandler(MouseEvent.MOUSE_CLICKED,
                 e -> {
-                    answer = saveList(clone);
+                    answer.set(selectedIdx, clone);
                     System.out.println(Arrays.toString(answer.get(0)));
                     //refresh listview when user restart contest.
                     listView.setCellFactory(param -> new QuestionCell(false));
                     dialog.close();
+
                     submit.setVisible(true);
+                    isRunning.set(true);
                     if (!myRunnableThread.isAlive()){
                         myRunnableThread = new Thread(myRunnable);
                         myRunnableThread.start();
@@ -263,7 +276,7 @@ public class QuizTestController implements Initializable {
         dialog.setScene(dialogScene);
         dialog.show();
         submit.setVisible(false);
-        myRunnableThread.stop();
+
 
     }
 
@@ -288,8 +301,7 @@ public class QuizTestController implements Initializable {
             optionB = new RadioButton();
             optionC = new RadioButton();
             optionD = new RadioButton();
-            ans = new Text();
-            key = new Text();
+
             number = new Text();
             content = new HBox(number, question);
             choose= new HBox(  optionA, optionB ,
@@ -338,33 +350,30 @@ public class QuizTestController implements Initializable {
                     group.selectedToggleProperty().addListener((obs, oldSel, newSel) -> {
                         if (group.getSelectedToggle() != null) {
                             if (group.getSelectedToggle().getUserData() != null )
-//                                System.out.println(group.getSelectedToggle().getUserData().toString());
+//
                                 //get topic's index is selected
                                 if (optionA.isSelected())
-                                    answer.get(contestLists.getSelectionModel().getSelectedIndex())[getIndex()]  = "A";
+                                    answer.get(selectedIdx)[getIndex()]  = "A";
                                 else  if (optionB.isSelected())
-                                    answer.get(contestLists.getSelectionModel().getSelectedIndex())[getIndex()]  = "B";
+                                    answer.get(selectedIdx)[getIndex()]  = "B";
                                 else  if (optionC.isSelected())
-                                    answer.get(contestLists.getSelectionModel().getSelectedIndex())[getIndex()]  = "C";
+                                    answer.get(selectedIdx)[getIndex()]  = "C";
                                 else
-                                    answer.get(contestLists.getSelectionModel().getSelectedIndex())[getIndex()]  = "D";
-                            System.out.println(answer.get(contestLists.getSelectionModel().getSelectedIndex())[getIndex()]);
+                                    answer.get(selectedIdx)[getIndex()]  = "D";
+                            System.out.println(answer.get(selectedIdx)[getIndex()]);
                         }
 
-                        if (answer.get(contestLists.getSelectionModel().getSelectedIndex())[getIndex()].equals(item.getKey())){
-                            answer.get(contestLists.getSelectionModel().getSelectedIndex())[answer.get(contestLists.getSelectionModel().getSelectedIndex()).length -2] =
-                                    Integer.toString(Integer.parseInt(answer.get(contestLists.getSelectionModel().getSelectedIndex())[answer.get(contestLists.getSelectionModel().getSelectedIndex()).length -2 ])+1);
-                            answer.get(contestLists.getSelectionModel().getSelectedIndex())[answer.get(contestLists.getSelectionModel().getSelectedIndex()).length -1] =
-                                    Integer.toString(Integer.parseInt(answer.get(contestLists.getSelectionModel().getSelectedIndex())[answer.get(contestLists.getSelectionModel().getSelectedIndex()).length-1]) -1) ;
+                        if (answer.get(selectedIdx)[getIndex()].equals(item.getKey())){
+                            answer.get(selectedIdx)[answer.get(selectedIdx).length -2] =
+                                    Integer.toString(Integer.parseInt(answer.get(selectedIdx)[answer.get(selectedIdx).length -2 ])+1);
+                            answer.get(selectedIdx)[answer.get(selectedIdx).length -1] =
+                                    Integer.toString(Integer.parseInt(answer.get(selectedIdx)[answer.get(selectedIdx).length-1]) -1) ;
                         }
-//                        listView.getSelectionModel().select(getIndex());
-//                        listView.getFocusModel().focus(listView.getSelectionModel().getSelectedIndex());
                     });
                 }else {
-
                     //check user's answer
-                    if (answer.get(contestLists.getSelectionModel().getSelectedIndex())[Integer.parseInt(item.getNumber())-1] != null){
-                        switch (answer.get(contestLists.getSelectionModel().getSelectedIndex())[Integer.parseInt(item.getNumber())-1]){
+                    if (answer.get(selectedIdx)[getIndex()] != null){
+                        switch (answer.get(selectedIdx)[getIndex()]){
                             case "A": optionA.setSelected(true);
                                 optionA.setStyle("-fx-background-color: #FF6A53");
                                 break;
@@ -378,7 +387,7 @@ public class QuizTestController implements Initializable {
                                 optionD.setStyle("-fx-background-color: #FF6A53");
                                 break;
                         }
-                        System.out.println(answer.get(contestLists.getSelectionModel().getSelectedIndex())[getIndex()]);
+                        System.out.println(answer.get(selectedIdx)[getIndex()]);
                     }
                     //show key
                     switch (item.getKey()){
@@ -413,30 +422,36 @@ public class QuizTestController implements Initializable {
 
         @Override
         public void run() {
+            isRunning.set(true);
+            while (isRunning.get()){
+                for (float i = 1; i <=100; i ++) {
+                    final double update_i = i;
+                    final int updateSec = (int) (i % 60);
+                    //Update JavaFX UI with runLater() in UI thread
+                    Platform.runLater(new Runnable(){
+                        final int minValue = Integer.valueOf(min.getText());
+                        final int s = (60- updateSec) % 60;
+                        final int m = s == 0 ? minValue-1: minValue;
+                        @Override
+                        public void run() {
+                            bar.setProgress(update_i / 100);
+                            min.setText(String.valueOf(m));
+                            sec.setText(String.valueOf(s));
 
-            for (float i = 1; i <=100; i ++) {
-                final double update_i = i;
-                final int updateSec = (int) (i % 60);
-                //Update JavaFX UI with runLater() in UI thread
-                Platform.runLater(new Runnable(){
-                    final int minValue = Integer.valueOf(min.getText());
-                final int s = (60- updateSec) % 60;
-                final int m = s == 0 ? minValue-1: minValue;
-                    @Override
-                    public void run() {
-                        bar.setProgress(update_i / 100);
-                        min.setText(String.valueOf(m));
-                        sec.setText(String.valueOf(s));
-                        if (m == 0 && s == 0)
-                            OnSubmit();
+                            if (m == 0 && s == 0)
+                                OnSubmit();
+                        }
+                    });
+                    if (!isRunning.get())
+                        break;
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(QuizTestController.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                });
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(QuizTestController.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
+
         }
 
     }
