@@ -40,7 +40,9 @@ import java.util.logging.Logger;
  * https://github.com/HanSolo/timer
  * Custom Progress bar:https://stackoverflow.com/questions/19417246/how-can-i-style-the-progressbar-component-in-javafx
  * docs oracle:https://docs.oracle.com/javase/8/javafx/user-interface-tutorial/progress.htm
- * stop/start/restart/interrupt thread:https://stackoverflow.com/questions/1881714/how-to-start-stop-restart-a-thread-in-java*/
+ * stop/start/restart/interrupt thread:https://stackoverflow.com/questions/1881714/how-to-start-stop-restart-a-thread-in-java
+ * killing a thread:https://stackoverflow.com/questions/39683952/how-to-stop-a-running-thread-in-java
+ * and https://www.baeldung.com/java-thread-stop*/
 public class QuizTestController implements Initializable {
 
     @FXML
