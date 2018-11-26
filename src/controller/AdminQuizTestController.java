@@ -47,30 +47,10 @@ public class AdminQuizTestController implements Initializable {
     @FXML
     TableColumn<QuizTestGrammarModel.QuizzQuesstionView, String> contestidCol;
     @FXML
-    TableColumn<QuizTestGrammarModel.QuizzQuesstionView, String> grammarIdCol;
-    @FXML
     TableColumn<QuizTestGrammarModel.QuizzQuesstionView, MenuButton> actionCol;
 
     ObservableList<QuizTestGrammarModel.QuizzQuesstionView> data;
 
-    @FXML
-    TextField idText;
-    @FXML
-    TextField questionText;
-    @FXML
-    TextField optionAText;
-    @FXML
-    TextField optionBText;
-    @FXML
-    TextField optionCText;
-    @FXML
-    TextField optionDText;
-    @FXML
-    TextField keyText;
-    @FXML
-    TextField contestidText;
-    @FXML
-    TextField grammarIdText;
     @FXML
     TextField searchingField;
     @FXML
@@ -98,8 +78,6 @@ public class AdminQuizTestController implements Initializable {
                 new PropertyValueFactory<>("key"));
         contestidCol.setCellValueFactory(
                 new PropertyValueFactory<>("contestid"));
-        grammarIdCol.setCellValueFactory(
-                new PropertyValueFactory<>("grammarid"));
 
         actionCol.setCellValueFactory(
                 new PropertyValueFactory<>("menuButton"));
@@ -107,33 +85,52 @@ public class AdminQuizTestController implements Initializable {
         menuButton = new ArrayList<>();
         data = FXCollections.observableArrayList();
         for (int i = 0; i < listQuestion.get(0).size(); i++) {
-            menuButton.add(new MenuButton());
-            MenuItem edit = new MenuItem("edit");
-            MenuItem delete = new MenuItem("delete");
-            menuButton.get(i).setText("...");
-            menuButton.get(i).getItems().addAll(edit);
-            menuButton.get(i).getItems().addAll(delete);
-            int id = i;
-            edit.setOnAction(event -> {
-                OnEdit(false);
-                System.out.println("edit");
-            });
-            delete.setOnAction(event -> {
-                System.out.println(id);
-                removeSelectedRows(Integer.parseInt(listQuestion.get(0).get(id)), tableView.getSelectionModel().getSelectedIndex());
-                System.out.println("remove row:" + tableView.getSelectionModel().getSelectedIndex());
-            });
-
-            data.addAll(new QuizTestGrammarModel.QuizzQuesstionView(listQuestion.get(0).get(i),
-                    listQuestion.get(1).get(i), listQuestion.get(2).get(i),listQuestion.get(3).get(i),
-                    listQuestion.get(4).get(i), listQuestion.get(5).get(i),
-                    listQuestion.get(6).get(i), (listQuestion.get(7).get(i)), (listQuestion.get(8).get(i)) , menuButton.get(i)) );
-
-
+          addQuestion(i);
         }
         tableView.setItems(data);
         tableView.setRowFactory(param -> new rowQuizzQuestion());
         filter();
+
+    }
+
+    private void addQuestion(int i){
+        menuButton.add(new MenuButton());
+        MenuItem edit = new MenuItem("EDIT");
+        MenuItem delete = new MenuItem("DELETE");
+        MenuItem add = new MenuItem("ADD");
+        menuButton.get(i).setText("...");
+        menuButton.get(i).getItems().add(add);
+        menuButton.get(i).getItems().addAll(edit);
+        menuButton.get(i).getItems().addAll(delete);
+        edit.setOnAction(event -> {
+            if (tableView.getSelectionModel().getSelectedIndex() == -1)
+                OnMessage("YOU HAVE NOT CHOSEN ANY ROW", Alert.AlertType.ERROR, "ERORR", "YOU HAVE ENTERED SOMETHINGS WRONG:");
+            else {
+                OnEdit(true);
+            }
+        });
+        delete.setOnAction(event -> {
+            if (tableView.getSelectionModel().getSelectedIndex() == -1)
+                OnMessage("YOU HAVE NOT CHOSEN ANY ROW", Alert.AlertType.ERROR, "ERORR", "YOU HAVE ENTERED SOMETHINGS WRONG:");
+            else {
+                removeSelectedRows(Integer.parseInt(listQuestion.get(0).get(i)), tableView.getSelectionModel().getSelectedIndex());
+                System.out.println("remove row:" + tableView.getSelectionModel().getSelectedIndex());
+            }
+
+        });
+        add.setOnAction(event -> {
+            if (tableView.getSelectionModel().getSelectedIndex() == -1)
+                OnMessage("YOU HAVE NOT CHOSEN ANY ROW", Alert.AlertType.ERROR, "ERORR", "YOU HAVE ENTERED SOMETHINGS WRONG:");
+            else {
+                OnEdit(false);
+
+            }
+        });
+        data.addAll(new QuizTestGrammarModel.QuizzQuesstionView(listQuestion.get(0).get(i),
+                listQuestion.get(1).get(i), listQuestion.get(2).get(i),listQuestion.get(3).get(i),
+                listQuestion.get(4).get(i), listQuestion.get(5).get(i),
+                listQuestion.get(6).get(i), (listQuestion.get(7).get(i)) , menuButton.get(i)) );
+
 
     }
 
@@ -165,47 +162,42 @@ public class AdminQuizTestController implements Initializable {
         data.remove(selectedIndex);
     }
 
-    private void editableCols() {
 
-
-    }
-
-    public void addRow(){
-        menuButton.add(new MenuButton());
-        MenuItem edit = new MenuItem("edit");
-        MenuItem delete = new MenuItem("delete");
-        edit.setOnAction(event -> {
-            editableCols();
-            System.out.println("edit");
-        });
-        delete.setOnAction(event -> {
-            removeSelectedRows(Integer.parseInt((tableView.getSelectionModel().getSelectedItem().getQuizzcontestid())), tableView.getSelectionModel().getSelectedIndex());
-        });
-        menuButton.get(menuButton.size() -1).setText("...");
-        menuButton.get(menuButton.size() -1).getItems().addAll(edit);
-        menuButton.get(menuButton.size() -1).getItems().addAll(delete);
-        data.addAll(new QuizTestGrammarModel.QuizzQuesstionView(
-                idText.getText(),questionText.getText(),optionAText.getText(),
-                optionBText.getText(),optionCText.getText(),optionDText.getText(),keyText.getText(),contestidText.getText(), grammarIdText.getText(),
-                menuButton.get(menuButton.size() -1))
-        );
-        model.addNewTestGrammar(new QuizTestGrammarModel.QuizzQuesstionView(
-                idText.getText(),questionText.getText(),optionAText.getText(),
-                optionBText.getText(),optionCText.getText(),optionDText.getText(),keyText.getText(),
-                contestidText.getText(), grammarIdText.getText(), menuButton.get(menuButton.size() -1))
-        );
-
-        questionText.clear();
-        optionAText.clear();
-        optionBText.clear();
-        optionCText.clear();
-        optionDText.clear();
-        grammarIdText.clear();
-        contestidText.clear();
-        idText.clear();
-        keyText.clear();
-
-    }
+//    public void addRow(){
+//        menuButton.add(new MenuButton());
+//        MenuItem edit = new MenuItem("edit");
+//        MenuItem delete = new MenuItem("delete");
+//        edit.setOnAction(event -> {
+//            editableCols();
+//            System.out.println("edit");
+//        });
+//        delete.setOnAction(event -> {
+//            removeSelectedRows(Integer.parseInt((tableView.getSelectionModel().getSelectedItem().getQuizzcontestid())), tableView.getSelectionModel().getSelectedIndex());
+//        });
+//        menuButton.get(menuButton.size() -1).setText("...");
+//        menuButton.get(menuButton.size() -1).getItems().addAll(edit);
+//        menuButton.get(menuButton.size() -1).getItems().addAll(delete);
+//        data.addAll(new QuizTestGrammarModel.QuizzQuesstionView(
+//                idText.getText(),questionText.getText(),optionAText.getText(),
+//                optionBText.getText(),optionCText.getText(),optionDText.getText(),keyText.getText(),contestidText.getText(),
+//                menuButton.get(menuButton.size() -1))
+//        );
+//        model.addNewTestGrammar(new QuizTestGrammarModel.QuizzQuesstionView(
+//                idText.getText(),questionText.getText(),optionAText.getText(),
+//                optionBText.getText(),optionCText.getText(),optionDText.getText(),keyText.getText(),
+//                contestidText.getText(),  menuButton.get(menuButton.size() -1))
+//        );
+//
+//        questionText.clear();
+//        optionAText.clear();
+//        optionBText.clear();
+//        optionCText.clear();
+//        optionDText.clear();
+//        contestidText.clear();
+//        idText.clear();
+//        keyText.clear();
+//
+//    }
 
     private static class rowQuizzQuestion extends TableRow<QuizTestGrammarModel.QuizzQuesstionView>{
         private Label id;
@@ -216,7 +208,6 @@ public class AdminQuizTestController implements Initializable {
         private Label optionD;
         private Label key;
         private Label contestid;
-        private Label grammarid;
         private MenuButton action;
         public rowQuizzQuestion(){
             super();
@@ -227,7 +218,6 @@ public class AdminQuizTestController implements Initializable {
             optionC = new Label();
             optionD = new Label();
             key = new Label();
-            grammarid = new Label();
             contestid = new Label();
         }
 
@@ -242,7 +232,6 @@ public class AdminQuizTestController implements Initializable {
                 optionC.setText(item.getOptionC());
                 optionD.setText(item.getOptionD());
                 key.setText(item.getKey());
-                grammarid.setText(item.getGrammarid());
                 contestid.setText(item.getContestid());
             }else setGraphic(null);
 
@@ -309,25 +298,84 @@ public class AdminQuizTestController implements Initializable {
         keyText.setPromptText("KEY");
         keyHbox.getChildren().addAll(keylabel, keyText);
 
-        HBox grammaridHbox = new HBox(5);
-        Label grammaridlabel = new Label("GRAMMAR ID");
-        TextField grammaridText = new TextField();
-        grammarIdText.setPromptText("GRAMMAR ID");
-        grammaridHbox.getChildren().addAll(grammaridlabel, grammaridText);
 
         HBox contestidHbox = new HBox(5);
         Label contestidlabel = new Label("CONTEST ID");
         TextField contestidText = new TextField();
         contestidText.setPromptText("CONTEST ID");
         contestidHbox.getChildren().addAll(contestidlabel, contestidText);
+        int selectedIdx = tableView.getSelectionModel().getSelectedIndex();
+        if (isEditable){
+            idText.setText(listQuestion.get(0).get(selectedIdx));
+            questionText.setText(listQuestion.get(1).get(selectedIdx));
+            optionAText.setText(listQuestion.get(2).get(selectedIdx));
+            optionBText.setText(listQuestion.get(3).get(selectedIdx));
+            optionCText.setText(listQuestion.get(4).get(selectedIdx));
+            optionDText.setText(listQuestion.get(5).get(selectedIdx));
+            keyText.setText(listQuestion.get(6).get(selectedIdx));
+            contestidText.setText(listQuestion.get(7).get(selectedIdx));
+            listQuestion.get(0).set(selectedIdx, String.valueOf(-1));
+        }
 
         update.addEventHandler(MouseEvent.MOUSE_CLICKED,
                 e -> {
+                    if (isValid(idText.getText(), keyText.getText(),optionAText.getText(),
+                            optionBText.getText(), optionCText.getText(), optionDText.getText(), true) &&
+                            !isEmpty(idText.getText(), questionText.getText(), optionAText.getText(),
+                                    optionBText.getText(), optionCText.getText(), optionDText.getText(),
+                                    keyText.getText())){
+                        model.update(idText.getText(), new QuizTestGrammarModel.QuizzQuesstion(idText.getText(), questionText.getText(), optionAText.getText(),
+                                optionBText.getText(), optionCText.getText(), optionDText.getText(),
+                                keyText.getText(), contestidText.getText()));
+                        dialog.close();
+                        listQuestion.get(0).set(selectedIdx, idText.getText());
+                        listQuestion.get(1).set(selectedIdx, questionText.getText());
+                        listQuestion.get(2).set(selectedIdx, optionAText.getText());
+                        listQuestion.get(3).set(selectedIdx, optionBText.getText());
+                        listQuestion.get(4).set(selectedIdx, optionCText.getText());
+                        listQuestion.get(5).set(selectedIdx, optionDText.getText());
+                        listQuestion.get(6).set(selectedIdx, keyText.getText());
+                        listQuestion.get(7).set(selectedIdx, contestidText.getText());
+                        OnMessage("", Alert.AlertType.INFORMATION, "SUCCESS", "DONE!");
 
+                        data.set(selectedIdx,new QuizTestGrammarModel.QuizzQuesstionView(listQuestion.get(1).get(selectedIdx), listQuestion.get(2).get(selectedIdx),listQuestion.get(3).get(selectedIdx),
+                                listQuestion.get(4).get(selectedIdx), listQuestion.get(5).get(selectedIdx),
+                                listQuestion.get(6).get(selectedIdx), (listQuestion.get(0).get(selectedIdx)), listQuestion.get(7).get(selectedIdx) , menuButton.get(selectedIdx)) );
+
+                    }
                 });
         add.addEventHandler(MouseEvent.MOUSE_CLICKED,
                 e -> {
-
+                    if (isValid(idText.getText(),  keyText.getText(),optionAText.getText(),
+                            optionBText.getText(), optionCText.getText(), optionDText.getText(), false) &&
+                            !isEmpty(idText.getText(), questionText.getText(), optionAText.getText(),
+                                    optionBText.getText(), optionCText.getText(), optionDText.getText(),
+                                    keyText.getText())){
+                        QuizTestGrammarModel.QuizzQuesstionView quizzQuesstionView =
+                                new QuizTestGrammarModel.QuizzQuesstionView(
+                                        questionText.getText(),questionText.getText(),optionAText.getText(),
+                                        optionAText.getText(),optionCText.getText(),optionDText.getText(),keyText.getText(), contestidText.getText(), menuButton.get(selectedIdx));
+                        listQuestion.get(0).add(idText.getText());
+                        listQuestion.get(1).add(questionText.getText());
+                        listQuestion.get(2).add(optionAText.getText());
+                        listQuestion.get(3).add(optionBText.getText());
+                        listQuestion.get(4).add(optionCText.getText());
+                        listQuestion.get(5).add(optionDText.getText());
+                        listQuestion.get(6).add(keyText.getText());
+                        listQuestion.get(7).add(contestidText.getText());
+                        data.add(quizzQuesstionView);
+                        addQuestion(selectedIdx);
+                        model.addNewTestGrammar(quizzQuesstionView);
+                        OnMessage("", Alert.AlertType.INFORMATION, "SUCCESS", "DONE!");
+                        questionText.clear();
+                        idText.clear();
+                        optionAText.clear();
+                        optionBText.clear();
+                        optionCText.clear();
+                        optionDText.clear();
+                        contestidText.clear();
+                        keyText.clear();
+                    }
 
                 });
         dialogVbox1.getChildren().addAll(idHbox);
@@ -337,7 +385,6 @@ public class AdminQuizTestController implements Initializable {
         dialogVbox1.getChildren().addAll(optionCHbox);
         dialogVbox1.getChildren().addAll(optionDHbox);
         dialogVbox1.getChildren().addAll(keyHbox);
-        dialogVbox1.getChildren().addAll(grammaridHbox);
         if (isEditable)
             dialogVbox1.getChildren().addAll(update);
         else dialogVbox1.getChildren().addAll(add);
@@ -357,5 +404,65 @@ public class AdminQuizTestController implements Initializable {
                 "    -fx-background-radius: 0px;\n" +
                 "    -fx-text-fill: #0099ff;");
         dialog.show();
+    }
+    public void OnMessage(String message, Alert.AlertType type, String title, String header) {
+        Alert alert  = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    public boolean isValid(String id, String key, String optionA,
+                           String optionB, String optionC, String optionD, boolean isEdit){
+        if (!id.matches("[0-9]*")) {
+            OnMessage("YOU MUST ENTER NUMBER ", Alert.AlertType.ERROR, "ERROR", "ERROR");
+            return false;
+        }
+        if (!key.matches("[A-D]")) {
+            OnMessage("YOU MUST ENTER A, B, C OR D ", Alert.AlertType.ERROR, "ERROR", "ERROR");
+            return false;
+        }
+
+        if (listQuestion.get(0).contains(id) && !isEdit){
+            OnMessage("YOU HAVE ENTER DUPLICATE ID ", Alert.AlertType.ERROR, "ERROR", "ERROR");
+            return false;
+        }else if (listQuestion.get(0).contains(id) && isEdit){
+            OnMessage("YOU HAVE ENTER DUPLICATE ID ", Alert.AlertType.ERROR, "ERROR", "ERROR");
+
+            return false;
+        }
+//        if (!listQuestion.get(7).contains(grammarid)){
+//            OnMessage("YOU HAVE ENTER INVALID GRAMMAR ID ", Alert.AlertType.ERROR, "ERROR", "ERROR");
+//            return false;
+//        }
+        return true;
+    }
+
+    public boolean isEmpty(String id, String question, String optionA, String optionB,
+                           String optionC, String optionD, String key){
+        if (id.equals("")){
+            OnMessage("YOU HAVE NOT ENTERED ID YET ", Alert.AlertType.ERROR, "ERROR", "ERROR");
+            return true;
+        }else if (question.equals("")){
+            OnMessage("YOU HAVE NOT ENTERED QUESTION YET ", Alert.AlertType.ERROR, "ERROR", "ERROR");
+            return true;
+        }else if (optionA.equals("")){
+            OnMessage("YOU HAVE NOT ENTERED OPTION A YET ", Alert.AlertType.ERROR, "ERROR", "ERROR");
+            return true;
+        }else if (optionB.equals("")){
+            OnMessage("YOU HAVE NOT ENTERED OPTION B YET ", Alert.AlertType.ERROR, "ERROR", "ERROR");
+            return true;
+        }else if (optionC.equals("")){
+            OnMessage("YOU HAVE NOT ENTERED OPTION C YET ", Alert.AlertType.ERROR, "ERROR", "ERROR");
+            return true;
+        }else if (optionD.equals("")){
+            OnMessage("YOU HAVE NOT ENTERED OPTION D YET ", Alert.AlertType.ERROR, "ERROR", "ERROR");
+            return true;
+        }else if (key.equals("")){
+            OnMessage("YOU HAVE NOT ENTERED KEY YET ", Alert.AlertType.ERROR, "ERROR", "ERROR");
+            return true;
+        }
+        return false;
     }
 }

@@ -6,23 +6,22 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1150.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AdminQuizTestController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AdminQuizTestController">
    <children>
-      <TableView fx:id="tableView" layoutY="58.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="682.0" prefWidth="1150.0">
+      <TableView fx:id="tableView" layoutX="7.0" layoutY="86.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="699.0" prefWidth="1178.0">
          <columns>
-            <TableColumn fx:id="idCol" prefWidth="58.39999467134476" text="id" />
-            <TableColumn fx:id="questionCol" prefWidth="371.20002365112305" text="Question" />
-            <TableColumn fx:id="optionACol" minWidth="0.0" prefWidth="111.20001220703125" text="A" />
-            <TableColumn fx:id="optionBCol" prefWidth="108.0" text="B" />
-            <TableColumn fx:id="optionCCol" prefWidth="106.4000244140625" text="C" />
-            <TableColumn fx:id="optionDCol" prefWidth="106.39996337890625" text="D" />
-            <TableColumn fx:id="keyCol" maxWidth="177.5999755859375" prefWidth="64.79986572265625" text="KEY" />
-            <TableColumn fx:id="grammarIdCol" maxWidth="188.00003662109373" prefWidth="78.39996337890625" text="GRAMMARID" />
-            <TableColumn fx:id="contestidCol" maxWidth="188.00003662109373" text="CONTESTID" />
-            <TableColumn fx:id="actionCol" maxWidth="188.00003662109373" prefWidth="62.40000000000009" text="ACTION" />
+            <TableColumn fx:id="idCol" prefWidth="35.200013160705566" text="id" />
+            <TableColumn fx:id="questionCol" prefWidth="395.1999931335449" text="Question" />
+            <TableColumn fx:id="optionACol" minWidth="0.0" prefWidth="122.39999389648438" text="A" />
+            <TableColumn fx:id="optionBCol" prefWidth="117.5999755859375" text="B" />
+            <TableColumn fx:id="optionCCol" prefWidth="119.20001220703125" text="C" />
+            <TableColumn fx:id="optionDCol" prefWidth="113.5999755859375" text="D" />
+            <TableColumn fx:id="keyCol" maxWidth="177.5999755859375" prefWidth="95.99993896484375" text="KEY" />
+            <TableColumn fx:id="contestidCol" maxWidth="188.00003662109373" prefWidth="84.7999267578125" text="CONTESTID" />
+            <TableColumn fx:id="actionCol" maxWidth="188.00003662109373" prefWidth="90.39990234375" text="ACTION" />
          </columns>
       </TableView>
-      <TextField fx:id="searchingField" layoutX="46.0" layoutY="14.0" prefHeight="26.0" prefWidth="354.0" />
-      <Text fx:id="filterText" layoutX="58.0" layoutY="32.0" opacity="0.3" strokeType="OUTSIDE" strokeWidth="0.0" text="Filter........." wrappingWidth="110.3999923914671" />
+      <TextField fx:id="searchingField" layoutX="45.0" layoutY="40.0" prefHeight="26.0" prefWidth="354.0" />
+      <Text fx:id="filterText" layoutX="57.0" layoutY="58.0" opacity="0.3" strokeType="OUTSIDE" strokeWidth="0.0" text="Filter........." wrappingWidth="110.3999923914671" />
    </children>
 </AnchorPane>

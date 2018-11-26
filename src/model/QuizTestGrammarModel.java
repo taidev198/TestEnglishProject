@@ -17,6 +17,26 @@ public class QuizTestGrammarModel {
 
     public QuizTestGrammarModel(){}
 
+
+    public void update(String id, QuizzQuesstion quizzQuesstion ){
+        String query = "update quizzcontest SET quizzcontestid = ?, questtion =  ?, a = ?, b = ?, c= ?, d = ?, quizzcontest.key = ?, contestid = ? WHERE quizzcontestid = ?";
+        try(PreparedStatement statement = ConnectDataHelper.getInstance().connectDB().prepareStatement(query)) {
+            statement.setInt(1, Integer.parseInt(quizzQuesstion.getQuizzcontestid()));
+            statement.setString(2, quizzQuesstion.getQuestion());
+            statement.setString(3, quizzQuesstion.getOptionA());
+            statement.setString(4, quizzQuesstion.getOptionB());
+            statement.setString(5, quizzQuesstion.getOptionC());
+            statement.setString(6, quizzQuesstion.getOptionD());
+            statement.setString(7, quizzQuesstion.getKey());
+            statement.setInt(8, Integer.parseInt(quizzQuesstion.getContestid()));
+            statement.setInt(9, Integer.parseInt(id));
+            statement.execute("use data");
+            statement.executeUpdate();
+        } catch (IllegalAccessException | InstantiationException | ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public List<List<String>> getDB(){
         String query = " select * from quizzcontest";
         List<List<String>> ans = new ArrayList<>();
@@ -31,7 +51,6 @@ public class QuizTestGrammarModel {
             List<String> d = new ArrayList<>();
             List<String> key = new ArrayList<>();
             List<String> contestid = new ArrayList<>();
-            List<String> grammarid = new ArrayList<>();
             while (resultSet.next()){
                 quizzcontestid.add(resultSet.getString("quizzcontestid"));
                 question.add(resultSet.getString("question"));
@@ -41,7 +60,7 @@ public class QuizTestGrammarModel {
                 d.add(resultSet.getString("d"));
                 key.add(resultSet.getString("key"));
                 contestid.add(String.valueOf(resultSet.getInt("contestid")));
-                grammarid.add(String.valueOf(resultSet.getInt("grammarid")));
+
             }
             ans.add(quizzcontestid);
             ans.add(question);
@@ -51,7 +70,6 @@ public class QuizTestGrammarModel {
             ans.add(d);
             ans.add(key);
             ans.add(contestid);
-            ans.add(grammarid);
         } catch (IllegalAccessException | InstantiationException | SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -72,7 +90,7 @@ public class QuizTestGrammarModel {
 
     public boolean addNewTestGrammar(QuizzQuesstion question){
 
-        String query = "insert into quizzcontest(quizzcontestid, question, a, b, c, d,quizzcontest.key,contestid, grammarid) values(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String query = "insert into quizzcontest(quizzcontestid, question, a, b, c, d,quizzcontest.key,contestid) values(?, ?, ?, ?, ?, ?, ?, ?)";
         try(PreparedStatement statement = ConnectDataHelper.getInstance().connectDB().prepareStatement(query)) {
             statement.execute("use data");
             statement.setInt(1, Integer.parseInt(question.getQuizzcontestid()));
@@ -83,7 +101,6 @@ public class QuizTestGrammarModel {
             statement.setString(6, question.getOptionD());
             statement.setString(7, question.getKey());
             statement.setInt(8, Integer.parseInt(question.getContestid()));
-            statement.setInt(9, Integer.parseInt(question.getGrammarid()));
             statement.executeUpdate();
         } catch (IllegalAccessException | InstantiationException | ClassNotFoundException | SQLException e) {
             e.printStackTrace();
@@ -102,10 +119,10 @@ public class QuizTestGrammarModel {
         private String optionD;
         private String key;
         private String contestid;
-        private String grammarid;
+
 
         public QuizzQuesstion(String quizzcontestid, String question, String optionA, String optionB, String optionC,
-                              String optionD, String key, String contestid, String grammarid) {
+                              String optionD, String key, String contestid) {
             this.quizzcontestid = quizzcontestid;
             this.question = question;
             this.optionA = optionA;
@@ -114,7 +131,6 @@ public class QuizTestGrammarModel {
             this.optionD = optionD;
             this.key = key;
             this.contestid = contestid;
-            this.grammarid = grammarid;
         }
 
         public String getQuizzcontestid() {
@@ -181,20 +197,13 @@ public class QuizTestGrammarModel {
             this.contestid = contestid;
         }
 
-        public String getGrammarid() {
-            return grammarid;
-        }
-
-        public void setGrammarid(String grammarid) {
-            this.grammarid = grammarid;
-        }
     }
 
     public static class QuizzQuesstionView extends QuizzQuesstion{
         private MenuButton menuButton;
         public QuizzQuesstionView(String quizzcontestid, String question, String optionA, String optionB,
-                                  String optionC, String optionD, String key, String contestid, String grammarid, MenuButton menuButton) {
-            super(quizzcontestid, question, optionA, optionB, optionC, optionD, key, contestid, grammarid);
+                                  String optionC, String optionD, String key, String contestid, MenuButton menuButton) {
+            super(quizzcontestid, question, optionA, optionB, optionC, optionD, key, contestid);
             this.menuButton = menuButton;
         }
 

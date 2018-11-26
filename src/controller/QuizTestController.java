@@ -3,6 +3,7 @@ package controller;
 import animatefx.animation.FadeIn;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -27,6 +28,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import model.QuizTestGrammarModel;
 import model.TestGrammarModel;
 
 import java.io.IOException;
@@ -120,7 +122,76 @@ public class QuizTestController implements Initializable {
             dot.setVisible(true);
             listView.getItems().clear();
             clone = saveList(answer.get(selectedIdx));
-            listView.setCellFactory(param -> new QuestionCell(false));
+            listView.setCellFactory(param -> {
+                QuestionCell cell = new QuestionCell(false);
+
+                    cell.getGroup().selectedToggleProperty().addListener((obs, oldSel, newSel) -> {
+                        if (cell.getGroup().getSelectedToggle() != null) {
+                            if (cell.getGroup().getSelectedToggle().getUserData() != null )
+//
+                                //get topic's index is selected
+                                if (cell.optionA.isSelected())
+                                    answer.get(selectedIdx)[cell.getIndex()]  = "A";
+                                else  if (cell.optionB.isSelected())
+                                    answer.get(selectedIdx)[cell.getIndex()]  = "B";
+                                else  if (cell.optionC.isSelected())
+                                    answer.get(selectedIdx)[cell.getIndex()]  = "C";
+                                else
+                                    answer.get(selectedIdx)[cell.getIndex()]  = "D";
+                                listView.getItems().addListener(new ListChangeListener<TestGrammarModel.Question>() {
+                                    @Override
+                                    public void onChanged(Change<? extends TestGrammarModel.Question> c) {
+                                        System.out.println("thanh tai nguyen");
+                                    }
+                                });
+                        //    System.out.println(answer.get(selectedIdx)[cell.getIndex()]);
+                        }
+
+                        if (answer.get(selectedIdx)[cell.getIndex()].equals(cell.getItem().getKey())){
+                            answer.get(selectedIdx)[answer.get(selectedIdx).length -2] =
+                                    Integer.toString(Integer.parseInt(answer.get(selectedIdx)[answer.get(selectedIdx).length -2 ])+1);
+                            answer.get(selectedIdx)[answer.get(selectedIdx).length -1] =
+                                    Integer.toString(Integer.parseInt(answer.get(selectedIdx)[answer.get(selectedIdx).length-1]) -1) ;
+                        }
+                    });
+//                }else {
+//                    //check user's answer
+//                    if (answer.get(selectedIdx)[getIndex()] != null){
+//                        switch (answer.get(selectedIdx)[getIndex()]){
+//                            case "A": optionA.setSelected(true);
+//                                optionA.setStyle("-fx-background-color: #FF6A53");
+//                                break;
+//                            case "B": optionB.setSelected(true);
+//                                optionB.setStyle("-fx-background-color: #FF6A53");
+//                                break;
+//                            case "C": optionC.setSelected(true);
+//                                optionC.setStyle("-fx-background-color: #FF6A53");
+//                                break;
+//                            case "D": optionD.setSelected(true);
+//                                optionD.setStyle("-fx-background-color: #FF6A53");
+//                                break;
+//                        }
+//                        System.out.println(answer.get(selectedIdx)[getIndex()]);
+//                    }
+//                    //show key
+//                    switch (item.getKey()){
+//                        case "A":
+//                            optionA.setStyle("-fx-background-color: #499C54");
+//                            break;
+//                        case "B":
+//                            optionB.setStyle("-fx-background-color: #499C54");
+//                            break;
+//                        case "C":
+//                            optionC.setStyle("-fx-background-color: #499C54");
+//                            break;
+//                        case "D":
+//                            optionD.setStyle("-fx-background-color: #499C54");
+//                            break;
+//                    }
+//                }
+
+              return cell;
+            });
             for (int i =0; i< tmp.get(1).size(); i++ ) {
                 listView.getItems().add( new TestGrammarModel.Question(key.get(selectedIdx), tmp.get(1).get(i), tmp.get(2).get(i),tmp.get(3).get(i),
                         tmp.get(4).get(i), tmp.get(5).get(i), "", tmp.get(6).get(i), (tmp.get(0).get(i)),  tmp.get(6).get(i)));
@@ -282,7 +353,7 @@ public class QuizTestController implements Initializable {
 
     }
 
-    private class QuestionCell extends ListCell<TestGrammarModel.Question> {
+    public class QuestionCell extends ListCell<TestGrammarModel.Question> {
         private HBox content;
         private HBox choose;
         private Text question;
@@ -323,6 +394,10 @@ public class QuizTestController implements Initializable {
             this.isSummitted = isSummitted;
         }
 
+        public ToggleGroup getGroup() {
+            return group;
+        }
+
         @Override
         protected void updateItem(TestGrammarModel.Question item, boolean empty) {
             super.updateItem(item, empty);
@@ -348,65 +423,7 @@ public class QuizTestController implements Initializable {
                 number.setText(String.valueOf(item.getNumber()) + ": ");
                 setGraphic(vBox);
                 //handling event of group radio button.
-                if (!isSummitted){
-                    group.selectedToggleProperty().addListener((obs, oldSel, newSel) -> {
-                        if (group.getSelectedToggle() != null) {
-                            if (group.getSelectedToggle().getUserData() != null )
-//
-                                //get topic's index is selected
-                                if (optionA.isSelected())
-                                    answer.get(selectedIdx)[getIndex()]  = "A";
-                                else  if (optionB.isSelected())
-                                    answer.get(selectedIdx)[getIndex()]  = "B";
-                                else  if (optionC.isSelected())
-                                    answer.get(selectedIdx)[getIndex()]  = "C";
-                                else
-                                    answer.get(selectedIdx)[getIndex()]  = "D";
-                            System.out.println(answer.get(selectedIdx)[getIndex()]);
-                        }
 
-                        if (answer.get(selectedIdx)[getIndex()].equals(item.getKey())){
-                            answer.get(selectedIdx)[answer.get(selectedIdx).length -2] =
-                                    Integer.toString(Integer.parseInt(answer.get(selectedIdx)[answer.get(selectedIdx).length -2 ])+1);
-                            answer.get(selectedIdx)[answer.get(selectedIdx).length -1] =
-                                    Integer.toString(Integer.parseInt(answer.get(selectedIdx)[answer.get(selectedIdx).length-1]) -1) ;
-                        }
-                    });
-                }else {
-                    //check user's answer
-                    if (answer.get(selectedIdx)[getIndex()] != null){
-                        switch (answer.get(selectedIdx)[getIndex()]){
-                            case "A": optionA.setSelected(true);
-                                optionA.setStyle("-fx-background-color: #FF6A53");
-                                break;
-                            case "B": optionB.setSelected(true);
-                                optionB.setStyle("-fx-background-color: #FF6A53");
-                                break;
-                            case "C": optionC.setSelected(true);
-                                optionC.setStyle("-fx-background-color: #FF6A53");
-                                break;
-                            case "D": optionD.setSelected(true);
-                                optionD.setStyle("-fx-background-color: #FF6A53");
-                                break;
-                        }
-                        System.out.println(answer.get(selectedIdx)[getIndex()]);
-                    }
-                    //show key
-                    switch (item.getKey()){
-                        case "A":
-                            optionA.setStyle("-fx-background-color: #499C54");
-                            break;
-                        case "B":
-                            optionB.setStyle("-fx-background-color: #499C54");
-                            break;
-                        case "C":
-                            optionC.setStyle("-fx-background-color: #499C54");
-                            break;
-                        case "D":
-                            optionD.setStyle("-fx-background-color: #499C54");
-                            break;
-                    }
-                }
             }else {
                 setGraphic(null);
             }
