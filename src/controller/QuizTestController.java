@@ -28,6 +28,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Callback;
 import model.QuizTestGrammarModel;
 import model.TestGrammarModel;
 
@@ -76,7 +77,8 @@ public class QuizTestController implements Initializable {
     private Map<String, List<List<String>>> listQuestion;
     List<Map.Entry<String, List<List<String>>>> entryList;
     List<String> key;
-    int selectedIdx;
+    Integer selectedIdx;
+    Boolean isSubmited ;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         submit.setVisible(false);
@@ -95,107 +97,44 @@ public class QuizTestController implements Initializable {
         answer = new ArrayList<>();
         addListener();
         listView.setFocusTraversable( false );
+        this.isSubmited = true;
         //set disable
         min.setVisible(false);
         sec.setVisible(false);
         dot.setVisible(false);
+        listView.setCellFactory(param -> new QuestionCell(false));
         progressBar.setVisible(false);
     }
 
     private void addListener(){
         contestLists.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             submit.setVisible(true);
-           selectedIdx = contestLists.getSelectionModel().getSelectedIndex();
-            System.out.println(selectedIdx);
-            progressBar.setVisible(true);
-            progressBar.setProgress(0);
-            myRunnable  =new MyRunnable(progressBar);
-            myRunnableThread = new Thread(myRunnable);
-            myRunnableThread.start();
-            isRunning.set(true);
-            List<List<String>> tmp = entryList.get(selectedIdx).getValue();
-            welcomeText.setVisible(false);
-            description.setText(key.get(selectedIdx));
-            initQuestion();
-            min.setVisible(true);
-            sec.setVisible(true);
-            dot.setVisible(true);
-            listView.getItems().clear();
-            clone = saveList(answer.get(selectedIdx));
-            listView.setCellFactory(param -> {
-                QuestionCell cell = new QuestionCell(false);
-
-                    cell.getGroup().selectedToggleProperty().addListener((obs, oldSel, newSel) -> {
-                        if (cell.getGroup().getSelectedToggle() != null) {
-                            if (cell.getGroup().getSelectedToggle().getUserData() != null )
-//
-                                //get topic's index is selected
-                                if (cell.optionA.isSelected())
-                                    answer.get(selectedIdx)[cell.getIndex()]  = "A";
-                                else  if (cell.optionB.isSelected())
-                                    answer.get(selectedIdx)[cell.getIndex()]  = "B";
-                                else  if (cell.optionC.isSelected())
-                                    answer.get(selectedIdx)[cell.getIndex()]  = "C";
-                                else
-                                    answer.get(selectedIdx)[cell.getIndex()]  = "D";
-                                listView.getItems().addListener(new ListChangeListener<TestGrammarModel.Question>() {
-                                    @Override
-                                    public void onChanged(Change<? extends TestGrammarModel.Question> c) {
-                                        System.out.println("thanh tai nguyen");
-                                    }
-                                });
-                        //    System.out.println(answer.get(selectedIdx)[cell.getIndex()]);
-                        }
-
-                        if (answer.get(selectedIdx)[cell.getIndex()].equals(cell.getItem().getKey())){
-                            answer.get(selectedIdx)[answer.get(selectedIdx).length -2] =
-                                    Integer.toString(Integer.parseInt(answer.get(selectedIdx)[answer.get(selectedIdx).length -2 ])+1);
-                            answer.get(selectedIdx)[answer.get(selectedIdx).length -1] =
-                                    Integer.toString(Integer.parseInt(answer.get(selectedIdx)[answer.get(selectedIdx).length-1]) -1) ;
-                        }
-                    });
-//                }else {
-//                    //check user's answer
-//                    if (answer.get(selectedIdx)[getIndex()] != null){
-//                        switch (answer.get(selectedIdx)[getIndex()]){
-//                            case "A": optionA.setSelected(true);
-//                                optionA.setStyle("-fx-background-color: #FF6A53");
-//                                break;
-//                            case "B": optionB.setSelected(true);
-//                                optionB.setStyle("-fx-background-color: #FF6A53");
-//                                break;
-//                            case "C": optionC.setSelected(true);
-//                                optionC.setStyle("-fx-background-color: #FF6A53");
-//                                break;
-//                            case "D": optionD.setSelected(true);
-//                                optionD.setStyle("-fx-background-color: #FF6A53");
-//                                break;
-//                        }
-//                        System.out.println(answer.get(selectedIdx)[getIndex()]);
-//                    }
-//                    //show key
-//                    switch (item.getKey()){
-//                        case "A":
-//                            optionA.setStyle("-fx-background-color: #499C54");
-//                            break;
-//                        case "B":
-//                            optionB.setStyle("-fx-background-color: #499C54");
-//                            break;
-//                        case "C":
-//                            optionC.setStyle("-fx-background-color: #499C54");
-//                            break;
-//                        case "D":
-//                            optionD.setStyle("-fx-background-color: #499C54");
-//                            break;
-//                    }
-//                }
-
-              return cell;
-            });
-            for (int i =0; i< tmp.get(1).size(); i++ ) {
-                listView.getItems().add( new TestGrammarModel.Question(key.get(selectedIdx), tmp.get(1).get(i), tmp.get(2).get(i),tmp.get(3).get(i),
-                        tmp.get(4).get(i), tmp.get(5).get(i), "", tmp.get(6).get(i), (tmp.get(0).get(i)),  tmp.get(6).get(i)));
+            if (this.isSubmited){
+                this.isSubmited = false;
+                selectedIdx = contestLists.getSelectionModel().getSelectedIndex();
+                progressBar.setVisible(true);
+                progressBar.setProgress(0);
+                myRunnable  =new MyRunnable(progressBar);
+                myRunnableThread = new Thread(myRunnable);
+                if (myRunnableThread.isAlive())
+                    myRunnableThread.stop();
+                myRunnableThread.start();
+                isRunning.set(true);
+                List<List<String>> tmp = entryList.get(selectedIdx).getValue();
+                welcomeText.setVisible(false);
+                description.setText(key.get(selectedIdx));
+                initQuestion();
+                min.setVisible(true);
+                sec.setVisible(true);
+                dot.setVisible(true);
+                listView.getItems().clear();
+                clone = saveList(answer.get(selectedIdx));
+                for (int i =0; i< tmp.get(1).size(); i++ ) {
+                    listView.getItems().add( new TestGrammarModel.Question(key.get(selectedIdx), tmp.get(1).get(i), tmp.get(2).get(i),tmp.get(3).get(i),
+                            tmp.get(4).get(i), tmp.get(5).get(i), "", tmp.get(6).get(i), (tmp.get(0).get(i)),  tmp.get(6).get(i)));
+                }
             }
+
         });
 
     }
@@ -321,6 +260,7 @@ public class QuizTestController implements Initializable {
         isRunning.set(false);
         review.addEventHandler(MouseEvent.MOUSE_CLICKED,
                 e -> {
+                    this.isSubmited = true;
                     answer.set(selectedIdx, clone);
                     listView.setCellFactory(param -> new QuestionCell(true));
                     // inside here you can use the minimize or close the previous stage//
@@ -335,9 +275,8 @@ public class QuizTestController implements Initializable {
                     //refresh listview when user restart contest.
                     listView.setCellFactory(param -> new QuestionCell(false));
                     dialog.close();
-
+                    this.isSubmited = false;
                     submit.setVisible(true);
-                    isRunning.set(true);
                     if (!myRunnableThread.isAlive()){
                         myRunnableThread = new Thread(myRunnable);
                         myRunnableThread.start();
@@ -349,8 +288,6 @@ public class QuizTestController implements Initializable {
         dialog.setScene(dialogScene);
         dialog.show();
         submit.setVisible(false);
-
-
     }
 
     public class QuestionCell extends ListCell<TestGrammarModel.Question> {
@@ -424,8 +361,72 @@ public class QuizTestController implements Initializable {
                 setGraphic(vBox);
                 //handling event of group radio button.
 
+                if (!isSummitted){
+                    group.selectedToggleProperty().addListener((obs, oldSel, newSel) -> {
+                        if (group.getSelectedToggle() != null) {
+                            if (group.getSelectedToggle().getUserData() != null ){
+
+                                if (optionA.isSelected())
+                                    answer.get(selectedIdx)[getIndex()]  = "A";
+                                else  if (optionB.isSelected())
+                                    answer.get(selectedIdx)[getIndex()]  = "B";
+                                else  if (optionC.isSelected())
+                                    answer.get(selectedIdx)[getIndex()]  = "C";
+                                else
+                                    answer.get(selectedIdx)[getIndex()]  = "D";
+                                System.out.println(answer.get(selectedIdx)[getIndex()]);
+                            }
+                            System.out.println(group.getSelectedToggle().getUserData().toString());
+                            //get topic's index is selected
+
+                        }
+                        if (answer.get(selectedIdx)[getIndex()].equals(item.getKey())){
+                            answer.get(selectedIdx)[answer.get(selectedIdx).length -2] =
+                                    Integer.toString(Integer.parseInt(answer.get(selectedIdx)[answer.get(selectedIdx).length -2 ])+1);
+                            answer.get(selectedIdx)[answer.get(selectedIdx).length -1] =
+                                    Integer.toString(Integer.parseInt(answer.get(selectedIdx)[answer.get(selectedIdx).length-1]) -1) ;
+                        }
+                    });
+                }else {
+
+                    //check user's answer
+                    if (answer.get(selectedIdx)[getIndex()] != null){
+                        switch (answer.get(selectedIdx)[getIndex()]){
+                            case "A": optionA.setSelected(true);
+                                optionA.setStyle("-fx-background-color: #FF6A53");
+                                break;
+                            case "B": optionB.setSelected(true);
+                                optionB.setStyle("-fx-background-color: #FF6A53");
+                                break;
+                            case "C": optionC.setSelected(true);
+                                optionC.setStyle("-fx-background-color: #FF6A53");
+                                break;
+                            case "D": optionD.setSelected(true);
+                                optionD.setStyle("-fx-background-color: #FF6A53");
+                                break;
+                        }
+                    }
+                    //show key
+                    switch (item.getKey()){
+                        case "A":
+                            optionA.setStyle("-fx-background-color: #499C54");
+                            break;
+                        case "B":
+                            optionB.setStyle("-fx-background-color: #499C54");
+                            break;
+                        case "C":
+                            optionC.setStyle("-fx-background-color: #499C54");
+                            break;
+                        case "D":
+                            optionD.setStyle("-fx-background-color: #499C54");
+                            break;
+                    }
+                }
+
             }else {
                 setGraphic(null);
+                setText(null);
+
             }
 
         }

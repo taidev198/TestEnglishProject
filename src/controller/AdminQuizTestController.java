@@ -19,7 +19,6 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.QuizTestGrammarModel;
-import model.TestGrammarModel;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -88,7 +87,7 @@ public class AdminQuizTestController implements Initializable {
           addQuestion(i);
         }
         tableView.setItems(data);
-        tableView.setRowFactory(param -> new rowQuizzQuestion());
+        tableView.setRowFactory(param -> new rowQuizQuestion());
         filter();
 
     }
@@ -163,43 +162,7 @@ public class AdminQuizTestController implements Initializable {
     }
 
 
-//    public void addRow(){
-//        menuButton.add(new MenuButton());
-//        MenuItem edit = new MenuItem("edit");
-//        MenuItem delete = new MenuItem("delete");
-//        edit.setOnAction(event -> {
-//            editableCols();
-//            System.out.println("edit");
-//        });
-//        delete.setOnAction(event -> {
-//            removeSelectedRows(Integer.parseInt((tableView.getSelectionModel().getSelectedItem().getQuizzcontestid())), tableView.getSelectionModel().getSelectedIndex());
-//        });
-//        menuButton.get(menuButton.size() -1).setText("...");
-//        menuButton.get(menuButton.size() -1).getItems().addAll(edit);
-//        menuButton.get(menuButton.size() -1).getItems().addAll(delete);
-//        data.addAll(new QuizTestGrammarModel.QuizzQuesstionView(
-//                idText.getText(),questionText.getText(),optionAText.getText(),
-//                optionBText.getText(),optionCText.getText(),optionDText.getText(),keyText.getText(),contestidText.getText(),
-//                menuButton.get(menuButton.size() -1))
-//        );
-//        model.addNewTestGrammar(new QuizTestGrammarModel.QuizzQuesstionView(
-//                idText.getText(),questionText.getText(),optionAText.getText(),
-//                optionBText.getText(),optionCText.getText(),optionDText.getText(),keyText.getText(),
-//                contestidText.getText(),  menuButton.get(menuButton.size() -1))
-//        );
-//
-//        questionText.clear();
-//        optionAText.clear();
-//        optionBText.clear();
-//        optionCText.clear();
-//        optionDText.clear();
-//        contestidText.clear();
-//        idText.clear();
-//        keyText.clear();
-//
-//    }
-
-    private static class rowQuizzQuestion extends TableRow<QuizTestGrammarModel.QuizzQuesstionView>{
+    private static class rowQuizQuestion extends TableRow<QuizTestGrammarModel.QuizzQuesstionView>{
         private Label id;
         private Label question;
         private Label optionA;
@@ -209,7 +172,7 @@ public class AdminQuizTestController implements Initializable {
         private Label key;
         private Label contestid;
         private MenuButton action;
-        public rowQuizzQuestion(){
+        public rowQuizQuestion(){
             super();
             id = new Label();
             question = new Label();

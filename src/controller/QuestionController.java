@@ -81,10 +81,9 @@ public class QuestionController implements Initializable {
     private void addListenerToListView(){
         grammarLists.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             welcomeText.setVisible(false);
-            selectedIdx = grammarLists.getSelectionModel().getSelectedIndex();
             if (this.isSubmited){
                 submit.setVisible(true);
-
+                selectedIdx = grammarLists.getSelectionModel().getSelectedIndex();
                 System.out.println(selectedIdx);
                 this.isSubmited = false;
                 List<List<String>> tmp = entryList.get(selectedIdx).getValue();
@@ -224,6 +223,7 @@ public class QuestionController implements Initializable {
         dialogHbox.getChildren().add(restart);
         review.addEventHandler(MouseEvent.MOUSE_CLICKED,
                 e -> {
+                    this.isSubmited = true;
                     answer.set(selectedIdx, saveList(clone))  ;
                     listView.setCellFactory(param -> new QuestionCell(true));
                     // inside here you can use the minimize or close the previous stage//
@@ -237,6 +237,7 @@ public class QuestionController implements Initializable {
                     //refresh listview when user restart contest.
                     listView.setCellFactory(param -> new QuestionCell(false));
                     dialog.close();
+                    this.isSubmited = false;
                     submit.setVisible(true);
                     grammarLists.setFocusTraversable( true );
                 });
@@ -245,7 +246,7 @@ public class QuestionController implements Initializable {
         dialog.setScene(dialogScene);
         dialog.show();
         submit.setVisible(false);
-        this.isSubmited = true;
+
     }
 
     private class QuestionCell extends ListCell<TestGrammarModel.Question>{
