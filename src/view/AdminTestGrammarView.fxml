@@ -8,7 +8,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1150.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AdminTestGrammarController">
    <children>
-      <TableView fx:id="tableView" layoutY="58.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="682.0" prefWidth="1106.0">
+      <TableView fx:id="tableView" layoutY="58.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="727.0" prefWidth="1136.0">
          <columns>
             <TableColumn fx:id="idCol" prefWidth="58.39999467134476" text="id" />
             <TableColumn fx:id="questionCol" prefWidth="371.20002365112305" text="Question" />
@@ -21,7 +21,7 @@
             <TableColumn fx:id="actionCol" maxWidth="188.00003662109373" prefWidth="92.0001220703125" text="ACTION" />
          </columns>
       </TableView>
-      <TextField fx:id="searchingField" layoutX="46.0" layoutY="14.0" prefHeight="26.0" prefWidth="354.0" />
-      <Text fx:id="filterText" layoutX="58.0" layoutY="32.0" opacity="0.3" strokeType="OUTSIDE" strokeWidth="0.0" text="Filter........." wrappingWidth="110.3999923914671" />
+      <TextField fx:id="searchingField" layoutX="77.0" layoutY="14.0" prefHeight="26.0" prefWidth="354.0" />
+      <Text fx:id="filterText" layoutX="90.0" layoutY="32.0" opacity="0.3" strokeType="OUTSIDE" strokeWidth="0.0" text="Filter........." wrappingWidth="110.3999923914671" />
    </children>
 </AnchorPane>

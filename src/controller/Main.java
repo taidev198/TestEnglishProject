@@ -16,11 +16,11 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("/view/UserView.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/view/LoginView.fxml"));
         primaryStage.setResizable(false);
         //    primaryStage.initStyle(StageStyle.TRANSPARENT);
         primaryStage.setTitle("Login");
-        primaryStage.setScene(new Scene(root, 1500, 800));
+        primaryStage.setScene(new Scene(root, 1000, 600));
         primaryStage.getIcons().add(new Image("/resource/avatar.png"));//set icon
         stage = primaryStage;
         new FadeIn(root).play();

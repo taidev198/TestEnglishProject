@@ -134,6 +134,9 @@ public class LoginController implements Initializable, LoadSceneHelper, IResult 
 
     public void signUp(){
         switchScene("/view/SignupView.fxml", anchorPane);
+        Stage stage = (Stage)(anchorPane).getScene().getWindow();
+        stage.setHeight(611);
+        stage.setWidth(500);
     }
     public void OnSignUp(){
          if (usernameSignUp.getText().equals(""))

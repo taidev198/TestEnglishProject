@@ -79,6 +79,9 @@
                            </font>
                         </Label>
                      </children>
+                     <padding>
+                        <Insets bottom="20.0" />
+                     </padding>
                   </HBox>
                   <HBox layoutX="10.0" layoutY="154.0" prefHeight="46.0" prefWidth="250.0" styleClass="sidebar-btn" stylesheets="@../resource/stylesheet.css">
                      <children>
@@ -99,6 +102,9 @@
                            </font>
                         </Label>
                      </children>
+                     <padding>
+                        <Insets bottom="20.0" />
+                     </padding>
                   </HBox>
                   <HBox layoutX="10.0" layoutY="200.0" prefHeight="46.0" prefWidth="250.0" styleClass="sidebar-btn" stylesheets="@../resource/stylesheet.css">
                      <children>
@@ -119,6 +125,9 @@
                            </font>
                         </Label>
                      </children>
+                     <padding>
+                        <Insets bottom="20.0" />
+                     </padding>
                   </HBox>
                   <HBox layoutX="10.0" layoutY="247.0" prefHeight="46.0" prefWidth="250.0" styleClass="sidebar-btn" stylesheets="@../resource/stylesheet.css">
                      <children>
@@ -139,6 +148,9 @@
                            </font>
                         </Label>
                      </children>
+                     <padding>
+                        <Insets bottom="20.0" />
+                     </padding>
                   </HBox>
                   <HBox layoutX="10.0" layoutY="154.0" prefHeight="46.0" prefWidth="250.0" styleClass="sidebar-btn" stylesheets="@../resource/stylesheet.css">
                      <children>
@@ -159,6 +171,9 @@
                            </font>
                         </Label>
                      </children>
+                     <padding>
+                        <Insets bottom="20.0" />
+                     </padding>
                   </HBox>
                   <HBox layoutX="10.0" layoutY="200.0" prefHeight="46.0" prefWidth="250.0" styleClass="sidebar-btn" stylesheets="@../resource/stylesheet.css">
                      <children>
@@ -170,7 +185,7 @@
                               <Font size="19.0" />
                            </font>
                         </FontAwesomeIcon>
-                        <Label styleClass="sidebar-btn-icon" text="CHAT">
+                        <Label styleClass="sidebar-btn-icon" text="ABOUT">
                            <HBox.margin>
                               <Insets left="20.0" top="10.0" />
                            </HBox.margin>
@@ -179,6 +194,9 @@
                            </font>
                         </Label>
                      </children>
+                     <padding>
+                        <Insets bottom="20.0" />
+                     </padding>
                   </HBox>
                   <HBox layoutX="10.0" layoutY="247.0" prefHeight="46.0" prefWidth="250.0" styleClass="sidebar-btn" stylesheets="@../resource/stylesheet.css">
                      <children>
@@ -199,6 +217,9 @@
                            </font>
                         </Label>
                      </children>
+                     <padding>
+                        <Insets bottom="20.0" />
+                     </padding>
                   </HBox>
                   <HBox layoutX="10.0" layoutY="293.0" prefHeight="46.0" prefWidth="250.0" styleClass="sidebar-btn" stylesheets="@../resource/stylesheet.css">
                      <children>
@@ -219,6 +240,9 @@
                            </font>
                         </Label>
                      </children>
+                     <padding>
+                        <Insets bottom="20.0" />
+                     </padding>
                   </HBox>
                </children>
                <padding>

@@ -101,7 +101,7 @@ public class AdminTestGrammarController implements Initializable {
         filter();
     }
 
-    private void addQuestion(int i) {
+    private void addQuestion(int i) {//adding listener to each questions.
 
         menuButton.add(new MenuButton());
         MenuItem edit = new MenuItem("EDIT");
@@ -113,7 +113,6 @@ public class AdminTestGrammarController implements Initializable {
         menuButton.get(i).getItems().addAll(delete);
         int id = i;
         add.setOnAction(event -> {
-
             if (tableView.getSelectionModel().getSelectedIndex() == -1)
                 OnMessage("YOU HAVE NOT CHOSEN ANY ROW", Alert.AlertType.ERROR, "ERORR", "YOU HAVE ENTERED SOMETHINGS WRONG:");
             else {
