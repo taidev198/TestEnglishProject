@@ -40,7 +40,7 @@ public class AdminController implements Initializable, LoadSceneHelper {
 
     @FXML
     private void quizTest(){
-        switchScene("/view/AdminQuizzTestView.fxml", anchorPane1);
+        switchScene("/view/AdminQuestionView.fxml", anchorPane1);
     }
 
     @FXML
