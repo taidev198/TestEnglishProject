@@ -32,6 +32,20 @@ public class GrammarModel  {
         }
     }
 
+    public void update(Grammar grammar, int id){
+        String query = "update grammar SET grammarid = ?, description =  ?, content = ?  WHERE grammarid = ?";
+        try(PreparedStatement statement = ConnectDataHelper.getInstance().connectDB().prepareStatement(query)) {
+            statement.setInt(1, Integer.parseInt(grammar.getId()));
+            statement.setString(2, grammar.getDes());
+            statement.setString(3, grammar.getContent());
+            statement.setInt(4, id);
+            statement.execute("use data");
+            statement.executeUpdate();
+        } catch (IllegalAccessException | InstantiationException | ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void deleteGrammar(int id){
         String query = "delete from grammar where id = ?";
         try(PreparedStatement statement = ConnectDataHelper.getInstance().connectDB().prepareStatement(query)) {

@@ -301,7 +301,6 @@ public class AdminQuestionController implements Initializable {
             grammaridText.setText(listQuestion.get(7).get(selectedIdx));
             contestidText.setText(listQuestion.get(8).get(selectedIdx));
             typeidText.setText(listQuestion.get(9).get(selectedIdx));
-//            listQuestion.get(0).set(selectedIdx, String.valueOf(-1));
         }
         String ordinaryId = idText.getText();
         update.addEventHandler(MouseEvent.MOUSE_CLICKED,

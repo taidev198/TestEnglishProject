@@ -23,6 +23,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.GrammarModel;
+import model.QuestionModel;
 import model.TestGrammarModel;
 
 import java.io.IOException;
@@ -33,7 +34,6 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class AdminGrammarController implements Initializable, LoadSceneHelper {
-
     @FXML
     TableView<GrammarModel.Grammar> tableView;
     @FXML
@@ -48,10 +48,6 @@ public class AdminGrammarController implements Initializable, LoadSceneHelper {
     @FXML
     TextField idText;
     @FXML
-    TextField descriptionText;
-    @FXML
-    TextField contentText;
-    @FXML
     TextField searchingField;
     @FXML
     Text filterText;
@@ -62,41 +58,17 @@ public class AdminGrammarController implements Initializable, LoadSceneHelper {
     AnchorPane anchorPane;
     @FXML
     GrammarModel model;
+    @FXML
+    Button addBtn;
     ObservableList<GrammarModel.Grammar> data;
     List<MenuButton> menuButton;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     model = new GrammarModel();
         loadData();
         filter();
-    }
-
-    @FXML
-    private void addRow(){
-        menuButton.add(new MenuButton());
-        MenuItem edit = new MenuItem("edit");
-        MenuItem delete = new MenuItem("delete");
-        edit.setOnAction(event -> {
-            editableCols();
-            System.out.println("edit");
-        });
-        delete.setOnAction(event -> {
-            removeSelectedRows(Integer.parseInt(listGrammar.get(0).get(Integer.parseInt((tableView.getSelectionModel().getSelectedItem().getId())))), tableView.getSelectionModel().getSelectedIndex());
-        });
-        menuButton.get(menuButton.size() -1).setText("...");
-        menuButton.get(menuButton.size() -1).getItems().addAll(edit);
-        menuButton.get(menuButton.size() -1).getItems().addAll(delete);
-        data.addAll(new GrammarModel.Grammar(
-                idText.getText(),descriptionText.getText(),contentText.getText(), menuButton.get(menuButton.size() -1))
-        );
-        model.addGrammar(new GrammarModel.Grammar(
-                idText.getText(),descriptionText.getText(),contentText.getText(), menuButton.get(menuButton.size() -1)));
-
-        idText.clear();
-        descriptionText.clear();
-        contentText.clear();
-
-
+        addBtn.setOnMouseClicked(event -> OnEdit(false));
     }
 
     private void loadScene(String view){
@@ -126,14 +98,13 @@ public class AdminGrammarController implements Initializable, LoadSceneHelper {
         menuButton = new ArrayList<>();
         for (int i = 0; i < listGrammar.get(0).size(); i++) {
             menuButton.add(new MenuButton());
-            MenuItem edit = new MenuItem("edit");
-            MenuItem delete = new MenuItem("delete");
+            MenuItem edit = new MenuItem("EDIT");
+            MenuItem delete = new MenuItem("DELETE");
             menuButton.get(i).setText("...");
-            menuButton.get(i).getItems().addAll(edit);
-            menuButton.get(i).getItems().addAll(delete);
+            menuButton.get(i).getItems().addAll(edit, delete);
             int id = i;
             edit.setOnAction(event -> {
-                OnEdit(false);
+                OnEdit(true);
                 System.out.println("edit");
             });
             delete.setOnAction(event -> {
@@ -153,10 +124,6 @@ public class AdminGrammarController implements Initializable, LoadSceneHelper {
     private void removeSelectedRows(int parseInt, int selectedIndex) {
         model.deleteGrammar(parseInt);
         data.remove(selectedIndex);
-    }
-
-    private void editableCols() {
-
     }
 
     private void filter() {
@@ -240,9 +207,9 @@ public class AdminGrammarController implements Initializable, LoadSceneHelper {
 
         HBox desHbox = new HBox(10);
         Label deslabel = new Label("DESCRIPTION");
-        TextField desAText = new TextField();
-        desAText.setPromptText("DESCRIPTION");
-        desHbox.getChildren().addAll(deslabel, desAText);
+        TextField descriptionText = new TextField();
+        descriptionText.setPromptText("DESCRIPTION");
+        desHbox.getChildren().addAll(deslabel, descriptionText);
 
         HBox contentHbox = new HBox(35);
         Label contentlabel = new Label("CONTENT");
@@ -252,15 +219,63 @@ public class AdminGrammarController implements Initializable, LoadSceneHelper {
 
         contentHbox.setPrefHeight(500);
         contentHbox.getChildren().addAll(contentlabel, contentText);
-
+        int selectedIdx = tableView.getSelectionModel().getSelectedIndex();
+        if (isEditable){
+            idText.setText(listGrammar.get(0).get(selectedIdx));
+            descriptionText.setText(listGrammar.get(1).get(selectedIdx));
+            contentText.setText(listGrammar.get(2).get(selectedIdx));
+        }
+        String ordinaryId = idText.getText();
         update.addEventHandler(MouseEvent.MOUSE_CLICKED,
                 e -> {
-
+                    if (isValid(idText.getText(), descriptionText.getText(),contentText.getText(), true) &&
+                            !isEmpty(idText.getText(), descriptionText.getText(), contentText.getText())){
+                        model.update( new GrammarModel.Grammar(idText.getText(), descriptionText.getText(), contentText.getText(), menuButton.get(selectedIdx)), Integer.parseInt(ordinaryId));
+                        dialog.close();
+                        listGrammar.get(0).set(selectedIdx, idText.getText());
+                        listGrammar.get(1).set(selectedIdx, descriptionText.getText());
+                        listGrammar.get(2).set(selectedIdx, contentText.getText());
+                        OnMessage("", Alert.AlertType.INFORMATION, "SUCCESS", "DONE!");
+                        data.set(selectedIdx,new GrammarModel.Grammar(idText.getText(), descriptionText.getText(), contentText.getText(), menuButton.get(selectedIdx)));
+                    }
                 });
         add.addEventHandler(MouseEvent.MOUSE_CLICKED,
                 e -> {
+                    if (isValid(idText.getText(), descriptionText.getText(),contentText.getText(), false) &&
+                            !isEmpty(idText.getText(), descriptionText.getText(), contentText.getText())){
+                        menuButton.add(new MenuButton());
+                        MenuItem edit = new MenuItem("EDIT");
+                        MenuItem delete = new MenuItem("DELETE");
+                        menuButton.get(menuButton.size()-1).setText("...");
+                        menuButton.get(menuButton.size()-1).getItems().addAll(edit, delete);
+                        edit.setOnAction(event -> {
+                            if (tableView.getSelectionModel().getSelectedIndex() == -1)
+                                OnMessage("YOU HAVE NOT CHOSEN ANY ROW", Alert.AlertType.ERROR, "ERORR", "YOU HAVE ENTERED SOMETHINGS WRONG:");
+                            else {
+                                OnEdit(true);
+                            }
+                        });
+                        delete.setOnAction(event -> {
+                            if (tableView.getSelectionModel().getSelectedIndex() == -1)
+                                OnMessage("YOU HAVE NOT CHOSEN ANY ROW", Alert.AlertType.ERROR, "ERORR", "YOU HAVE ENTERED SOMETHINGS WRONG:");
+                            else {
+                                removeSelectedRows(Integer.parseInt(listGrammar.get(0).get(data.size() -1)), data.size() -1);
+                            }
+                        });
+                        GrammarModel.Grammar grammar =
+                                new GrammarModel.Grammar(idText.getText(), descriptionText.getText(), contentText.getText(), menuButton.get(menuButton.size()-1));
+                        listGrammar.get(0).add(idText.getText());
+                        listGrammar.get(1).add(descriptionText.getText());
+                        listGrammar.get(2).add(contentText.getText());
 
-
+                        model.addGrammar(grammar);
+                        data.add( grammar);
+                        OnMessage("", Alert.AlertType.INFORMATION, "SUCCESS", "DONE!");
+                        contentText.clear();
+                        idText.clear();
+                        descriptionText.clear();
+                        contentText.clear();
+                    }
                 });
         dialogVbox1.getChildren().addAll(idHbox);
         dialogVbox1.getChildren().addAll(desHbox);
@@ -286,4 +301,53 @@ public class AdminGrammarController implements Initializable, LoadSceneHelper {
                 "    -fx-text-fill: #0099ff;");
         dialog.show();
     }
+
+    public boolean isValid(String id, String des, String content, boolean isEdit){
+//        if (!id.matches("[0-9]*")) {
+//            OnMessage("YOU MUST ENTER NUMBER ", Alert.AlertType.ERROR, "ERROR", "ERROR");
+//            return false;
+//        }
+//        if (!key.matches("[A-D]")) {
+//            OnMessage("YOU MUST ENTER A, B, C OR D ", Alert.AlertType.ERROR, "ERROR", "ERROR");
+//            return false;
+//        }
+
+//        if (listGrammar.get(0).contains(id) && !isEdit){
+//            OnMessage("YOU HAVE ENTER DUPLICATE ID ", Alert.AlertType.ERROR, "ERROR", "ERROR");
+//            return false;
+//        }else if (listGrammar.get(0).contains(id) && isEdit){
+//            OnMessage("YOU HAVE ENTER DUPLICATE ID ", Alert.AlertType.ERROR, "ERROR", "ERROR");
+//
+//            return false;
+//        }
+//        if (!listQuestion.get(7).contains(grammarid)){
+//            OnMessage("YOU HAVE ENTER INVALID GRAMMAR ID ", Alert.AlertType.ERROR, "ERROR", "ERROR");
+//            return false;
+//        }
+        return true;
+    }
+
+    public boolean isEmpty(String id, String des, String content){
+        if (id.equals("")){
+            OnMessage("YOU HAVE NOT ENTERED ID YET ", Alert.AlertType.ERROR, "ERROR", "ERROR");
+            return true;
+        }else if (des.equals("")){
+            OnMessage("YOU HAVE NOT ENTERED QUESTION YET ", Alert.AlertType.ERROR, "ERROR", "ERROR");
+            return true;
+        }else if (content.equals("")){
+            OnMessage("YOU HAVE NOT ENTERED OPTION A YET ", Alert.AlertType.ERROR, "ERROR", "ERROR");
+            return true;
+        }
+
+        return false;
+    }
+
+    public void OnMessage(String message, Alert.AlertType type, String title, String header) {
+        Alert alert  = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
 }
