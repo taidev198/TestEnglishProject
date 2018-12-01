@@ -91,7 +91,7 @@ public class UserModel  {
     }
 
     public boolean addUser(User user, boolean isSignup){
-        String query = "insert into userinfo values(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String query = "insert into userinfo(userInfoid,username, password, address, email, phone, firstname, lastname, birth) values(?, ?, ?, ?, ?, ?, ?, ?, ?)";
         if (isSignup)
             query = "insert into userinfo(username, password, email, phone) values(?, ?, ?, ?)";
         try(PreparedStatement statement = ConnectDataHelper.getInstance().connectDB().prepareStatement(query)) {
@@ -112,7 +112,6 @@ public class UserModel  {
                 statement.setString(8, user.getLastname());
                 statement.setDate(9, Date.valueOf(user.getBirth()));
             }
-
             statement.executeUpdate();
         } catch (IllegalAccessException | InstantiationException | ClassNotFoundException | SQLException e) {
             e.printStackTrace();
