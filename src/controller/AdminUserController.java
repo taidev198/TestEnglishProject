@@ -63,28 +63,10 @@ public class AdminUserController implements Initializable, LoadSceneHelper {
     TableColumn<TestGrammarModel.QuestionTableView, String> birthCol;
     @FXML
     TableColumn<TestGrammarModel.QuestionTableView, MenuButton> actionCol;
-
-    //textFields
-    @FXML
-    TextField idText;
-    @FXML
-    TextField usernameText;
-    @FXML
-    TextField passwordText;
-    @FXML
-    TextField firstnameText;
-    @FXML
-    TextField lastnameText;
-    @FXML
-    TextField addressText;
-    @FXML
-    TextField phoneText;
-    @FXML
-    TextField emailText;
-    @FXML
-    TextField birthText;
     @FXML
     TextField searchingField;
+    @FXML
+    Button addBtn;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -102,23 +84,15 @@ public class AdminUserController implements Initializable, LoadSceneHelper {
         actionCol.setCellValueFactory(new PropertyValueFactory<>("menuButton"));
         menuButton = new ArrayList<>();
         data = FXCollections.observableArrayList();
+        addBtn.setOnMouseClicked(event -> OnEdit(false));
+
         for (int i = 0; i < listUser.get(0).size(); i++) {
             menuButton.add(new MenuButton());
             MenuItem edit = new MenuItem("EDIT");
             MenuItem delete = new MenuItem("DELETE");
-            MenuItem add = new MenuItem("ADD");
             menuButton.get(i).setText("...");
-            menuButton.get(i).getItems().addAll(edit);
-            menuButton.get(i).getItems().addAll(add);
-            menuButton.get(i).getItems().addAll(delete);
+            menuButton.get(i).getItems().addAll(edit, delete);
             int id = i;
-            add.setOnAction(event -> {
-
-                if (tableView.getSelectionModel().getSelectedIndex() == -1)
-                    OnMessage("YOU HAVE NOT CHOSEN ANY ROW", Alert.AlertType.ERROR, "ERORR", "YOU HAVE ENTERED SOMETHINGS WRONG:");
-                else OnEdit(false);
-            });
-
             edit.setOnAction(event -> {
 
                 if (tableView.getSelectionModel().getSelectedIndex() == -1)
@@ -179,10 +153,6 @@ public class AdminUserController implements Initializable, LoadSceneHelper {
     private void removeSelectedRows(int parseInt, int selectedIndex) {
         model.removeUser(parseInt);
         data.remove(selectedIndex);
-    }
-
-    private void editableCols() {
-
     }
 
     @Override
@@ -334,19 +304,81 @@ public class AdminUserController implements Initializable, LoadSceneHelper {
             phoneText.setText(listUser.get(5).get(selectedIdx));
             firstnameText.setText(listUser.get(6).get(selectedIdx));
             lastnameText.setText(listUser.get(7).get(selectedIdx));
-            Queue<Integer> queue = new LinkedList<>();
-            ((LinkedList<Integer>) queue).addAll(queue.size()-1, new ArrayList<>());
         }
-
-
+        int selectedIdx = tableView.getSelectionModel().getSelectedIndex();
+        String ordinaryId = idText.getText();
         update.addEventHandler(MouseEvent.MOUSE_CLICKED,
                 e -> {
 
+                    if (isValid(usernameText.getText(), passwordText.getText(), firstnameText.getText(), lastnameText.getText(), idText.getText(), false)){
+                        model.update( new UserModel.User(idText.getText(), usernameText.getText(), passwordText.getText(),
+                                addressText.getText(), emailText.getText(), phoneText.getText(),
+                                firstnameText.getText(),lastnameText.getText(),"1990-12-31", menuButton.get(selectedIdx)), Integer.parseInt(ordinaryId));
+                        dialog.close();
+                        listUser.get(0).set(selectedIdx, idText.getText());
+                        listUser.get(1).set(selectedIdx, usernameText.getText());
+                        listUser.get(2).set(selectedIdx, passwordText.getText());
+                        listUser.get(3).set(selectedIdx, addressText.getText());
+                        listUser.get(4).set(selectedIdx, emailText.getText());
+                        listUser.get(5).set(selectedIdx, phoneText.getText());
+                        listUser.get(6).set(selectedIdx, firstnameText.getText());
+                        listUser.get(7).set(selectedIdx, lastnameText.getText());
+                        listUser.get(8).set(selectedIdx, "1990-12-31");
+                        OnMessage("", Alert.AlertType.INFORMATION, "SUCCESS", "DONE!");
+                        data.set(selectedIdx,new UserModel.User(idText.getText(), usernameText.getText(), passwordText.getText(),
+                                addressText.getText(), emailText.getText(), phoneText.getText(),
+                                firstnameText.getText(),lastnameText.getText(),"1990-12-31", menuButton.get(selectedIdx)));
+                    }
                 });
         add.addEventHandler(MouseEvent.MOUSE_CLICKED,
                 e -> {
 
+                    if (isValid(usernameText.getText(), passwordText.getText(), firstnameText.getText(), lastnameText.getText(), idText.getText(), false)){
+                        menuButton.add(new MenuButton());
+                        MenuItem edit = new MenuItem("EDIT");
+                        MenuItem delete = new MenuItem("DELETE");
+                        menuButton.get(menuButton.size()-1).setText("...");
+                        menuButton.get(menuButton.size()-1).getItems().addAll(edit, delete);
+                        edit.setOnAction(event -> {
+                            if (tableView.getSelectionModel().getSelectedIndex() == -1)
+                                OnMessage("YOU HAVE NOT CHOSEN ANY ROW", Alert.AlertType.ERROR, "ERORR", "YOU HAVE ENTERED SOMETHINGS WRONG:");
+                            else {
+                                OnEdit(true);
+                            }
+                        });
+                        delete.setOnAction(event -> {
+                            if (tableView.getSelectionModel().getSelectedIndex() == -1)
+                                OnMessage("YOU HAVE NOT CHOSEN ANY ROW", Alert.AlertType.ERROR, "ERORR", "YOU HAVE ENTERED SOMETHINGS WRONG:");
+                            else {
+                                removeSelectedRows(Integer.parseInt(listUser.get(0).get(data.size() -1)), data.size() -1);
+                            }
+                        });
+                        UserModel.User user =
+                                new UserModel.User(idText.getText(), usernameText.getText(), passwordText.getText(),
+                                        addressText.getText(), emailText.getText(), phoneText.getText(),
+                                        firstnameText.getText(),lastnameText.getText(),"1990-12-31", menuButton.get(menuButton.size()-1));
+                        listUser.get(0).add(idText.getText());
+                        listUser.get(1).add(usernameText.getText());
+                        listUser.get(2).add(passwordText.getText());
+                        listUser.get(3).add(addressText.getText());
+                        listUser.get(4).add(emailText.getText());
+                        listUser.get(5).add(phoneText.getText());
+                        listUser.get(6).add(firstnameText.getText());
+                        listUser.get(7).add(lastnameText.getText());
+                        listUser.get(8).add("1999-1-1");
 
+                        model.addUser(user, false);
+                        data.add( user);
+                        OnMessage("", Alert.AlertType.INFORMATION, "SUCCESS", "DONE!");
+                        usernameText.clear();
+                        idText.clear();
+                        passwordText.clear();
+                        phoneText.clear();
+                        emailText.clear();
+                        addressText.clear();
+                        firstnameText.clear();
+                        lastnameText.clear();
+                    }
                 });
         dialogVbox1.getChildren().addAll(idHbox);
         dialogVbox1.getChildren().addAll(usernameHbox);
@@ -377,4 +409,27 @@ public class AdminUserController implements Initializable, LoadSceneHelper {
         dialog.setScene(dialogScene);
         dialog.show();
     }
+    public boolean isValid(String username, String password, String firstname, String lastname, String id,  boolean isEdit){
+        if (!id.matches("[0-9]*")) {
+            OnMessage("YOU MUST ENTER NUMBER ", Alert.AlertType.ERROR, "ERROR", "ERROR");
+            return false;
+        }
+        if (!username.matches("[A-Za-z]*")) {
+            OnMessage("YOU MUST ENTER TEXT ", Alert.AlertType.ERROR, "ERROR", "ERROR");
+            return false;
+        }
+
+//        if (listUser.get(0).contains(id) && !isEdit){
+//            OnMessage("YOU HAVE ENTER DUPLICATE ID ", Alert.AlertType.ERROR, "ERROR", "ERROR");
+//            return false;
+//        }else if (listUser.get(0).contains(id) && isEdit){
+//            OnMessage("YOU HAVE ENTER DUPLICATE ID ", Alert.AlertType.ERROR, "ERROR", "ERROR");
+//        }
+//        if (!listQuestion.get(7).contains(grammarid)){
+//            OnMessage("YOU HAVE ENTER INVALID GRAMMAR ID ", Alert.AlertType.ERROR, "ERROR", "ERROR");
+//            return false;
+//        }
+        return true;
+    }
+
 }

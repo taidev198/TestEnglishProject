@@ -16,8 +16,25 @@ import java.util.ResourceBundle;
  */
 public class UserModel  {
 
-
-
+    public void update(User user, int id){
+        String query = "update userinfo SET userInfoid = ?, username =  ?, password = ?, address = ?, email= ?, phone = ?, firstname = ?, lastname = ?, birth = ? WHERE userInfoid = ?";
+        try(PreparedStatement statement = ConnectDataHelper.getInstance().connectDB().prepareStatement(query)) {
+            statement.setInt(1, Integer.parseInt(user.getUserInfoid()));
+            statement.setString(2, user.getUsername());
+            statement.setString(3, user.getPassword());
+            statement.setString(4, user.getAddress());
+            statement.setString(5, user.getEmail());
+            statement.setString(6, user.getPhone());
+            statement.setString(7, user.getFirstname());
+            statement.setString(8, user.getLastname());
+            statement.setDate(9, Date.valueOf(user.getBirth()));
+            statement.setInt(10, id);
+            statement.execute("use data");
+            statement.executeUpdate();
+        } catch (IllegalAccessException | InstantiationException | ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     public List<List<String>> getUserInfo(){
         String query = "select * from userinfo";

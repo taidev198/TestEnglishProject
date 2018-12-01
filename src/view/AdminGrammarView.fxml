@@ -6,17 +6,17 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1150.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AdminGrammarController">
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AdminGrammarController">
    <children>
-      <TableView fx:id="tableView" layoutY="58.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="682.0" prefWidth="1106.0">
+      <TableView fx:id="tableView" layoutX="13.0" layoutY="67.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="718.0" prefWidth="1274.0">
          <columns>
             <TableColumn fx:id="idCol" prefWidth="58.39999467134476" text="id" />
             <TableColumn fx:id="descriptionCol" prefWidth="371.20002365112305" text="DESCRIPTION" />
-            <TableColumn fx:id="contentCol" maxWidth="602.3999633789062" prefWidth="602.3999633789062" text="CONTENT" />
-            <TableColumn fx:id="actionCol" maxWidth="582.39990234375" prefWidth="72.7999267578125" text="ACTION" />
+            <TableColumn fx:id="contentCol" maxWidth="747.1998901367188" prefWidth="747.1998901367188" text="CONTENT" />
+            <TableColumn fx:id="actionCol" maxWidth="582.39990234375" prefWidth="102.4000244140625" text="ACTION" />
          </columns>
       </TableView>
-      <TextField fx:id="searchingField" layoutX="46.0" layoutY="14.0" prefHeight="26.0" prefWidth="354.0" />
-      <Text fx:id="filterText" layoutX="58.0" layoutY="32.0" opacity="0.3" strokeType="OUTSIDE" strokeWidth="0.0" text="Filter........." wrappingWidth="110.3999923914671" />
+      <TextField fx:id="searchingField" layoutX="37.0" layoutY="28.0" prefHeight="26.0" prefWidth="354.0" />
+      <Text fx:id="filterText" layoutX="49.0" layoutY="46.0" opacity="0.3" strokeType="OUTSIDE" strokeWidth="0.0" text="Filter........." wrappingWidth="110.3999923914671" />
    </children>
 </AnchorPane>
