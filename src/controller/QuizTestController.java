@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.geometry.Side;
 import javafx.scene.Parent;
@@ -20,6 +21,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -49,9 +51,10 @@ import java.util.logging.Logger;
 public class QuizTestController implements Initializable {
 
     @FXML
-    ListView<Label> contestLists;
+    ScrollPane rootLayout;
+
     @FXML
-    ListView<TestGrammarModel.Question> listView;
+    ListView<Label> contestLists;
     @FXML
     AnchorPane anchorPane;
     @FXML
@@ -68,6 +71,7 @@ public class QuizTestController implements Initializable {
     Text sec;
     @FXML
     Text dot;
+    Map<Integer, List<RadioButton>> listButton = new HashMap<>();
     private List<String[]> answer;
     private String[] clone;
     Thread myRunnableThread;
@@ -82,6 +86,30 @@ public class QuizTestController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         submit.setVisible(false);
+        submit.setOnAction(event -> {
+            if (!isSubmited) {
+                submit.setText("RESTART");
+                OnSubmit();
+               // this.isSubmited = true;
+                System.out.println("submit");
+            }
+            else {
+                answer.set(selectedIdx, clone);
+                System.out.println(Arrays.toString(answer.get(0)));
+                //refresh listview when user restart contest.
+                this.isSubmited = false;
+                submit.setVisible(true);
+
+                createQuestion(entryList.get(selectedIdx).getValue());
+                if (!myRunnableThread.isAlive()){
+                    myRunnableThread = new Thread(myRunnable);
+                    myRunnableThread.start();
+                }
+                System.out.println("restart");
+                submit.setText("SUBMIT");
+            }
+            System.out.println("thanh tai nguyen");
+        });
         model = new TestGrammarModel();
         min.setText("15");
         listQuestion = model.getTestGrammarFollowGrammarId();
@@ -96,14 +124,159 @@ public class QuizTestController implements Initializable {
         }
         answer = new ArrayList<>();
         addListener();
-        listView.setFocusTraversable( false );
         this.isSubmited = true;
         //set disable
         min.setVisible(false);
         sec.setVisible(false);
         dot.setVisible(false);
-        listView.setCellFactory(param -> new QuestionCell(false));
         progressBar.setVisible(false);
+    }
+
+    private void createQuestion(List<List<String>>  listQuestion) {
+        FlowPane flowPane = new FlowPane(Orientation.HORIZONTAL);
+        rootLayout.setPadding(new Insets(10, 10, 10, 10));
+        flowPane.setVgap(10);
+        flowPane.setHgap(4);
+        flowPane.setPrefWrapLength(310);
+        for (int i = 0; i < listQuestion.get(0).size(); i++) {
+            //init question and add event handler on each questions.
+            HBox content;
+            HBox choose;
+            Text question;
+            RadioButton optionA;
+            RadioButton optionB;
+            RadioButton optionC;
+            RadioButton optionD;
+            Text number;
+            VBox vBox;
+            ToggleGroup group;
+            question = new Text(i+": " +listQuestion.get(1).get(i));
+            optionA = new RadioButton("A " + listQuestion.get(2).get(i));
+            optionB = new RadioButton("B " + listQuestion.get(3).get(i));
+            optionC = new RadioButton("C " + listQuestion.get(4).get(i));
+            optionD = new RadioButton("D " + listQuestion.get(5).get(i));
+            List<RadioButton> list = new ArrayList<>();
+            list.add(optionA);
+            list.add(optionB);
+            list.add(optionC);
+            list.add(optionD);
+            listButton.put(i,list);
+            number = new Text();
+            content = new HBox(number, question);
+            choose= new HBox(  optionA, optionB ,
+                    optionC ,optionD);
+            content.setPadding(new Insets(0,0,0,10));
+            HBox.setMargin(optionA, new Insets(40, 80, 30, 70));
+            HBox.setMargin(optionB, new Insets(40, 80, 30, 70));
+            HBox.setMargin(optionC, new Insets(40, 80, 30, 70));
+            HBox.setMargin(optionD, new Insets(40, 80, 30, 70));
+            group = new ToggleGroup();
+            optionA.setFont(Font.font(18));
+            optionB.setFont(Font.font(18));
+            optionC.setFont(Font.font(18));
+            optionD.setFont(Font.font(18));
+            question.setFont(Font.font(18));
+            number.setFont(Font.font(18));
+            optionB.setToggleGroup(group);
+            optionA.setToggleGroup(group);
+            optionC.setToggleGroup(group);
+            optionD.setToggleGroup(group);
+
+            //set user date
+            optionA.setUserData(listQuestion.get(2).get(i));
+            optionB.setUserData(listQuestion.get(3).get(i));
+            optionC.setUserData(listQuestion.get(4).get(i));
+            optionD.setUserData(listQuestion.get(5).get(i));
+
+            choose.setAlignment(Pos.CENTER);
+            vBox = new VBox(content, choose);
+            vBox.setSpacing(10);
+            vBox.setPrefWidth(1100);
+            int finalI = i;
+            group.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
+                if (group.getSelectedToggle() != null){
+                    if (optionA.isSelected()) {
+                        answer.get(selectedIdx)[finalI]  = "A";
+                        System.out.println(finalI + " "+optionA.getUserData());
+                    }
+                    else if (optionB.isSelected()) {
+                        answer.get(selectedIdx)[finalI]  = "B";
+                        System.out.println(finalI + " "+optionB.getUserData());
+                    }
+                    else  if (optionC.isSelected()) {
+                        answer.get(selectedIdx)[finalI]  = "C";
+                        System.out.println(finalI + " "+optionC.getUserData());
+                    }
+                    else {
+                        answer.get(selectedIdx)[finalI]  = "D";
+                        System.out.println(finalI + " "+optionD.getUserData());
+                    }
+                }
+                if (answer.get(selectedIdx)[finalI].equals(listQuestion.get(6).get(finalI))){
+                    answer.get(selectedIdx)[answer.get(selectedIdx).length -2] =
+                            Integer.toString(Integer.parseInt(answer.get(selectedIdx)[answer.get(selectedIdx).length -2 ])+1);
+                    answer.get(selectedIdx)[answer.get(selectedIdx).length -1] =
+                            Integer.toString(Integer.parseInt(answer.get(selectedIdx)[answer.get(selectedIdx).length-1]) -1) ;
+                }
+                System.out.println(Arrays.toString(answer.get(selectedIdx)));
+
+            });
+            vBox.setStyle("-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0.5, 0.0, 0.0);" +
+                    "-fx-background-color: white;"); // Shadow effect
+            //vBox.setEffect(new DropShadow(2d, 0d, +2d, Color.WHITE));
+            flowPane.getChildren().add(vBox);
+        }
+
+        flowPane.setPadding(new Insets(5, 0, 5, 0));
+        //    flowPane.setEffect(new DropShadow(2d, 0d, +2d, new Color("#D1D7DB")));
+        rootLayout.setContent(flowPane);
+    }
+
+    private void checkAns(){
+        List<List<String>> tmp = entryList.get(selectedIdx).getValue();
+       List<Map.Entry<Integer, List<RadioButton>>> entryList = new ArrayList<>(listButton.entrySet());
+        for (Map.Entry<Integer, List<RadioButton>> entry:
+            entryList ) {
+            if (answer.get(selectedIdx)[entry.getKey()] != null) {
+                switch (answer.get(selectedIdx)[entry.getKey()]) {
+                    case "A":
+                        entry.getValue().get(0).setSelected(true);
+                        entry.getValue().get(0).setStyle("-fx-background-color: #FF6A53");
+                        break;
+                    case "B":
+                        entry.getValue().get(1).setSelected(true);
+                        entry.getValue().get(1).setStyle("-fx-background-color: #FF6A53");
+                        break;
+                    case "C":
+                        entry.getValue().get(2).setSelected(true);
+                        entry.getValue().get(2).setStyle("-fx-background-color: #FF6A53");
+                        break;
+                    case "D":
+                        entry.getValue().get(3).setSelected(true);
+                        entry.getValue().get(3).setStyle("-fx-background-color: #FF6A53");
+                        break;
+                }
+            }
+            if (answer.get(selectedIdx)[entry.getKey()] != null) {
+                switch (tmp.get(6).get(entry.getKey())) {
+                    case "A":
+                        entry.getValue().get(0).setStyle("-fx-background-color: #499C54");
+                        break;
+                    case "B":
+
+                        entry.getValue().get(1).setStyle("-fx-background-color: #499C54");
+                        break;
+                    case "C":
+
+                        entry.getValue().get(2).setStyle("-fx-background-color: #499C54");
+                        break;
+                    case "D":
+
+                        entry.getValue().get(3).setStyle("-fx-background-color: #499C54");
+                        break;
+                }
+            }
+        }
     }
 
     private void addListener(){
@@ -121,18 +294,19 @@ public class QuizTestController implements Initializable {
                 myRunnableThread.start();
                 isRunning.set(true);
                 List<List<String>> tmp = entryList.get(selectedIdx).getValue();
+                listButton.clear();
+                createQuestion(tmp);
                 welcomeText.setVisible(false);
                 description.setText(key.get(selectedIdx));
                 initQuestion();
                 min.setVisible(true);
                 sec.setVisible(true);
                 dot.setVisible(true);
-                listView.getItems().clear();
                 clone = saveList(answer.get(selectedIdx));
-                for (int i =0; i< tmp.get(1).size(); i++ ) {
-                    listView.getItems().add( new TestGrammarModel.Question(key.get(selectedIdx), tmp.get(1).get(i), tmp.get(2).get(i),tmp.get(3).get(i),
-                            tmp.get(4).get(i), tmp.get(5).get(i), "", tmp.get(6).get(i), (tmp.get(0).get(i)),  tmp.get(6).get(i)));
-                }
+            }else {
+                contestLists.requestFocus();
+                contestLists.getSelectionModel().select(selectedIdx);
+                contestLists.getFocusModel().focus(selectedIdx);
             }
 
         });
@@ -242,7 +416,7 @@ public class QuizTestController implements Initializable {
         displayLabel.setFont(Font.font(null, FontWeight.BOLD, 14));
 
         dialog.initModality(Modality.NONE);
-        dialog.initOwner(listView.getScene().getWindow());
+        dialog.initOwner(description.getScene().getWindow());
 
         HBox dialogHbox = new HBox(20);
         dialogHbox.setAlignment(Pos.CENTER);
@@ -260,9 +434,9 @@ public class QuizTestController implements Initializable {
         isRunning.set(false);
         review.addEventHandler(MouseEvent.MOUSE_CLICKED,
                 e -> {
+                    checkAns();
                     this.isSubmited = true;
                     answer.set(selectedIdx, clone);
-                    listView.setCellFactory(param -> new QuestionCell(true));
                     // inside here you can use the minimize or close the previous stage//
                     dialog.close();
                     submit.setVisible(true);
@@ -273,7 +447,6 @@ public class QuizTestController implements Initializable {
                     answer.set(selectedIdx, clone);
                     System.out.println(Arrays.toString(answer.get(0)));
                     //refresh listview when user restart contest.
-                    listView.setCellFactory(param -> new QuestionCell(false));
                     dialog.close();
                     this.isSubmited = false;
                     submit.setVisible(true);
@@ -284,153 +457,11 @@ public class QuizTestController implements Initializable {
 
                 });
         Scene dialogScene = new Scene(dialogVbox1, 600, 450);
-//        dialogScene.getStylesheets().add("//style sheet of your choice");
         dialog.setScene(dialogScene);
         dialog.show();
         submit.setVisible(false);
     }
 
-    public class QuestionCell extends ListCell<TestGrammarModel.Question> {
-        private HBox content;
-        private HBox choose;
-        private Text question;
-        private RadioButton optionA;
-        private RadioButton optionB;
-        private RadioButton optionC;
-        private RadioButton optionD;
-        private Text ans;
-        private Text key;
-        private Text number;
-        private VBox vBox;
-        private ToggleGroup group;
-        private boolean isSummitted;
-        public QuestionCell(boolean isSummitted){
-            super();
-            question = new Text();
-            optionA = new RadioButton();
-            optionB = new RadioButton();
-            optionC = new RadioButton();
-            optionD = new RadioButton();
-
-            number = new Text();
-            content = new HBox(number, question);
-            choose= new HBox(  optionA, optionB ,
-                    optionC ,optionD);
-            HBox.setMargin(optionA, new Insets(60, 70, 30, 70));
-            HBox.setMargin(optionB, new Insets(60, 70, 30, 70));
-            HBox.setMargin(optionC, new Insets(60, 70, 30, 70));
-            HBox.setMargin(optionD, new Insets(60, 70, 30, 70));
-            group = new ToggleGroup();
-            optionB.setToggleGroup(group);
-            optionA.setToggleGroup(group);
-            optionC.setToggleGroup(group);
-            optionD.setToggleGroup(group);
-            choose.setAlignment(Pos.CENTER);
-            vBox = new VBox(content, choose);
-            vBox.setSpacing(10);
-            this.isSummitted = isSummitted;
-        }
-
-        public ToggleGroup getGroup() {
-            return group;
-        }
-
-        @Override
-        protected void updateItem(TestGrammarModel.Question item, boolean empty) {
-            super.updateItem(item, empty);
-            if (item !=null && !empty ){
-                //set text
-                question.setText(item.getQuestion());
-                optionA.setText("A:  "+item.getOptionA());
-                optionB.setText("B:  "+item.getOptionB());
-                optionC.setText("C:  "+item.getOptionC());
-                optionD.setText("D:  "+item.getOptionD());
-                //set font
-                optionA.setFont(Font.font(18));
-                optionB.setFont(Font.font(18));
-                optionC.setFont(Font.font(18));
-                optionD.setFont(Font.font(18));
-                question.setFont(Font.font(18));
-                number.setFont(Font.font(18));
-                //set user date
-                optionA.setUserData(item.getOptionA());
-                optionB.setUserData(item.getOptionB());
-                optionC.setUserData(item.getOptionC());
-                optionD.setUserData(item.getOptionD());
-                number.setText(String.valueOf(item.getNumber()) + ": ");
-                setGraphic(vBox);
-                //handling event of group radio button.
-
-                if (!isSummitted){
-                    group.selectedToggleProperty().addListener((obs, oldSel, newSel) -> {
-                        if (group.getSelectedToggle() != null) {
-                            if (group.getSelectedToggle().getUserData() != null ){
-
-                                if (optionA.isSelected())
-                                    answer.get(selectedIdx)[getIndex()]  = "A";
-                                else  if (optionB.isSelected())
-                                    answer.get(selectedIdx)[getIndex()]  = "B";
-                                else  if (optionC.isSelected())
-                                    answer.get(selectedIdx)[getIndex()]  = "C";
-                                else
-                                    answer.get(selectedIdx)[getIndex()]  = "D";
-                                System.out.println(answer.get(selectedIdx)[getIndex()]);
-                            }
-                            System.out.println(group.getSelectedToggle().getUserData().toString());
-                            //get topic's index is selected
-
-                        }
-                        if (answer.get(selectedIdx)[getIndex()].equals(item.getKey())){
-                            answer.get(selectedIdx)[answer.get(selectedIdx).length -2] =
-                                    Integer.toString(Integer.parseInt(answer.get(selectedIdx)[answer.get(selectedIdx).length -2 ])+1);
-                            answer.get(selectedIdx)[answer.get(selectedIdx).length -1] =
-                                    Integer.toString(Integer.parseInt(answer.get(selectedIdx)[answer.get(selectedIdx).length-1]) -1) ;
-                        }
-                    });
-                }else {
-
-                    //check user's answer
-                    if (answer.get(selectedIdx)[getIndex()] != null){
-                        switch (answer.get(selectedIdx)[getIndex()]){
-                            case "A": optionA.setSelected(true);
-                                optionA.setStyle("-fx-background-color: #FF6A53");
-                                break;
-                            case "B": optionB.setSelected(true);
-                                optionB.setStyle("-fx-background-color: #FF6A53");
-                                break;
-                            case "C": optionC.setSelected(true);
-                                optionC.setStyle("-fx-background-color: #FF6A53");
-                                break;
-                            case "D": optionD.setSelected(true);
-                                optionD.setStyle("-fx-background-color: #FF6A53");
-                                break;
-                        }
-                    }
-                    //show key
-                    switch (item.getKey()){
-                        case "A":
-                            optionA.setStyle("-fx-background-color: #499C54");
-                            break;
-                        case "B":
-                            optionB.setStyle("-fx-background-color: #499C54");
-                            break;
-                        case "C":
-                            optionC.setStyle("-fx-background-color: #499C54");
-                            break;
-                        case "D":
-                            optionD.setStyle("-fx-background-color: #499C54");
-                            break;
-                    }
-                }
-
-            }else {
-                setGraphic(null);
-                setText(null);
-
-            }
-
-        }
-    }
 
     class MyRunnable implements Runnable{
 

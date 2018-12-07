@@ -9,6 +9,8 @@ public class ConnectDataHelper {
     private ConnectDataHelper() throws SQLException, ClassNotFoundException, IllegalAccessException, InstantiationException {
         Class.forName("com.mysql.jdbc.Driver").newInstance();
         String password = "03031998";
+//        String userName = "taiadmin";
+//        String url = "jdbc:mysql://db4free.net:3306/testenglish";
         String userName = "root";
         String url = "jdbc:mysql://localhost:3306/data";
         conn = DriverManager.getConnection(url, userName, password);
