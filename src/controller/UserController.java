@@ -3,26 +3,39 @@ package controller;
 
 import animatefx.animation.FadeIn;
 import helper.LoadSceneHelper;
+import helper.Progressable;
+import helper.WorkIndicatorDialog;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Side;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class UserController implements Initializable, LoadSceneHelper {
+
+/***Why am I getting java.lang.IllegalStateException “Not on FX application thread” on JavaFX?:
+ * https://stackoverflow.com/questions/17850191/why-am-i-getting-java-lang-illegalstateexception-not-on-fx-application-thread
+ * dialog progress:https://www.rational-pi.be/2016/05/modal-jaxafx-progress-indicator-running-in-background/*/
+public class UserController implements Initializable, LoadSceneHelper, Progressable {
 
     private double xOffset = 0;
     private double yOffset = 0;
@@ -37,10 +50,15 @@ public class UserController implements Initializable, LoadSceneHelper {
     AnchorPane anchorPane;
 
     @FXML
+    AnchorPane anchorPane1;
+
+    @FXML
     LineChart<?, ?> lineChart;
+    Task worker;
+    Stage dialog;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        makeStageDrageable();
+        makeStageDragerable();
         list.addAll(new PieChart.Data("tai", 10),
                 new PieChart.Data("tai", 10),
                 new PieChart.Data("tai", 10),
@@ -77,7 +95,7 @@ public class UserController implements Initializable, LoadSceneHelper {
 
     }
 
-    private void makeStageDrageable() {
+    private void makeStageDragerable() {
         anchorPane.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -103,19 +121,19 @@ public class UserController implements Initializable, LoadSceneHelper {
     }
     @FXML
     private void goToGrammar(){
-        switchScene("/view/grammarView.fxml", anchorPane);
+        OnProgress("/view/grammarView.fxml", anchorPane);
     }
 
     @FXML
     private void goToTestGrammar(){
-    switchScene("/view/UserTestGrammarView.fxml", anchorPane);
+    OnProgress("/view/UserTestGrammarView.fxml", anchorPane);
 
     }
 
     @FXML
     private void goToQuizTest(){
 
-        switchScene("/view/QuizTestView.fxml", anchorPane);
+        OnProgress("/view/QuizTestView.fxml", anchorPane);
     }
 
     @Override
@@ -133,5 +151,34 @@ public class UserController implements Initializable, LoadSceneHelper {
     @Override
     public void loadData() {
 
+    }
+
+    @Override
+    public void OnProgress(String url, Object parent) {
+        final WorkIndicatorDialog[] wd = {null};
+        //dialog.showAndWait();
+        wd[0] = new WorkIndicatorDialog(anchorPane.getScene().getWindow(), "Loading Project Files...");
+        wd[0].addTaskEndNotification(result -> {
+            System.out.println(result);
+            wd[0] =null; // don't keep the object, cleanup
+        });
+        anchorPane.getScene().getWindow().setOpacity(0.9);
+       wd[0].exec("123", inputParam -> {
+            // Thinks to do...
+            // NO ACCESS TO UI ELEMENTS!
+               System.out.println("Loading data... '123' =->"+inputParam);
+               try {
+                   Thread.sleep(500);
+               }
+               catch (InterruptedException e) {
+                   e.printStackTrace();
+               }
+           Platform.runLater(() -> {
+               // Update UI here.
+              switchScene(url, anchorPane);
+               anchorPane.getScene().getWindow().setOpacity(1);
+           });
+            return 1;
+        });
     }
 }
