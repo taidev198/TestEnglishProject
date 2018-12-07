@@ -79,7 +79,6 @@ public class UserTestGrammarController implements Initializable {
                 System.out.println("restart");
                 submit.setText("SUBMIT");
             }
-            System.out.println("thanh tai nguyen");
         });
         model = new TestGrammarModel();
         listQuestion = model.getTestGrammarFollowGrammarId();
@@ -261,8 +260,8 @@ public class UserTestGrammarController implements Initializable {
                 grammarLists.setFocusTraversable( false );
             }else {
                 grammarLists.requestFocus();
-                grammarLists.getSelectionModel().select(selectedIdx);
-                grammarLists.getFocusModel().focus(selectedIdx);
+               // grammarLists.getSelectionModel().select(selectedIdx);
+               // grammarLists.getFocusModel().focus(selectedIdx);
             }
         });
     }
@@ -401,6 +400,11 @@ public class UserTestGrammarController implements Initializable {
                     this.isSubmited = false;
                     submit.setVisible(true);
                     grammarLists.setFocusTraversable( true );
+                    answer.set(selectedIdx, clone);
+                    System.out.println(Arrays.toString(answer.get(0)));
+                    //refresh listview when user restart contest.
+                    createQuestion(entryList.get(selectedIdx).getValue());
+
                 });
         Scene dialogScene = new Scene(dialogVbox1, 600, 450);
 //        dialogScene.getStylesheets().add("//style sheet of your choice");

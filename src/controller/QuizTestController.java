@@ -451,6 +451,7 @@ public class QuizTestController implements Initializable {
                     dialog.close();
                     this.isSubmited = false;
                     submit.setVisible(true);
+                    createQuestion(entryList.get(selectedIdx).getValue());
                     if (!myRunnableThread.isAlive()){
                         myRunnableThread = new Thread(myRunnable);
                         myRunnableThread.start();
