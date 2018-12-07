@@ -40,7 +40,7 @@ public class TestGrammarModel {
         String query = "select description,testgrammarid, questtion, a, b, c, d, testgrammar.key from testgrammar join grammar on grammar.grammarid = testgrammar.grammarid;";
         Map<String, List<List<String>>> res = new LinkedHashMap<>();
         try(Statement statement = ConnectDataHelper.getInstance().connectDB().createStatement()) {
-            statement.execute("use data");
+            statement.execute("use sql12268841");
             ResultSet resultSet = statement.executeQuery(query);
 
 
