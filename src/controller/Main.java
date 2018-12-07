@@ -1,6 +1,7 @@
 package controller;
 
 import animatefx.animation.FadeIn;
+import helper.ConnectDataHelper;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -25,6 +26,7 @@ public class Main extends Application {
         stage = primaryStage;
         new FadeIn(root).play();
         primaryStage.show();
+       // ConnectDataHelper.getInstance().connectDB();
     }
 
 

@@ -222,7 +222,7 @@ public class QuizTestController implements Initializable {
 
             });
             vBox.setStyle("-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0.5, 0.0, 0.0);" +
-                    "-fx-background-color: white;"); // Shadow effect
+                    "-fx-background-color: white;" + "-fx-border-radius: 3px"); // Shadow effect
             //vBox.setEffect(new DropShadow(2d, 0d, +2d, Color.WHITE));
             flowPane.getChildren().add(vBox);
         }
@@ -281,8 +281,9 @@ public class QuizTestController implements Initializable {
 
     private void addListener(){
         contestLists.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            submit.setVisible(true);
             if (this.isSubmited){
+                submit.setText("SUBMIT");
+                submit.setVisible(true);
                 this.isSubmited = false;
                 selectedIdx = contestLists.getSelectionModel().getSelectedIndex();
                 progressBar.setVisible(true);

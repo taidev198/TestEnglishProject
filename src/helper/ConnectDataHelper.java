@@ -13,6 +13,8 @@ public class ConnectDataHelper {
 //        String url = "jdbc:mysql://db4free.net:3306/testenglish";
         String userName = "root";
         String url = "jdbc:mysql://localhost:3306/data";
+//        String userName = "root";
+//        String url = "jdbc:mysql://sql12268841:3306/sql12268841";
         conn = DriverManager.getConnection(url, userName, password);
    }
 

@@ -108,7 +108,7 @@ public class UserController implements Initializable, LoadSceneHelper {
 
     @FXML
     private void goToTestGrammar(){
-    switchScene("/view/TestGrammar1View.fxml", anchorPane);
+    switchScene("/view/UserTestGrammarView.fxml", anchorPane);
 
     }
 
