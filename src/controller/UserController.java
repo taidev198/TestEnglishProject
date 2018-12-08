@@ -19,6 +19,7 @@ import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -54,8 +55,11 @@ public class UserController implements Initializable, LoadSceneHelper, Progressa
 
     @FXML
     LineChart<?, ?> lineChart;
+    @FXML
+     Label userName;
     Task worker;
     Stage dialog;
+    static String temp;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         makeStageDragerable();
@@ -92,7 +96,12 @@ public class UserController implements Initializable, LoadSceneHelper, Progressa
         lineChart.setTitleSide(Side.TOP);
 
         lineChart.getData().addAll(series);
+        userName.setText(temp);
+    }
 
+    public static void setUserName(String username){
+        temp = username;
+        System.out.println("thanh tai nguyen");
     }
 
     private void makeStageDragerable() {
@@ -150,6 +159,22 @@ public class UserController implements Initializable, LoadSceneHelper, Progressa
 
     @Override
     public void loadData() {
+
+    }
+
+    @FXML
+    private void logOut(){
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/view/LoginView.fxml"));
+            ((AnchorPane) anchorPane).getChildren().clear();
+            ((AnchorPane) anchorPane).getChildren().addAll(root);
+            Stage stage = (Stage)((AnchorPane)anchorPane).getScene().getWindow();
+            stage.setHeight(600);
+            stage.setWidth(1000);
+            new FadeIn((Parent)anchorPane).play();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 

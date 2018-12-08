@@ -96,7 +96,7 @@ public class TestGrammarModel {
         String query = "select * from testgrammar ;";
         List<List<String>> res = new ArrayList<>();
         try(Statement statement = ConnectDataHelper.getInstance().connectDB().createStatement()) {
-            statement.execute("use data");
+            statement.execute("use sql12268841");
             ResultSet resultSet = statement.executeQuery(query);
 
             List<String> testgrammarid = new ArrayList<>();

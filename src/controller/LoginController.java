@@ -3,6 +3,9 @@ package controller;
 import animatefx.animation.FadeIn;
 import helper.IResult;
 import helper.LoadSceneHelper;
+import helper.Progressable;
+import helper.WorkIndicatorDialog;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -29,7 +32,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class LoginController implements Initializable, LoadSceneHelper, IResult {
+public class LoginController implements Initializable, LoadSceneHelper, IResult, Progressable {
     @FXML
     Pane pane;
     @FXML
@@ -61,17 +64,22 @@ public class LoginController implements Initializable, LoadSceneHelper, IResult 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     model = new UserModel();
+        listUsers = model.getUserInfo();
     }
 
     public void goHome(){
+        OnProgress("/view/UserView.fxml", anchorPane);
         if (username.getText().equals("") && password.getText().equals(""))
         OnMessage("ERROR: USERNAME AND PASSWORD IS EMPTY");
     else if (username.getText().equals(""))
         OnMessage("ERROR: USERNAME IS EMPTY");
     else if (password.getText().equals(""))OnMessage("ERROR: PASSWORD IS EMPTY");
        else {
-            if (isValidUser(username.getText(), password.getText()))
+            if (isValidUser(username.getText(), password.getText())){
                 switchScene("/view/UserView.fxml", anchorPane);
+                anchorPane.getScene().getWindow().setOpacity(1);
+            }
+
             else
                 PopUp();
         }
@@ -80,10 +88,10 @@ public class LoginController implements Initializable, LoadSceneHelper, IResult 
 
 
     public boolean isValidUser(String username, String password){
-         listUsers = model.getUserInfo();
+
         boolean validUsername = false;
         boolean validPassword = false;
-
+        UserController.setUserName(username);
             if (listUsers.get(1).contains(username))
                 validUsername = true;
             if (listUsers.get(2).contains(password))
@@ -133,7 +141,9 @@ public class LoginController implements Initializable, LoadSceneHelper, IResult 
     }
 
     public void signUp(){
+        OnProgress("/view/SignupView.fxml", anchorPane);
         switchScene("/view/SignupView.fxml", anchorPane);
+        UserController.setUserName(usernameSignUp.getText());
         Stage stage = (Stage)(anchorPane).getScene().getWindow();
         stage.setHeight(611);
         stage.setWidth(500);
@@ -151,7 +161,7 @@ public class LoginController implements Initializable, LoadSceneHelper, IResult 
              OnMessage("ERROR: PASSWORD AND CONFIRM PASSWORD IS NOT MATCHED");
         else {
             String email  = emailSignUp.getText();
-            if (!phoneSignUp.getText().matches("^[0-9]"))
+            if (!phoneSignUp.getText().matches("[0-9]"))
                 OnMessage("PHONE NUMBER IS INCORRECT");
             else if (!passwordSignUp.getText().matches("[a-zA-Z0-9._]*"))
                 OnMessage("PASSWORD IS INCORRECT");
@@ -161,8 +171,11 @@ public class LoginController implements Initializable, LoadSceneHelper, IResult 
                 OnMessage("EMAIL IS INCORRECT");
             else   if (listUsers.get(1).contains(usernameSignUp.getText()))
                 OnMessage("USERNAME WAS EXISTED");
-            model.addUser(new UserModel.User(usernameSignUp.getText(), passwordSignUp.getText(), emailSignUp.getText(), phoneSignUp.getText()),true);
-                switchScene("/view/UserView.fxml", anchorPaneSignUp);
+            else {
+                model.addUser(new UserModel.User(usernameSignUp.getText(), passwordSignUp.getText(), emailSignUp.getText(), phoneSignUp.getText()),true);
+                switchScene("/view/UserView.fxml", anchorPane);
+            }
+
         }
     }
 
@@ -215,5 +228,35 @@ public class LoginController implements Initializable, LoadSceneHelper, IResult 
         dialog.setScene(dialogScene);
         dialog.show();
 
+    }
+
+    @Override
+    public void OnProgress(String url, Object parent) {
+        final WorkIndicatorDialog[] wd = {null};
+        //dialog.showAndWait();
+        wd[0] = new WorkIndicatorDialog(anchorPane.getScene().getWindow(), "Loading...");
+        wd[0].addTaskEndNotification(result -> {
+            System.out.println(result);
+            wd[0] =null; // don't keep the object, cleanup
+        });
+        anchorPane.getScene().getWindow().setOpacity(0.9);
+        wd[0].exec("123", inputParam -> {
+            // Thinks to do...
+            // NO ACCESS TO UI ELEMENTS!
+            System.out.println("Loading data... '123' =->"+inputParam);
+            try {
+
+                Thread.sleep(500);
+            }
+            catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            Platform.runLater(() -> {
+                // Update UI here.
+                anchorPane.getScene().getWindow().setOpacity(1);
+
+            });
+            return 1;
+        });
     }
 }

@@ -64,7 +64,7 @@ public class GrammarModel  {
         List<List<String>> ans = new ArrayList<>();
         try(Statement statement = ConnectDataHelper.getInstance().connectDB().createStatement()) {
 
-            statement.execute("use data");
+            statement.execute("use sql12268841");
             ResultSet resultSet = statement.executeQuery(query);
             List<String> id = new ArrayList<>();
             List<String> des = new ArrayList<>();

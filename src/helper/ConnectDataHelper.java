@@ -1,7 +1,7 @@
 package helper;
 
 import java.sql.*;
-
+/**https://stackoverflow.com/questions/29916610/1273-unknown-collation-utf8mb4-unicode-ci-cpanel*/
 public class ConnectDataHelper {
    private  static Connection conn = null;
    private static ConnectDataHelper instance= null;

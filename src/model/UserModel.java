@@ -40,7 +40,7 @@ public class UserModel  {
         String query = "select * from userinfo";
         List<List<String>> ans = new ArrayList<>();
         try(Statement statement = ConnectDataHelper.getInstance().connectDB().createStatement()) {
-            statement.execute("use data");
+            statement.execute("use sql12268841");
             ResultSet resultSet = statement.executeQuery(query);
 
             List<String> userInfoid = new ArrayList<>();
@@ -95,7 +95,7 @@ public class UserModel  {
         if (isSignup)
             query = "insert into userinfo(username, password, email, phone) values(?, ?, ?, ?)";
         try(PreparedStatement statement = ConnectDataHelper.getInstance().connectDB().prepareStatement(query)) {
-            statement.execute("use data");
+            statement.execute("use sql12268841");
             if (isSignup){
                 statement.setString(1, user.getUsername());
                 statement.setString(2, user.getPassword());

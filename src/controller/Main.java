@@ -10,18 +10,18 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.util.PriorityQueue;
-
+/**creating exe file :https://www.youtube.com/watch?v=iqwSjKYqsH0*/
 public class Main extends Application {
 
     public static Stage stage = null;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("/view/UserView.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/view/LoginView.fxml"));
         primaryStage.setResizable(false);
         //    primaryStage.initStyle(StageStyle.TRANSPARENT);
         primaryStage.setTitle("Login");
-        primaryStage.setScene(new Scene(root, 1520, 800));
+        primaryStage.setScene(new Scene(root, 1000, 600));
         primaryStage.getIcons().add(new Image("/resource/avatar.png"));//set icon
         stage = primaryStage;
         new FadeIn(root).play();
