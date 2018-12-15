@@ -19,7 +19,7 @@
    <children>
       <AnchorPane fx:id="anchorPane1" prefHeight="800.0" prefWidth="350.0" styleClass="sidebar" stylesheets="@../resource/stylesheet.css">
          <children>
-            <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="350.0">
+            <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="806.0" prefWidth="350.0">
                <children>
                   <ImageView fitHeight="80.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -31,7 +31,7 @@
                   </ImageView>
                   <HBox prefHeight="46.0" prefWidth="338.0">
                      <children>
-                        <Label styleClass="sidebar-btn-icon" stylesheets="@../resource/stylesheet.css" text="Nguyen Thanh Tai">
+                        <Label fx:id="userName" styleClass="sidebar-btn-icon" stylesheets="@../resource/stylesheet.css" text="Nguyen Thanh Tai">
                            <HBox.margin>
                               <Insets left="70.0" top="5.0" />
                            </HBox.margin>
@@ -46,12 +46,16 @@
                         </FontAwesomeIcon>
                      </children>
                   </HBox>
-                  <Label text="MAIN" />
+                  <Label text="MAIN">
+                     <VBox.margin>
+                        <Insets left="10.0" />
+                     </VBox.margin>
+                  </Label>
                   <HBox prefHeight="46.0" prefWidth="250.0" styleClass="sidebar-btn" stylesheets="@../resource/stylesheet.css">
                      <children>
                         <FontAwesomeIcon fill="#b8b1b1" iconName="HOME" size="2em" styleClass="sidebar-btn-icon">
                            <HBox.margin>
-                              <Insets left="10.0" top="10.0" />
+                              <Insets left="30.0" top="10.0" />
                            </HBox.margin>
                         </FontAwesomeIcon>
                         <Label styleClass="sidebar-btn-icon" text="DASHBOARD">
@@ -68,7 +72,7 @@
                      <children>
                         <FontAwesomeIcon fill="#b8b1b1" iconName="ARCHIVE" size="2em" styleClass="sidebar-btn-icon" text="">
                            <HBox.margin>
-                              <Insets left="10.0" top="10.0" />
+                              <Insets left="30.0" top="10.0" />
                            </HBox.margin>
                         </FontAwesomeIcon>
                         <Label onMouseClicked="#goToGrammar" styleClass="sidebar-btn-icon" text="GRAMMAR">
@@ -85,7 +89,7 @@
                      <children>
                         <FontAwesomeIcon fill="#b8b1b1" iconName="TASKS" size="2em" styleClass="sidebar-btn-icon">
                            <HBox.margin>
-                              <Insets left="10.0" top="10.0" />
+                              <Insets left="30.0" top="10.0" />
                            </HBox.margin>
                         </FontAwesomeIcon>
                         <Label onMouseClicked="#goToTestGrammar" styleClass="sidebar-btn-icon" text="TEST GRAMMAR">
@@ -102,7 +106,7 @@
                      <children>
                         <FontAwesomeIcon fill="#b8b1b1" iconName="ARCHIVE" size="2em" styleClass="sidebar-btn-icon">
                            <HBox.margin>
-                              <Insets left="10.0" top="10.0" />
+                              <Insets left="30.0" top="10.0" />
                            </HBox.margin>
                         </FontAwesomeIcon>
                         <Label onMouseClicked="#goToQuizTest" styleClass="sidebar-btn-icon" text="QUIZ TEST">
@@ -115,49 +119,19 @@
                         </Label>
                      </children>
                   </HBox>
-                  <Label layoutX="10.0" layoutY="136.0" text="SHARE" />
-                  <HBox layoutX="10.0" layoutY="154.0" prefHeight="46.0" prefWidth="250.0" styleClass="sidebar-btn" stylesheets="@../resource/stylesheet.css">
-                     <children>
-                        <FontAwesomeIcon fill="#b8b1b1" iconName="HOME" size="2em" styleClass="sidebar-btn-icon">
-                           <HBox.margin>
-                              <Insets left="10.0" top="10.0" />
-                           </HBox.margin>
-                        </FontAwesomeIcon>
-                        <Label styleClass="sidebar-btn-icon" text="CHALLEGENE">
-                           <HBox.margin>
-                              <Insets left="40.0" top="10.0" />
-                           </HBox.margin>
-                           <font>
-                              <Font size="19.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </HBox>
-                  <HBox layoutX="10.0" layoutY="200.0" prefHeight="46.0" prefWidth="250.0" styleClass="sidebar-btn" stylesheets="@../resource/stylesheet.css">
-                     <children>
-                        <FontAwesomeIcon fill="#b8b1b1" iconName="ARCHIVE" size="2em" styleClass="sidebar-btn-icon" text="">
-                           <HBox.margin>
-                              <Insets left="10.0" top="10.0" />
-                           </HBox.margin>
-                        </FontAwesomeIcon>
-                        <Label styleClass="sidebar-btn-icon" text="CHAT">
-                           <HBox.margin>
-                              <Insets left="40.0" top="10.0" />
-                           </HBox.margin>
-                           <font>
-                              <Font size="19.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </HBox>
+                  <Label layoutX="10.0" layoutY="136.0" text="SHARE">
+                     <VBox.margin>
+                        <Insets left="10.0" />
+                     </VBox.margin>
+                  </Label>
                   <HBox layoutX="10.0" layoutY="247.0" prefHeight="46.0" prefWidth="250.0" styleClass="sidebar-btn" stylesheets="@../resource/stylesheet.css">
                      <children>
                         <FontAwesomeIcon fill="#b8b1b1" iconName="TASKS" size="2em" styleClass="sidebar-btn-icon">
                            <HBox.margin>
-                              <Insets left="10.0" top="10.0" />
+                              <Insets left="30.0" top="10.0" />
                            </HBox.margin>
                         </FontAwesomeIcon>
-                        <Label styleClass="sidebar-btn-icon" text="CALENDER">
+                        <Label styleClass="sidebar-btn-icon" text="PROFILE">
                            <HBox.margin>
                               <Insets left="40.0" top="10.0" />
                            </HBox.margin>
@@ -167,14 +141,14 @@
                         </Label>
                      </children>
                   </HBox>
-                  <HBox layoutX="10.0" layoutY="293.0" prefHeight="46.0" prefWidth="250.0" styleClass="sidebar-btn" stylesheets="@../resource/stylesheet.css">
+                  <HBox layoutX="10.0" layoutY="293.0" onMouseClicked="#logOut" prefHeight="46.0" prefWidth="250.0" styleClass="sidebar-btn" stylesheets="@../resource/stylesheet.css">
                      <children>
                         <FontAwesomeIcon fill="#b8b1b1" iconName="ARCHIVE" size="2em" styleClass="sidebar-btn-icon">
                            <HBox.margin>
-                              <Insets left="10.0" top="10.0" />
+                              <Insets left="30.0" top="10.0" />
                            </HBox.margin>
                         </FontAwesomeIcon>
-                        <Label styleClass="sidebar-btn-icon" text="TASK">
+                        <Label styleClass="sidebar-btn-icon" text="LOG OUT">
                            <HBox.margin>
                               <Insets left="40.0" top="10.0" />
                            </HBox.margin>
@@ -188,7 +162,7 @@
             </VBox>
          </children>
       </AnchorPane>
-      <Pane layoutX="372.0" layoutY="86.0" onMouseClicked="#goToQuizTest" prefHeight="700.0" prefWidth="1100.0" style="-fx-background-color: #F2F2F2;">
+      <Pane layoutX="372.0" layoutY="86.0" prefHeight="700.0" prefWidth="1100.0" style="-fx-background-color: #F2F2F2;">
          <children>
             <PieChart fx:id="pieChart" layoutX="43.0" layoutY="410.0" prefHeight="276.0" prefWidth="307.0" />
             <PieChart fx:id="pieChart1" layoutX="743.0" layoutY="410.0" prefHeight="276.0" prefWidth="307.0" />
@@ -200,6 +174,7 @@
                 <NumberAxis side="LEFT" />
               </yAxis>
             </LineChart>
-         </children></Pane>
+         </children>
+      </Pane>
    </children>
 </AnchorPane>

@@ -9,7 +9,7 @@
 
 <AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AdminGrammarController">
    <children>
-      <TableView fx:id="tableView" layoutX="13.0" layoutY="67.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="718.0" prefWidth="1274.0">
+      <TableView fx:id="tableView" layoutX="14.0" layoutY="81.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="718.0" prefWidth="1274.0">
          <columns>
             <TableColumn fx:id="idCol" prefWidth="58.39999467134476" text="id" />
             <TableColumn fx:id="descriptionCol" prefWidth="371.20002365112305" text="DESCRIPTION" />
@@ -17,8 +17,8 @@
             <TableColumn fx:id="actionCol" maxWidth="582.39990234375" prefWidth="102.4000244140625" text="ACTION" />
          </columns>
       </TableView>
-      <TextField fx:id="searchingField" layoutX="37.0" layoutY="28.0" prefHeight="26.0" prefWidth="354.0" />
-      <Text fx:id="filterText" layoutX="49.0" layoutY="46.0" opacity="0.3" strokeType="OUTSIDE" strokeWidth="0.0" text="Filter........." wrappingWidth="110.3999923914671" />
-      <Button fx:id="addBtn" layoutX="1147.0" layoutY="12.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="122.0" text="ADD" />
+      <TextField fx:id="searchingField" layoutX="41.0" layoutY="41.0" prefHeight="26.0" prefWidth="354.0" />
+      <Text fx:id="filterText" layoutX="53.0" layoutY="59.0" opacity="0.3" strokeType="OUTSIDE" strokeWidth="0.0" text="Filter........." wrappingWidth="110.3999923914671" />
+      <Button fx:id="addBtn" layoutX="1165.0" layoutY="37.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="122.0" text="ADD" />
    </children>
 </AnchorPane>

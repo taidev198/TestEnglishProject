@@ -26,6 +26,6 @@
       </TableView>
       <TextField fx:id="searchingField" layoutX="45.0" layoutY="40.0" prefHeight="26.0" prefWidth="354.0" />
       <Text fx:id="filterText" layoutX="57.0" layoutY="58.0" opacity="0.3" strokeType="OUTSIDE" strokeWidth="0.0" text="Filter........." wrappingWidth="110.3999923914671" />
-      <Button fx:id="addBtn" layoutX="1122.0" layoutY="27.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="138.0" text="ADD" />
+      <Button fx:id="addBtn" layoutX="1150.0" layoutY="42.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="138.0" text="ADD" />
    </children>
 </AnchorPane>

@@ -28,6 +28,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 
+import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -66,10 +67,8 @@ public class UserController implements Initializable, LoadSceneHelper, Progressa
         list.addAll(new PieChart.Data("tai", 10),
                 new PieChart.Data("tai", 10),
                 new PieChart.Data("tai", 10),
-                new PieChart.Data("tai", 10),
                 new PieChart.Data("tai", 10));
         list1.addAll(new PieChart.Data("tai", 10),
-                new PieChart.Data("tai", 10),
                 new PieChart.Data("tai", 10),
                 new PieChart.Data("tai", 10),
                 new PieChart.Data("tai", 10));
@@ -171,6 +170,10 @@ public class UserController implements Initializable, LoadSceneHelper, Progressa
             Stage stage = (Stage)((AnchorPane)anchorPane).getScene().getWindow();
             stage.setHeight(600);
             stage.setWidth(1000);
+            Dimension d= Toolkit.getDefaultToolkit().getScreenSize(); // get screen size
+            stage.show(); //show stage because you wouldn't be able to get Height & width of the stage
+            stage.setX(d.width/2-(stage.getWidth()/2));
+            stage.setY(d.height/2-(stage.getHeight()/2));
             new FadeIn((Parent)anchorPane).play();
         } catch (IOException e) {
             e.printStackTrace();
@@ -182,7 +185,7 @@ public class UserController implements Initializable, LoadSceneHelper, Progressa
     public void OnProgress(String url, Object parent) {
         final WorkIndicatorDialog[] wd = {null};
         //dialog.showAndWait();
-        wd[0] = new WorkIndicatorDialog(anchorPane.getScene().getWindow(), "Loading Project Files...");
+        wd[0] = new WorkIndicatorDialog(anchorPane.getScene().getWindow(), "Loading Project Files...", Toolkit.getDefaultToolkit().getScreenSize());
         wd[0].addTaskEndNotification(result -> {
             System.out.println(result);
             wd[0] =null; // don't keep the object, cleanup

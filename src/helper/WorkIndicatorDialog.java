@@ -19,6 +19,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
 
+import java.awt.*;
 import java.util.function.Consumer;
 import java.util.function.ToIntFunction;
 
@@ -46,10 +47,12 @@ public class WorkIndicatorDialog<P> {
     /**
      *
      */
-    public WorkIndicatorDialog(Window owner, String label) {
+    public WorkIndicatorDialog(Window owner, String label, Dimension d) {
         dialog.initModality(Modality.WINDOW_MODAL);
         dialog.initOwner(owner);
         dialog.setResizable(false);
+        dialog.setX(d.width/2-scene.getWidth()/2);
+        dialog.setY(d.height/2- scene.getHeight()/2);
         this.label.setText(label);
     }
 

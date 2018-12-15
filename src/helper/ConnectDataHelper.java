@@ -8,13 +8,14 @@ public class ConnectDataHelper {
 
     private ConnectDataHelper() throws SQLException, ClassNotFoundException, IllegalAccessException, InstantiationException {
         Class.forName("com.mysql.jdbc.Driver").newInstance();
-        String password = "iVqm7FVt6R";
+//        String password = "iVqm7FVt6R";
+        String password = "03031998";
 //        String userName = "taiadmin";
 //        String url = "jdbc:mysql://db4free.net:3306/testenglish";
-//        String userName = "root";
-//        String url = "jdbc:mysql://localhost:3306/data";
-        String userName = "sql12268841";
-        String url = "jdbc:mysql://sql12.freemysqlhosting.net:3306/sql12268841";
+        String userName = "root";
+        String url = "jdbc:mysql://localhost:3306/data";
+//        String userName = "sql12268841";
+//        String url = "jdbc:mysql://sql12.freemysqlhosting.net:3306/sql12268841";
         conn = DriverManager.getConnection(url, userName, password);
    }
 

@@ -27,6 +27,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.UserModel;
 
+import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
@@ -68,7 +69,9 @@ public class LoginController implements Initializable, LoadSceneHelper, IResult,
     }
 
     public void goHome(){
-        OnProgress("/view/UserView.fxml", anchorPane);
+        if (username.getText().equals("admin"))
+            OnProgress("/view/AdminView.fxml", anchorPane);
+      else   OnProgress("/view/UserView.fxml", anchorPane);
         if (username.getText().equals("") && password.getText().equals(""))
         OnMessage("ERROR: USERNAME AND PASSWORD IS EMPTY");
     else if (username.getText().equals(""))
@@ -76,10 +79,11 @@ public class LoginController implements Initializable, LoadSceneHelper, IResult,
     else if (password.getText().equals(""))OnMessage("ERROR: PASSWORD IS EMPTY");
        else {
             if (isValidUser(username.getText(), password.getText())){
-                switchScene("/view/UserView.fxml", anchorPane);
+                if (username.getText().equals("admin"))
+                    switchScene("/view/AdminView.fxml", anchorPane);
+                else switchScene("/view/UserView.fxml", anchorPane);
                 anchorPane.getScene().getWindow().setOpacity(1);
             }
-
             else
                 PopUp();
         }
@@ -139,14 +143,16 @@ public class LoginController implements Initializable, LoadSceneHelper, IResult,
 
 
     }
-
+    @FXML
     public void signUp(){
-        OnProgress("/view/SignupView.fxml", anchorPane);
         switchScene("/view/SignupView.fxml", anchorPane);
-        UserController.setUserName(usernameSignUp.getText());
         Stage stage = (Stage)(anchorPane).getScene().getWindow();
         stage.setHeight(611);
         stage.setWidth(500);
+        Dimension d= Toolkit.getDefaultToolkit().getScreenSize(); // get screen size
+        stage.show(); //show stage because you wouldn't be able to get Height & width of the stage
+        stage.setX(d.width/2-(stage.getWidth()/2));
+        stage.setY(d.height/2-(stage.getHeight()/2));
     }
     public void OnSignUp(){
          if (usernameSignUp.getText().equals(""))
@@ -173,7 +179,11 @@ public class LoginController implements Initializable, LoadSceneHelper, IResult,
                 OnMessage("USERNAME WAS EXISTED");
             else {
                 model.addUser(new UserModel.User(usernameSignUp.getText(), passwordSignUp.getText(), emailSignUp.getText(), phoneSignUp.getText()),true);
-                switchScene("/view/UserView.fxml", anchorPane);
+                if (usernameSignUp.getText().equals("admin"))
+                    OnProgress("/viewAdminView.fxml", anchorPaneSignUp);
+                else
+                OnProgress("/view/UserView.fxml", anchorPaneSignUp);
+                UserController.setUserName(usernameSignUp.getText());
             }
 
         }
@@ -187,7 +197,11 @@ public class LoginController implements Initializable, LoadSceneHelper, IResult,
             ((AnchorPane) parent).getChildren().addAll(root);
             Stage stage = (Stage)((AnchorPane)parent).getScene().getWindow();
             stage.setHeight(850);
-            stage.setWidth(1500);
+            stage.setWidth(1520);
+            Dimension d= Toolkit.getDefaultToolkit().getScreenSize(); // get screen size
+            stage.show(); //show stage because you wouldn't be able to get Height & width of the stage
+            stage.setX(d.width/2-(stage.getWidth()/2));
+            stage.setY(d.height/2-(stage.getHeight()/2));
             new FadeIn((Parent)parent).play();
         } catch (IOException e) {
             e.printStackTrace();
@@ -234,12 +248,12 @@ public class LoginController implements Initializable, LoadSceneHelper, IResult,
     public void OnProgress(String url, Object parent) {
         final WorkIndicatorDialog[] wd = {null};
         //dialog.showAndWait();
-        wd[0] = new WorkIndicatorDialog(anchorPane.getScene().getWindow(), "Loading...");
+        wd[0] = new WorkIndicatorDialog(((AnchorPane)parent).getScene().getWindow(), "Loading...", Toolkit.getDefaultToolkit().getScreenSize());
         wd[0].addTaskEndNotification(result -> {
             System.out.println(result);
             wd[0] =null; // don't keep the object, cleanup
         });
-        anchorPane.getScene().getWindow().setOpacity(0.9);
+        ((AnchorPane)parent).getScene().getWindow().setOpacity(0.9);
         wd[0].exec("123", inputParam -> {
             // Thinks to do...
             // NO ACCESS TO UI ELEMENTS!
@@ -253,7 +267,8 @@ public class LoginController implements Initializable, LoadSceneHelper, IResult,
             }
             Platform.runLater(() -> {
                 // Update UI here.
-                anchorPane.getScene().getWindow().setOpacity(1);
+                switchScene(url, parent);
+                ((AnchorPane)parent).getScene().getWindow().setOpacity(1);
 
             });
             return 1;
