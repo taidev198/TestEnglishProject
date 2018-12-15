@@ -52,7 +52,6 @@ public class QuizTestController implements Initializable {
 
     @FXML
     ScrollPane rootLayout;
-
     @FXML
     ListView<Label> contestLists;
     @FXML
@@ -77,7 +76,7 @@ public class QuizTestController implements Initializable {
     Thread myRunnableThread;
     MyRunnable myRunnable;
     private AtomicBoolean isRunning = new AtomicBoolean(false);
-    private TestGrammarModel model;
+    private QuizTestGrammarModel model;
     private Map<String, List<List<String>>> listQuestion;
     List<Map.Entry<String, List<List<String>>>> entryList;
     List<String> key;
@@ -110,9 +109,9 @@ public class QuizTestController implements Initializable {
             }
             System.out.println("thanh tai nguyen");
         });
-        model = new TestGrammarModel();
+        model = new QuizTestGrammarModel();
         min.setText("15");
-        listQuestion = model.getTestGrammarFollowGrammarId();
+        listQuestion = model.getContest();
          entryList = new ArrayList<>(listQuestion.entrySet());
          key = new ArrayList<>();
         for (Map.Entry<String, List<List<String>>> entry :

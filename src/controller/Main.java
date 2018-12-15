@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import model.QuizTestGrammarModel;
 
 import java.awt.*;
 
@@ -17,6 +18,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+//        Class.forName("helper/ConnectDataHelper.java");
         Parent root = FXMLLoader.load(getClass().getResource("/view/UserView.fxml"));
         primaryStage.setResizable(false);
         //    primaryStage.initStyle(StageStyle.TRANSPARENT);
@@ -37,7 +39,6 @@ public class Main extends Application {
 
        // ConnectDataHelper.getInstance().connectDB();
     }
-
 
     public static void main(String[] args) {
         launch(args);

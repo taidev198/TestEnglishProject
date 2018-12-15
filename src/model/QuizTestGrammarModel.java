@@ -3,16 +3,18 @@ package model;
 import helper.ConnectDataHelper;
 import javafx.scene.control.MenuButton;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by traig on 4:35 PM, 11/12/2018
  */
+
+/**https://stackoverflow.com/questions/21119096/how-to-insert-timestamp-in-database*/
 public class QuizTestGrammarModel {
 
     public QuizTestGrammarModel(){}
@@ -37,43 +39,113 @@ public class QuizTestGrammarModel {
         }
     }
 
-    public List<List<String>> getDB(){
-        String query = " select * from quizzcontest";
+    public boolean addResult(TestResult testResult){
+        java.util.Date date = new Date();
+        String query = "insert into testresult values( ?, ?, ?, ?, ?, ?, ?)";
+        try(PreparedStatement statement = ConnectDataHelper.getInstance().connectDB().prepareStatement(query)) {
+            statement.execute("use data");
+            statement.setInt(1, testResult.getUserInfoid());
+            statement.setInt(2, testResult.getContestid());
+            statement.setInt(3, testResult.getNumOfCorrect());
+            statement.setInt(4, testResult.getNumOfIncorect());
+            statement.setInt(5, testResult.getTimes());
+            statement.setString(6, testResult.getTotalTime());
+            statement.setTimestamp(7, new Timestamp(date.getTime()));
+            statement.executeUpdate();
+        } catch (IllegalAccessException | InstantiationException | ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+
+    public List<List<String>> getResult( int id){
+        String query = "select * from testresult where userInfoid = "+id;
         List<List<String>> ans = new ArrayList<>();
-        try(Statement statement = ConnectDataHelper.getInstance().connectDB().createStatement()) {
+        try(PreparedStatement statement = ConnectDataHelper.getInstance().connectDB().prepareStatement(query)) {
             statement.execute("use data");
             ResultSet resultSet = statement.executeQuery(query);
-            List<String> quizzcontestid = new ArrayList<>();
-            List<String> question = new ArrayList<>();
-            List<String> a = new ArrayList<>();
-            List<String> b = new ArrayList<>();
-            List<String> c = new ArrayList<>();
-            List<String> d = new ArrayList<>();
-            List<String> key = new ArrayList<>();
-            List<String> contestid = new ArrayList<>();
-            while (resultSet.next()){
-                quizzcontestid.add(resultSet.getString("quizzcontestid"));
-                question.add(resultSet.getString("question"));
-                a.add(resultSet.getString("a"));
-                b.add(resultSet.getString("b"));
-                c.add(resultSet.getString("c"));
-                d.add(resultSet.getString("d"));
-                key.add(resultSet.getString("key"));
-                contestid.add(String.valueOf(resultSet.getInt("contestid")));
 
+            List<String> userInfoid = new ArrayList<>();
+            List<String> contestid = new ArrayList<>();
+            List<String> numOfCorrect = new ArrayList<>();
+            List<String> numOfIncorrect = new ArrayList<>();
+            List<String> times = new ArrayList<>();
+            List<String> totalTime = new ArrayList<>();
+            List<String> date = new ArrayList<>();
+            while (resultSet.next()){
+                userInfoid.add(String.valueOf(resultSet.getInt("userInfoid")));
+                contestid.add(String.valueOf(resultSet.getInt("contestid")));
+                numOfCorrect.add(String.valueOf(resultSet.getInt("numOfCorrect")));
+                numOfIncorrect.add(String.valueOf(resultSet.getInt("numOfIncorrect")));
+                times.add(String.valueOf(resultSet.getInt("times")));
+                totalTime.add(String.valueOf(resultSet.getInt("totalTime")));
+                date.add(String.valueOf(resultSet.getTimestamp("date")));
             }
-            ans.add(quizzcontestid);
-            ans.add(question);
-            ans.add(a);
-            ans.add(b);
-            ans.add(c);
-            ans.add(d);
-            ans.add(key);
+            ans.add(userInfoid);
             ans.add(contestid);
-        } catch (IllegalAccessException | InstantiationException | SQLException | ClassNotFoundException e) {
+            ans.add(numOfCorrect);
+            ans.add(numOfIncorrect);
+            ans.add(times);
+            ans.add(totalTime);
+            ans.add(date);
+
+        } catch (IllegalAccessException | InstantiationException | ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
         return ans;
+    }
+
+
+
+    public  Map<String, List<List<String>>> getContest(){
+        String query ="select description,idquiztest, content, optionA, optionB, optionC, optionD, keyQuestion from quiztest join question on quiztest.idquiztest = question.contestid;";
+        Map<String, List<List<String>>> listContests = new HashMap<>();
+        try(Statement statement = ConnectDataHelper.getInstance().connectDB().createStatement()) {
+            statement.execute("use data");
+            ResultSet resultSet = statement.executeQuery(query);
+            while (resultSet.next()){
+                List<String> testgrammarid = new ArrayList<>();
+                List<String> question = new ArrayList<>();
+                List<String> a = new ArrayList<>();
+                List<String> b = new ArrayList<>();
+                List<String> c = new ArrayList<>();
+                List<String> d = new ArrayList<>();
+                List<String> key = new ArrayList<>();
+                if (!listContests.containsKey(resultSet.getString("description"))){
+                    List<List<String>> tmp = new ArrayList<>();
+                    testgrammarid.add(resultSet.getString("idquiztest"));
+                    question.add(resultSet.getString("content"));
+                    a.add(resultSet.getString("optionA"));
+                    b.add(resultSet.getString("optionB"));
+                    c.add(resultSet.getString("optionC"));
+                    d.add(resultSet.getString("optionD"));
+                    key.add(resultSet.getString("keyQuestion"));
+                    tmp.add(testgrammarid);
+                    tmp.add(question);
+                    tmp.add(a);
+                    tmp.add(b);
+                    tmp.add(c);
+                    tmp.add(d);
+                    tmp.add(key);
+                    listContests.put(resultSet.getString("description"), tmp);
+                }else {
+                    List<List<String>> tmp = new ArrayList<>(listContests.get(resultSet.getString("description")));
+                    tmp.get(0).add(resultSet.getString("idquiztest"));
+                    tmp.get(1).add(resultSet.getString("content"));
+                    tmp.get(2).add(resultSet.getString("optionA"));
+                    tmp.get(3).add(resultSet.getString("optionB"));
+                    tmp.get(4).add(resultSet.getString("optionC"));
+                    tmp.get(5).add(resultSet.getString("optionD"));
+                    tmp.get(6).add(resultSet.getString("keyQuestion"));
+                    listContests.replace(resultSet.getString("description"), listContests.get(resultSet.getString("description")), tmp);
+                }
+            }
+        } catch (IllegalAccessException | InstantiationException | SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return listContests;
     }
 
     public boolean removeQuizzTestGrammar(int id){
@@ -199,20 +271,72 @@ public class QuizTestGrammarModel {
 
     }
 
-    public static class QuizzQuesstionView extends QuizzQuesstion{
-        private MenuButton menuButton;
-        public QuizzQuesstionView(String quizzcontestid, String question, String optionA, String optionB,
-                                  String optionC, String optionD, String key, String contestid, MenuButton menuButton) {
-            super(quizzcontestid, question, optionA, optionB, optionC, optionD, key, contestid);
-            this.menuButton = menuButton;
+    public class TestResult{
+
+        private int userInfoid;
+        private int contestid;
+        private int numOfCorrect;
+        private int numOfIncorect;
+        private int times;
+        private String totalTime;
+
+        public TestResult(int userInfoid, int contestid, int numOfCorrect, int numOfIncorect, int times, String totalTime) {
+            this.userInfoid = userInfoid;
+            this.contestid = contestid;
+            this.numOfCorrect = numOfCorrect;
+            this.numOfIncorect = numOfIncorect;
+            this.times = times;
+            this.totalTime = totalTime;
         }
 
-        public MenuButton getMenuButton() {
-            return menuButton;
+        public int getUserInfoid() {
+            return userInfoid;
         }
 
-        public void setMenuButton(MenuButton menuButton) {
-            this.menuButton = menuButton;
+        public void setUserInfoid(int userInfoid) {
+            this.userInfoid = userInfoid;
+        }
+
+        public int getContestid() {
+            return contestid;
+        }
+
+        public void setContestid(int contestid) {
+            this.contestid = contestid;
+        }
+
+        public int getNumOfCorrect() {
+            return numOfCorrect;
+        }
+
+        public void setNumOfCorrect(int numOfCorrect) {
+            this.numOfCorrect = numOfCorrect;
+        }
+
+        public int getNumOfIncorect() {
+            return numOfIncorect;
+        }
+
+        public void setNumOfIncorect(int numOfIncorect) {
+            this.numOfIncorect = numOfIncorect;
+        }
+
+        public int getTimes() {
+            return times;
+        }
+
+        public void setTimes(int times) {
+            this.times = times;
+        }
+
+        public String getTotalTime() {
+            return totalTime;
+        }
+
+        public void setTotalTime(String totalTime) {
+            this.totalTime = totalTime;
         }
     }
+
+
 }
