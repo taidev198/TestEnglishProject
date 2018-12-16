@@ -162,11 +162,11 @@
             </VBox>
          </children>
       </AnchorPane>
-      <Pane layoutX="372.0" layoutY="86.0" prefHeight="700.0" prefWidth="1100.0" style="-fx-background-color: #F2F2F2;">
+      <Pane layoutX="372.0" layoutY="27.0" prefHeight="759.0" prefWidth="1100.0" style="-fx-background-color: #F2F2F2;">
          <children>
-            <PieChart fx:id="pieChart" layoutX="43.0" layoutY="410.0" prefHeight="276.0" prefWidth="307.0" />
-            <PieChart fx:id="pieChart1" layoutX="743.0" layoutY="410.0" prefHeight="276.0" prefWidth="307.0" />
-            <LineChart fx:id="lineChart" layoutX="50.0" layoutY="24.0" prefHeight="350.0" prefWidth="1000.0">
+            <PieChart fx:id="pieChart" layoutX="50.0" layoutY="450.0" prefHeight="276.0" prefWidth="307.0" />
+            <PieChart fx:id="pieChart1" layoutX="743.0" layoutY="450.0" prefHeight="276.0" prefWidth="307.0" />
+            <LineChart fx:id="lineChart" layoutX="50.0" layoutY="45.0" prefHeight="350.0" prefWidth="1000.0">
               <xAxis>
                 <CategoryAxis prefWidth="444.0" side="BOTTOM" />
               </xAxis>

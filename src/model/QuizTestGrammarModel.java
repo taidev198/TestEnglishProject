@@ -1,7 +1,6 @@
 package model;
 
 import helper.ConnectDataHelper;
-import javafx.scene.control.MenuButton;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -41,16 +40,17 @@ public class QuizTestGrammarModel {
 
     public boolean addResult(TestResult testResult){
         java.util.Date date = new Date();
-        String query = "insert into testresult values( ?, ?, ?, ?, ?, ?, ?)";
+        String query = "insert into testresult values( ?, ?, ?, ?, ?, ?, ?, ?)";
         try(PreparedStatement statement = ConnectDataHelper.getInstance().connectDB().prepareStatement(query)) {
             statement.execute("use data");
             statement.setInt(1, testResult.getUserInfoid());
-            statement.setInt(2, testResult.getContestid());
-            statement.setInt(3, testResult.getNumOfCorrect());
-            statement.setInt(4, testResult.getNumOfIncorect());
-            statement.setInt(5, testResult.getTimes());
-            statement.setString(6, testResult.getTotalTime());
-            statement.setTimestamp(7, new Timestamp(date.getTime()));
+            statement.setInt(2, testResult.getTyperesultid());
+            statement.setInt(3, testResult.getResultid());
+            statement.setInt(4, testResult.getNumOfCorrect());
+            statement.setInt(5, testResult.getNumOfIncorect());
+            statement.setInt(6, testResult.getTimes());
+            statement.setString(7, testResult.getTotalTime());
+            statement.setTimestamp(8, new Timestamp(date.getTime()));
             statement.executeUpdate();
         } catch (IllegalAccessException | InstantiationException | ClassNotFoundException | SQLException e) {
             e.printStackTrace();
@@ -60,15 +60,15 @@ public class QuizTestGrammarModel {
     }
 
 
-    public List<List<String>> getResult( int id){
-        String query = "select * from testresult where userInfoid = "+id;
+    public List<List<String>> getResult(int id){
+        String query = "select * from testresult where userInfoid = "+id +" and typeresultid = 1";
         List<List<String>> ans = new ArrayList<>();
         try(PreparedStatement statement = ConnectDataHelper.getInstance().connectDB().prepareStatement(query)) {
             statement.execute("use data");
             ResultSet resultSet = statement.executeQuery(query);
 
             List<String> userInfoid = new ArrayList<>();
-            List<String> contestid = new ArrayList<>();
+            List<String> resultid = new ArrayList<>();
             List<String> numOfCorrect = new ArrayList<>();
             List<String> numOfIncorrect = new ArrayList<>();
             List<String> times = new ArrayList<>();
@@ -76,7 +76,7 @@ public class QuizTestGrammarModel {
             List<String> date = new ArrayList<>();
             while (resultSet.next()){
                 userInfoid.add(String.valueOf(resultSet.getInt("userInfoid")));
-                contestid.add(String.valueOf(resultSet.getInt("contestid")));
+                resultid.add(String.valueOf(resultSet.getInt("resultid")));
                 numOfCorrect.add(String.valueOf(resultSet.getInt("numOfCorrect")));
                 numOfIncorrect.add(String.valueOf(resultSet.getInt("numOfIncorrect")));
                 times.add(String.valueOf(resultSet.getInt("times")));
@@ -84,7 +84,7 @@ public class QuizTestGrammarModel {
                 date.add(String.valueOf(resultSet.getTimestamp("date")));
             }
             ans.add(userInfoid);
-            ans.add(contestid);
+            ans.add(resultid);
             ans.add(numOfCorrect);
             ans.add(numOfIncorrect);
             ans.add(times);
@@ -274,19 +274,30 @@ public class QuizTestGrammarModel {
     public class TestResult{
 
         private int userInfoid;
-        private int contestid;
+        private int typeresultid;
+        private int resultid;
         private int numOfCorrect;
         private int numOfIncorect;
         private int times;
         private String totalTime;
 
-        public TestResult(int userInfoid, int contestid, int numOfCorrect, int numOfIncorect, int times, String totalTime) {
+        public TestResult(int userInfoid, int typeresultid, int resultid , int numOfCorrect, int numOfIncorect, int times, String totalTime) {
             this.userInfoid = userInfoid;
-            this.contestid = contestid;
+            this.typeresultid = typeresultid;
             this.numOfCorrect = numOfCorrect;
             this.numOfIncorect = numOfIncorect;
             this.times = times;
+            this.resultid = resultid;
             this.totalTime = totalTime;
+
+        }
+
+        public int getResultid() {
+            return resultid;
+        }
+
+        public void setResultid(int resultid) {
+            this.resultid = resultid;
         }
 
         public int getUserInfoid() {
@@ -297,12 +308,12 @@ public class QuizTestGrammarModel {
             this.userInfoid = userInfoid;
         }
 
-        public int getContestid() {
-            return contestid;
+        public int getTyperesultid() {
+            return typeresultid;
         }
 
-        public void setContestid(int contestid) {
-            this.contestid = contestid;
+        public void setTyperesultid(int typeresultid) {
+            this.typeresultid = typeresultid;
         }
 
         public int getNumOfCorrect() {
