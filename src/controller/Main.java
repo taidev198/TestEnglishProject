@@ -7,7 +7,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import model.QuizTestGrammarModel;
 
 import java.awt.*;
 
@@ -19,7 +18,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
 //        Class.forName("helper/ConnectDataHelper.java");
-        Parent root = FXMLLoader.load(getClass().getResource("/view/UserView.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/view/LoginView.fxml"));
         primaryStage.setResizable(false);
         //    primaryStage.initStyle(StageStyle.TRANSPARENT);
         primaryStage.setTitle("Login");
@@ -27,7 +26,7 @@ public class Main extends Application {
 //        primaryStage.setX((primScreenBounds.getWidth() - primaryStage.getWidth()) / 2);
 //        primaryStage.setY((primScreenBounds.getHeight() - primaryStage.getHeight()) / 2);
 
-        primaryStage.setScene(new Scene(root, 1520, 800));
+        primaryStage.setScene(new Scene(root, 1000, 600));
         Dimension d= Toolkit.getDefaultToolkit().getScreenSize(); // get screen size
         primaryStage.show(); //show stage because you wouldn't be able to get Height & width of the stage
         primaryStage.setX(d.width/2-(primaryStage.getWidth()/2));

@@ -36,6 +36,40 @@ public class UserModel  {
         }
     }
 
+    public int getUserId(String username) {
+        String query = "select userInfoid from userinfo where username = " + "\'"+ username+"\'"  ;
+
+        try (Statement statement = ConnectDataHelper.getInstance().connectDB().createStatement()) {
+            statement.execute("use data");
+            ResultSet resultSet = statement.executeQuery(query);
+            while (resultSet.next())
+            return resultSet.getInt("userInfoid");
+        } catch (SQLException | IllegalAccessException | InstantiationException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+
+    public List<String> getResultUser(int userId){
+        String query = "select description from testresult join quiztest on quiztest.idquiztest = testresult.resultid where typeresultid = 1 and userInfoid =" + userId;
+        List<String> res = new ArrayList<>();
+
+
+        try (Statement statement = ConnectDataHelper.getInstance().connectDB().createStatement()) {
+            statement.execute("use data");
+            ResultSet resultSet = statement.executeQuery(query);
+            while (resultSet.next()){
+                res.add(resultSet.getString("description"));
+            }
+        } catch (SQLException | IllegalAccessException | InstantiationException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return res;
+
+    }
+
+
     public List<List<String>> getUserInfo(){
         String query = "select * from userinfo";
         List<List<String>> ans = new ArrayList<>();

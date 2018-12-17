@@ -3,7 +3,6 @@ package controller;
 import animatefx.animation.FadeIn;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -30,9 +29,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import javafx.util.Callback;
-import model.QuizTestGrammarModel;
-import model.TestGrammarModel;
+import model.QuizTestModel;
 
 import java.io.IOException;
 import java.net.URL;
@@ -76,7 +73,7 @@ public class QuizTestController implements Initializable {
     Thread myRunnableThread;
     MyRunnable myRunnable;
     private AtomicBoolean isRunning = new AtomicBoolean(false);
-    private QuizTestGrammarModel model;
+    private QuizTestModel model;
     private Map<String, List<List<String>>> listQuestion;
     List<Map.Entry<String, List<List<String>>>> entryList;
     List<String> key;
@@ -109,7 +106,7 @@ public class QuizTestController implements Initializable {
             }
             System.out.println("thanh tai nguyen");
         });
-        model = new QuizTestGrammarModel();
+        model = new QuizTestModel();
         min.setText("15");
         listQuestion = model.getContest();
          entryList = new ArrayList<>(listQuestion.entrySet());

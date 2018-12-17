@@ -14,9 +14,9 @@ import java.util.Map;
  */
 
 /**https://stackoverflow.com/questions/21119096/how-to-insert-timestamp-in-database*/
-public class QuizTestGrammarModel {
+public class QuizTestModel {
 
-    public QuizTestGrammarModel(){}
+    public QuizTestModel(){}
 
 
     public void update(String id, QuizzQuesstion quizzQuesstion ){

@@ -8,29 +8,31 @@ import helper.WorkIndicatorDialog;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.concurrent.Task;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Side;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
-import javafx.scene.control.ProgressIndicator;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
+import model.QuizTestModel;
+import model.UserModel;
 
 
 import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 
@@ -58,12 +60,26 @@ public class UserController implements Initializable, LoadSceneHelper, Progressa
     LineChart<?, ?> lineChart;
     @FXML
      Label userName;
-    Task worker;
-    Stage dialog;
     static String temp;
+    QuizTestModel quizTestModel;
+    private List<List<String>> quizTestResult;
+    List<String > listContest;
+    UserModel userModel;
+    private int userId;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         makeStageDragerable();
+        userModel = new UserModel();
+        //get userid
+        userId = userModel.getUserId(temp);
+        System.out.println(userId);
+        quizTestModel = new QuizTestModel();
+
+
+        quizTestResult = quizTestModel.getResult(userId);
+        listContest = userModel.getResultUser(userId);
+        System.out.println(quizTestResult);
+        //pie chart
         list.addAll(new PieChart.Data("tai", 10),
                 new PieChart.Data("tai", 10),
                 new PieChart.Data("tai", 10),
@@ -83,15 +99,21 @@ public class UserController implements Initializable, LoadSceneHelper, Progressa
         pieChart1.setTitle("OverView");
         pieChart1.setLegendSide(Side.BOTTOM);
 
+        //LINE CHART
         XYChart.Series series = new XYChart.Series();
-        series.getData().add(new XYChart.Data<>("1", 2));
-        series.getData().add(new XYChart.Data<>("2", 13));
-        series.getData().add(new XYChart.Data<>("3", 21));
-        series.getData().add(new XYChart.Data<>("4", 20));
-        series.getData().add(new XYChart.Data<>("5", 12));
-        series.getData().add(new XYChart.Data<>("6", 25));
+        for (int i = 0; i < listContest.size(); i++) {
+            System.out.println("result:" + quizTestResult.get(2).get(i));
+            series.getData().add(new XYChart.Data<>(listContest.get(i), Integer.valueOf(quizTestResult.get(2).get(i))));
+        }
+
+
+//        series.getData().add(new XYChart.Data<>("2", 13));
+//        series.getData().add(new XYChart.Data<>("3", 21));
+//        series.getData().add(new XYChart.Data<>("4", 20));
+//        series.getData().add(new XYChart.Data<>("5", 12));
+//        series.getData().add(new XYChart.Data<>("6", 25));
         series.setName("User Account");
-        lineChart.setTitle("Overview");
+        lineChart.setTitle("RESULTS OF QUIZ TESTS");
         lineChart.setTitleSide(Side.TOP);
 
         lineChart.getData().addAll(series);
