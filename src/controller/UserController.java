@@ -65,7 +65,7 @@ public class UserController implements Initializable, LoadSceneHelper, Progressa
     private List<List<String>> quizTestResult;
     List<String > listContest;
     UserModel userModel;
-    private int userId;
+    public static int userId;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         makeStageDragerable();
@@ -101,13 +101,6 @@ public class UserController implements Initializable, LoadSceneHelper, Progressa
             System.out.println("result:" + quizTestResult.get(2).get(i));
             series.getData().add(new XYChart.Data<>(listContest.get(i), Integer.valueOf(quizTestResult.get(2).get(i))));
         }
-
-
-//        series.getData().add(new XYChart.Data<>("2", 13));
-//        series.getData().add(new XYChart.Data<>("3", 21));
-//        series.getData().add(new XYChart.Data<>("4", 20));
-//        series.getData().add(new XYChart.Data<>("5", 12));
-//        series.getData().add(new XYChart.Data<>("6", 25));
         series.setName("User Account");
         lineChart.setTitle("RESULTS OF QUIZ TESTS");
         lineChart.setTitleSide(Side.TOP);
@@ -118,24 +111,17 @@ public class UserController implements Initializable, LoadSceneHelper, Progressa
 
     public static void setUserName(String username){
         temp = username;
-        System.out.println("thanh tai nguyen");
     }
 
     private void makeStageDragerable() {
-        anchorPane.setOnMousePressed(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                xOffset = event.getSceneX();
-                yOffset = event.getSceneY();
-            }
+        anchorPane.setOnMousePressed(event -> {
+            xOffset = event.getSceneX();
+            yOffset = event.getSceneY();
         });
-        anchorPane.setOnMouseDragged(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                Main.stage.setX(event.getScreenX() - xOffset);
-                Main.stage.setY(event.getScreenY() - yOffset);
-                Main.stage.setOpacity(0.7f);
-            }
+        anchorPane.setOnMouseDragged(event -> {
+            Main.stage.setX(event.getScreenX() - xOffset);
+            Main.stage.setY(event.getScreenY() - yOffset);
+            Main.stage.setOpacity(0.7f);
         });
         anchorPane.setOnDragDone((e) -> {
             Main.stage.setOpacity(1.0f);
@@ -183,9 +169,9 @@ public class UserController implements Initializable, LoadSceneHelper, Progressa
     private void logOut(){
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/view/LoginView.fxml"));
-            ((AnchorPane) anchorPane).getChildren().clear();
-            ((AnchorPane) anchorPane).getChildren().addAll(root);
-            Stage stage = (Stage)((AnchorPane)anchorPane).getScene().getWindow();
+            ( anchorPane).getChildren().clear();
+            ( anchorPane).getChildren().addAll(root);
+            Stage stage = (Stage)(anchorPane).getScene().getWindow();
             stage.setHeight(600);
             stage.setWidth(1000);
             Dimension d= Toolkit.getDefaultToolkit().getScreenSize(); // get screen size

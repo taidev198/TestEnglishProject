@@ -117,7 +117,7 @@ public class QuizTestModel {
             statement.execute("use data");
             ResultSet resultSet = statement.executeQuery(query);
             while (resultSet.next()){
-                List<String> testgrammarid = new ArrayList<>();
+                List<String> quiztestid = new ArrayList<>();
                 List<String> question = new ArrayList<>();
                 List<String> a = new ArrayList<>();
                 List<String> b = new ArrayList<>();
@@ -126,14 +126,14 @@ public class QuizTestModel {
                 List<String> key = new ArrayList<>();
                 if (!listContests.containsKey(resultSet.getString("description"))){
                     List<List<String>> tmp = new ArrayList<>();
-                    testgrammarid.add(resultSet.getString("idquiztest"));
+                    quiztestid.add(resultSet.getString("idquiztest"));
                     question.add(resultSet.getString("content"));
                     a.add(resultSet.getString("optionA"));
                     b.add(resultSet.getString("optionB"));
                     c.add(resultSet.getString("optionC"));
                     d.add(resultSet.getString("optionD"));
                     key.add(resultSet.getString("keyQuestion"));
-                    tmp.add(testgrammarid);
+                    tmp.add(quiztestid);
                     tmp.add(question);
                     tmp.add(a);
                     tmp.add(b);
@@ -282,7 +282,7 @@ public class QuizTestModel {
 
     }
 
-    public class TestResult{
+    public static class TestResult{
 
         private int userInfoid;
         private int typeresultid;

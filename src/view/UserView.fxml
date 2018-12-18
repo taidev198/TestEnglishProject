@@ -119,7 +119,7 @@
                         </Label>
                      </children>
                   </HBox>
-                  <Label layoutX="10.0" layoutY="136.0" text="SHARE">
+                  <Label layoutX="10.0" layoutY="136.0" text="MORE">
                      <VBox.margin>
                         <Insets left="10.0" />
                      </VBox.margin>
@@ -164,8 +164,8 @@
       </AnchorPane>
       <Pane layoutX="372.0" layoutY="27.0" prefHeight="759.0" prefWidth="1121.0" style="-fx-background-color: #F2F2F2;">
          <children>
-            <PieChart fx:id="pieChart" layoutX="14.0" layoutY="423.0" prefHeight="322.0" prefWidth="483.0" />
-            <PieChart fx:id="pieChart1" layoutX="613.0" layoutY="423.0" prefHeight="322.0" prefWidth="483.0" />
+            <PieChart fx:id="pieChart" layoutX="14.0" layoutY="423.0" prefHeight="322.0" prefWidth="551.0" />
+            <PieChart fx:id="pieChart1" layoutX="569.0" layoutY="423.0" prefHeight="322.0" prefWidth="527.0" />
             <LineChart fx:id="lineChart" layoutX="50.0" layoutY="45.0" prefHeight="350.0" prefWidth="1000.0">
               <xAxis>
                 <CategoryAxis prefWidth="444.0" side="BOTTOM" />

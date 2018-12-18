@@ -67,6 +67,8 @@ public class UserQuizTestController implements Initializable {
     Text sec;
     @FXML
     Text dot;
+    int times = 1;
+    String totalTime ;
     Map<Integer, List<RadioButton>> listButton = new HashMap<>();
     private List<String[]> answer;
     private String[] clone;
@@ -104,7 +106,6 @@ public class UserQuizTestController implements Initializable {
                 System.out.println("restart");
                 submit.setText("SUBMIT");
             }
-            System.out.println("thanh tai nguyen");
         });
         model = new QuizTestModel();
         min.setText("15");
@@ -133,7 +134,7 @@ public class UserQuizTestController implements Initializable {
         rootLayout.setPadding(new Insets(10, 10, 10, 10));
         flowPane.setVgap(10);
         flowPane.setHgap(4);
-        flowPane.setPrefWrapLength(310);
+        flowPane.setPrefWrapLength(320);
         for (int i = 0; i < listQuestion.get(0).size(); i++) {
             //init question and add event handler on each questions.
             HBox content;
@@ -432,6 +433,12 @@ public class UserQuizTestController implements Initializable {
         dialogVbox1.getChildren().addAll(dialogHbox);
         dialogHbox.getChildren().add(review);
         dialogHbox.getChildren().add(restart);
+
+        //adding result to database
+        model.addResult(new QuizTestModel.TestResult(UserController.userId, 1, Integer.valueOf(entryList.get(selectedIdx).getValue().get(0).get(selectedIdx))
+                , numberOfCorrect, numberOfWrong,times++, totalTime));
+
+
         dialog.initStyle(StageStyle.TRANSPARENT);
         isRunning.set(false);
         review.addEventHandler(MouseEvent.MOUSE_CLICKED,
@@ -488,12 +495,15 @@ public class UserQuizTestController implements Initializable {
                         final int m = s == 0 ? minValue-1: minValue;
                         @Override
                         public void run() {
-                            bar.setProgress(update_i / 100);
+                            bar.setProgress(update_i * 60);
                             min.setText(String.valueOf(m));
                             sec.setText(String.valueOf(s));
-
-                            if (m == 0 && s == 0)
+                            totalTime = String.valueOf(update_i/ 100);
+                            if (m == 0 && s == 0){
                                 OnSubmit();
+                                totalTime = "600";
+                            }
+
                         }
                     });
                     if (!isRunning.get())
