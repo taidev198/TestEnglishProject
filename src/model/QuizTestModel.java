@@ -43,12 +43,12 @@ public class QuizTestModel {
         String query = "insert into testresult values( ?, ?, ?, ?, ?, ?, ?, ?)";
         try(PreparedStatement statement = ConnectDataHelper.getInstance().connectDB().prepareStatement(query)) {
             statement.execute("use data");
-            statement.setInt(1, testResult.getUserInfoid());
-            statement.setInt(2, testResult.getTyperesultid());
-            statement.setInt(3, testResult.getResultid());
-            statement.setInt(4, testResult.getNumOfCorrect());
-            statement.setInt(5, testResult.getNumOfIncorect());
-            statement.setInt(6, testResult.getTimes());
+            statement.setInt(1, Integer.parseInt(testResult.getUserInfoid()));
+            statement.setInt(2, Integer.parseInt(testResult.getTyperesultid()));
+            statement.setInt(3, Integer.parseInt(testResult.getResultid()));
+            statement.setInt(4, Integer.parseInt(testResult.getNumOfCorrect()));
+            statement.setInt(5, Integer.parseInt(testResult.getNumOfIncorrect()));
+            statement.setInt(6, Integer.parseInt(testResult.getTimes()));
             statement.setString(7, testResult.getTotalTime());
             statement.setTimestamp(8, new Timestamp(date.getTime()));
             statement.executeUpdate();
@@ -158,6 +158,43 @@ public class QuizTestModel {
         }
         return listContests;
     }
+
+
+    public List<List<String>> getResultByAdmin(int userId){
+        List<List<String>> res = new ArrayList<>();
+        String query = "select  description, numOfCorrect, numOfIncorrect, times, totalTime, date from testresult join quiztest\n" +
+                " on testresult.resultid = quiztest.idquiztest and userInfoid = "+ userId + " order by description;";
+        try(Statement statement = ConnectDataHelper.getInstance().connectDB().createStatement()) {
+            statement.execute("use data");
+            ResultSet resultSet = statement.executeQuery(query);
+            List<String> description = new ArrayList<>();
+            List<String> numOfCorrect = new ArrayList<>();
+            List<String> numOfIncorrect = new ArrayList<>();
+            List<String> times = new ArrayList<>();
+            List<String> totalTime = new ArrayList<>();
+            List<String> date = new ArrayList<>();
+            while (resultSet.next()){
+
+                description.add(resultSet.getString("description"));
+                numOfCorrect.add(String.valueOf(resultSet.getInt("numOfCorrect")));
+                numOfIncorrect.add(String.valueOf(resultSet.getInt("numOfIncorrect")));
+                times.add(String.valueOf(resultSet.getInt("times")));
+                totalTime.add(resultSet.getString("totalTime"));
+                date.add(String.valueOf(resultSet.getTimestamp("date")));
+            }
+            res.add(description);
+            res.add(numOfCorrect);
+            res.add(numOfIncorrect);
+            res.add(times);
+            res.add(totalTime);
+            res.add(date);
+        } catch (SQLException | IllegalAccessException | InstantiationException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return res;
+    }
+
 
     public boolean removeQuizzTestGrammar(int id){
         String query = "delete from quizzcontest where quizzcontestid = " + id;
@@ -284,70 +321,70 @@ public class QuizTestModel {
 
     public static class TestResult{
 
-        private int userInfoid;
-        private int typeresultid;
-        private int resultid;
-        private int numOfCorrect;
-        private int numOfIncorect;
-        private int times;
+        private String userInfoid;
+        private String typeresultid;
+        private String resultid;
+        private String numOfCorrect;
+        private String numOfIncorrect;
+        private String times;
         private String totalTime;
 
-        public TestResult(int userInfoid, int typeresultid, int resultid , int numOfCorrect, int numOfIncorect, int times, String totalTime) {
+        public TestResult(String userInfoid, String typeresultid, String resultid , String numOfCorrect, String numOfIncorrect, String times, String totalTime) {
             this.userInfoid = userInfoid;
             this.typeresultid = typeresultid;
             this.numOfCorrect = numOfCorrect;
-            this.numOfIncorect = numOfIncorect;
+            this.numOfIncorrect = numOfIncorrect;
             this.times = times;
             this.resultid = resultid;
             this.totalTime = totalTime;
 
         }
 
-        public int getResultid() {
-            return resultid;
-        }
-
-        public void setResultid(int resultid) {
-            this.resultid = resultid;
-        }
-
-        public int getUserInfoid() {
+        public String getUserInfoid() {
             return userInfoid;
         }
 
-        public void setUserInfoid(int userInfoid) {
+        public void setUserInfoid(String userInfoid) {
             this.userInfoid = userInfoid;
         }
 
-        public int getTyperesultid() {
+        public String getTyperesultid() {
             return typeresultid;
         }
 
-        public void setTyperesultid(int typeresultid) {
+        public void setTyperesultid(String typeresultid) {
             this.typeresultid = typeresultid;
         }
 
-        public int getNumOfCorrect() {
+        public String getResultid() {
+            return resultid;
+        }
+
+        public void setResultid(String resultid) {
+            this.resultid = resultid;
+        }
+
+        public String getNumOfCorrect() {
             return numOfCorrect;
         }
 
-        public void setNumOfCorrect(int numOfCorrect) {
+        public void setNumOfCorrect(String numOfCorrect) {
             this.numOfCorrect = numOfCorrect;
         }
 
-        public int getNumOfIncorect() {
-            return numOfIncorect;
+        public String getNumOfIncorrect() {
+            return numOfIncorrect;
         }
 
-        public void setNumOfIncorect(int numOfIncorect) {
-            this.numOfIncorect = numOfIncorect;
+        public void setNumOfIncorrect(String numOfIncorrect) {
+            this.numOfIncorrect = numOfIncorrect;
         }
 
-        public int getTimes() {
+        public String getTimes() {
             return times;
         }
 
-        public void setTimes(int times) {
+        public void setTimes(String times) {
             this.times = times;
         }
 
@@ -359,6 +396,33 @@ public class QuizTestModel {
             this.totalTime = totalTime;
         }
     }
+
+    public static class TestResultUser extends TestResult{
+        String description;
+        String date;
+        public TestResultUser(String description,  String numOfCorrect, String numOfIncorrect, String times, String totalTime, String date) {
+            super("", "", "", numOfCorrect, numOfIncorrect, times, totalTime);
+            this.description = description;
+            this.date =date;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        public void setDescription(String description) {
+            this.description = description;
+        }
+
+        public String getDate() {
+            return date;
+        }
+
+        public void setDate(String date) {
+            this.date = date;
+        }
+    }
+
 
 
 }

@@ -435,8 +435,8 @@ public class UserQuizTestController implements Initializable {
         dialogHbox.getChildren().add(restart);
 
         //adding result to database
-        model.addResult(new QuizTestModel.TestResult(UserController.userId, 1, Integer.valueOf(entryList.get(selectedIdx).getValue().get(0).get(selectedIdx))
-                , numberOfCorrect, numberOfWrong,times++, totalTime));
+        model.addResult(new QuizTestModel.TestResult(Integer.toString(UserController.userId), "1", entryList.get(selectedIdx).getValue().get(0).get(selectedIdx)
+                , Integer.toString(numberOfCorrect), Integer.toString(numberOfWrong),Integer.toString(times++), totalTime));
 
 
         dialog.initStyle(StageStyle.TRANSPARENT);

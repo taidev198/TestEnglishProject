@@ -23,6 +23,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import model.QuizTestModel;
 import model.TestGrammarModel;
 import model.UserModel;
 
@@ -36,6 +37,8 @@ import java.util.*;
 public class AdminUserController implements Initializable, LoadSceneHelper {
     @FXML
      TableView<UserModel.User> tableView;
+//    @FXML
+//    TableView<QuizTestModel.TestResultUser> resultTableView;
      UserModel model;
     ObservableList<UserModel.User> data;
     @FXML
@@ -43,6 +46,24 @@ public class AdminUserController implements Initializable, LoadSceneHelper {
     List<MenuButton> menuButton;
     FilteredList<UserModel.User> filteredList;
     private  List<List<String>> listUser;
+
+    //result
+//    @FXML
+//    TableColumn<QuizTestModel.TestResultUser, String> contestCol;
+//    @FXML
+//    TableColumn<QuizTestModel.TestResultUser, String> grammarCol;
+//    @FXML
+//    TableColumn<QuizTestModel.TestResultUser, String> numOfCorrectCol;
+//    @FXML
+//    TableColumn<QuizTestModel.TestResultUser, String> numOfIncorrectCol;
+//    @FXML
+//    TableColumn<QuizTestModel.TestResultUser, String> timesCol;
+//    @FXML
+//    TableColumn<QuizTestModel.TestResultUser, String> totalTimeCol;
+//    @FXML
+//    TableColumn<QuizTestModel.TestResultUser, String> dateCol;
+
+
     @FXML
     TableColumn<TestGrammarModel.QuestionTableView, String> idCol;
     @FXML
@@ -67,10 +88,13 @@ public class AdminUserController implements Initializable, LoadSceneHelper {
     TextField searchingField;
     @FXML
     Button addBtn;
+    List<List<String>> listResultsContest ;
+    QuizTestModel quizTestModel;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         model = new UserModel();
+        quizTestModel = new QuizTestModel();
         listUser = model.getUserInfo();
         idCol.setCellValueFactory(new PropertyValueFactory<>("userInfoid"));
         usernameCol.setCellValueFactory(new PropertyValueFactory<>("username"));
@@ -90,11 +114,11 @@ public class AdminUserController implements Initializable, LoadSceneHelper {
             menuButton.add(new MenuButton());
             MenuItem edit = new MenuItem("EDIT");
             MenuItem delete = new MenuItem("DELETE");
+            MenuItem result = new MenuItem("RESULT");
             menuButton.get(i).setText("...");
-            menuButton.get(i).getItems().addAll(edit, delete);
+            menuButton.get(i).getItems().addAll(edit, delete, result);
             int id = i;
             edit.setOnAction(event -> {
-
                 if (tableView.getSelectionModel().getSelectedIndex() == -1)
                     OnMessage("YOU HAVE NOT CHOSEN ANY ROW", Alert.AlertType.ERROR, "ERORR", "YOU HAVE ENTERED SOMETHINGS WRONG:");
                 else
@@ -104,6 +128,64 @@ public class AdminUserController implements Initializable, LoadSceneHelper {
                 System.out.println(id);
                 removeSelectedRows(Integer.parseInt(listUser.get(0).get(id)), tableView.getSelectionModel().getSelectedIndex());
                 System.out.println("remove row:" + tableView.getSelectionModel().getSelectedIndex());
+            });
+
+            result.setOnAction(event -> {
+                Stage stage = new Stage();
+                stage.setTitle("RESULT TEST OF USERID :" + Integer.parseInt(listUser.get(0).get(id)));
+                stage.setWidth(1280);
+                stage.setHeight(449);
+                Scene scene = new Scene(new AnchorPane());
+                TableView<QuizTestModel.TestResultUser> resultTableView = new TableView<>();
+
+                TableColumn<QuizTestModel.TestResultUser, String> contestCol = new TableColumn<>("CONTEST");
+                contestCol.setPrefWidth(268.79999351501465);
+                contestCol.setStyle( "-fx-alignment: CENTER;");
+                TableColumn<QuizTestModel.TestResultUser, String> grammarCol = new TableColumn<>("GRAMMAR");
+                grammarCol.setPrefWidth(337.5999450683594);
+                grammarCol.setStyle( "-fx-alignment: CENTER;");
+                TableColumn<QuizTestModel.TestResultUser, String> numOfCorrectCol = new TableColumn<>("NUM OF CORRECT");
+                numOfCorrectCol.setPrefWidth(131.20001220703125);
+                numOfCorrectCol.setStyle( "-fx-alignment: CENTER;");
+                TableColumn<QuizTestModel.TestResultUser, String> numOfIncorrectCol = new TableColumn<>("NUM OF INCORRECT");
+                numOfIncorrectCol.setPrefWidth(139.20001220703125);
+                numOfIncorrectCol.setStyle( "-fx-alignment: CENTER;");
+                TableColumn<QuizTestModel.TestResultUser, String> timesCol = new TableColumn<>("TIMES");
+                timesCol.setPrefWidth(102.4000244140625);
+                timesCol.setStyle( "-fx-alignment: CENTER;");
+                TableColumn<QuizTestModel.TestResultUser, String> totalTimeCol = new TableColumn<>("TOTAL TIME");
+                totalTimeCol.setPrefWidth(115.2000732421875);
+                totalTimeCol.setStyle( "-fx-alignment: CENTER;");
+                TableColumn<QuizTestModel.TestResultUser, String> dateCol = new TableColumn<>("DATE");
+                dateCol.setPrefWidth(200);
+                dateCol.setStyle( "-fx-alignment: CENTER;");
+                contestCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+//                grammarCol.setCellValueFactory(new PropertyValueFactory<>("grammar"));
+                numOfCorrectCol.setCellValueFactory(new PropertyValueFactory<>("numOfCorrect"));
+                numOfIncorrectCol.setCellValueFactory(new PropertyValueFactory<>("numOfIncorrect"));
+                timesCol.setCellValueFactory(new PropertyValueFactory<>("times"));
+                totalTimeCol.setCellValueFactory(new PropertyValueFactory<>("totalTime"));
+                dateCol.setCellValueFactory(new PropertyValueFactory<>("date"));
+
+
+                 ObservableList<QuizTestModel.TestResultUser> data =
+                        FXCollections.observableArrayList();
+                listResultsContest = quizTestModel.getResultByAdmin(Integer.parseInt(listUser.get(0).get(id)));
+                for (int j = 0; j < listResultsContest.size(); j++) {
+                        data.add(new QuizTestModel.TestResultUser(listResultsContest.get(0).get(j), listResultsContest.get(1).get(j),
+                                listResultsContest.get(2).get(j), listResultsContest.get(3).get(j), listResultsContest.get(4).get(j),
+                                listResultsContest.get(5).get(j)));
+                }
+                resultTableView.getColumns().addAll(contestCol, grammarCol, numOfCorrectCol, numOfIncorrectCol,
+                        timesCol, totalTimeCol, dateCol);
+                resultTableView.setItems(data);
+                resultTableView.setPrefWidth(1242);
+                resultTableView.setPrefHeight(367);
+                resultTableView.setLayoutX(7);
+                resultTableView.setLayoutY(24);
+                ((AnchorPane) scene.getRoot()).getChildren().addAll(resultTableView);
+                stage.setScene(scene);
+                stage.show();
             });
 
             data.addAll(new UserModel.User(listUser.get(0).get(i),
@@ -337,8 +419,9 @@ public class AdminUserController implements Initializable, LoadSceneHelper {
                         menuButton.add(new MenuButton());
                         MenuItem edit = new MenuItem("EDIT");
                         MenuItem delete = new MenuItem("DELETE");
+                        MenuItem result = new MenuItem("RESULT");
                         menuButton.get(menuButton.size()-1).setText("...");
-                        menuButton.get(menuButton.size()-1).getItems().addAll(edit, delete);
+                        menuButton.get(menuButton.size()-1).getItems().addAll(edit, delete, result);
                         edit.setOnAction(event -> {
                             if (tableView.getSelectionModel().getSelectedIndex() == -1)
                                 OnMessage("YOU HAVE NOT CHOSEN ANY ROW", Alert.AlertType.ERROR, "ERORR", "YOU HAVE ENTERED SOMETHINGS WRONG:");
