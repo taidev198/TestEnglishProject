@@ -102,7 +102,7 @@ public class UserTestGrammarController implements Initializable {
         rootLayout.setPadding(new Insets(10, 10, 10, 10));
         flowPane.setVgap(10);
         flowPane.setHgap(4);
-        flowPane.setPrefWrapLength(310);
+        flowPane.setPrefWrapLength(320);
         for (int i = 0; i < listQuestion.get(0).size(); i++) {
             //init question and add event handler on each questions.
             HBox content;
@@ -131,10 +131,21 @@ public class UserTestGrammarController implements Initializable {
             choose= new HBox(  optionA, optionB ,
                     optionC ,optionD);
             content.setPadding(new Insets(0,0,0,10));
-            HBox.setMargin(optionA, new Insets(40, 80, 30, 70));
-            HBox.setMargin(optionB, new Insets(40, 80, 30, 70));
-            HBox.setMargin(optionC, new Insets(40, 80, 30, 70));
-            HBox.setMargin(optionD, new Insets(40, 80, 30, 70));
+            //set user date
+            optionA.setUserData(listQuestion.get(2).get(i));
+            optionB.setUserData(listQuestion.get(3).get(i));
+            optionC.setUserData(listQuestion.get(4).get(i));
+            optionD.setUserData(listQuestion.get(5).get(i));
+
+            optionA.setPrefWidth(250);
+            optionB.setPrefWidth(250);
+            optionC.setPrefWidth(250);
+            optionD.setPrefWidth(250);
+
+            HBox.setMargin(optionA, new Insets(40, 0, 30, 0));
+            HBox.setMargin(optionB, new Insets(40, 0, 30, 0));
+            HBox.setMargin(optionC, new Insets(40, 0, 30, 0));
+            HBox.setMargin(optionD, new Insets(40, 0, 30, 0));
             group = new ToggleGroup();
             optionA.setFont(Font.font(18));
             optionB.setFont(Font.font(18));
@@ -147,11 +158,7 @@ public class UserTestGrammarController implements Initializable {
             optionC.setToggleGroup(group);
             optionD.setToggleGroup(group);
 
-            //set user date
-            optionA.setUserData(listQuestion.get(2).get(i));
-            optionB.setUserData(listQuestion.get(3).get(i));
-            optionC.setUserData(listQuestion.get(4).get(i));
-            optionD.setUserData(listQuestion.get(5).get(i));
+
 
             choose.setAlignment(Pos.CENTER);
             vBox = new VBox(content, choose);

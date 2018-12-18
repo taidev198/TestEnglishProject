@@ -45,7 +45,7 @@ import java.util.logging.Logger;
  * stop/start/restart/interrupt thread:https://stackoverflow.com/questions/1881714/how-to-start-stop-restart-a-thread-in-java
  * killing a thread:https://stackoverflow.com/questions/39683952/how-to-stop-a-running-thread-in-java
  * and https://www.baeldung.com/java-thread-stop*/
-public class QuizTestController implements Initializable {
+public class UserQuizTestController implements Initializable {
 
     @FXML
     ScrollPane rootLayout;
@@ -162,10 +162,15 @@ public class QuizTestController implements Initializable {
             choose= new HBox(  optionA, optionB ,
                     optionC ,optionD);
             content.setPadding(new Insets(0,0,0,10));
-            HBox.setMargin(optionA, new Insets(40, 80, 30, 70));
-            HBox.setMargin(optionB, new Insets(40, 80, 30, 70));
-            HBox.setMargin(optionC, new Insets(40, 80, 30, 70));
-            HBox.setMargin(optionD, new Insets(40, 80, 30, 70));
+            optionA.setPrefWidth(250);
+            optionB.setPrefWidth(250);
+            optionC.setPrefWidth(250);
+            optionD.setPrefWidth(250);
+
+            HBox.setMargin(optionA, new Insets(40, 0, 30, 0));
+            HBox.setMargin(optionB, new Insets(40, 0, 30, 0));
+            HBox.setMargin(optionC, new Insets(40, 0, 30, 0));
+            HBox.setMargin(optionD, new Insets(40, 0, 30, 0));
             group = new ToggleGroup();
             optionA.setFont(Font.font(18));
             optionB.setFont(Font.font(18));
@@ -496,7 +501,7 @@ public class QuizTestController implements Initializable {
                     try {
                         Thread.sleep(1000);
                     } catch (InterruptedException ex) {
-                        Logger.getLogger(QuizTestController.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(UserQuizTestController.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             }
