@@ -97,7 +97,18 @@ public class QuizTestModel {
         return ans;
     }
 
-
+    /**@param id Integer*/
+    public int getTotalCompletedContestByUser(int id) {
+        String query = "select count(distinct resultid) as 'totalCompletedContest' from testresult where typeresultid = 1 and userInfoid =" + id;
+        try (Statement statement = ConnectDataHelper.getInstance().connectDB().createStatement()) {
+            statement.execute("use data");
+            ResultSet resultSet = statement.executeQuery(query);
+            return resultSet.getInt("totalCompletedContest");
+        } catch (IllegalAccessException | InstantiationException | SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
 
     public  Map<String, List<List<String>>> getContest(){
         String query ="select description,idquiztest, content, optionA, optionB, optionC, optionD, keyQuestion from quiztest join question on quiztest.idquiztest = question.contestid;";

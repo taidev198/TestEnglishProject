@@ -80,23 +80,19 @@ public class UserController implements Initializable, LoadSceneHelper, Progressa
         listContest = userModel.getResultUser(userId);
         System.out.println(quizTestResult);
         //pie chart
-        list.addAll(new PieChart.Data("tai", 10),
-                new PieChart.Data("tai", 10),
-                new PieChart.Data("tai", 10),
-                new PieChart.Data("tai", 10));
-        list1.addAll(new PieChart.Data("tai", 10),
-                new PieChart.Data("tai", 10),
-                new PieChart.Data("tai", 10),
-                new PieChart.Data("tai", 10));
+        list.addAll(new PieChart.Data("Completed Grammar", 90),
+                new PieChart.Data("Uncompleted Grammar", 10));
+        list1.addAll(new PieChart.Data("Completed Contest", 90),
+                new PieChart.Data("Uncompleted Contest", 10));
         pieChart.setData(list);
         pieChart.setStartAngle(90);
 
-        pieChart.setTitle("OverView");
+        pieChart.setTitle("OverView Grammar");
         pieChart.setLegendSide(Side.BOTTOM);
         pieChart1.setData(list1);
         pieChart1.setStartAngle(90);
 
-        pieChart1.setTitle("OverView");
+        pieChart1.setTitle("OverView Contest");
         pieChart1.setLegendSide(Side.BOTTOM);
 
         //LINE CHART

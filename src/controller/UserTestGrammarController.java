@@ -24,6 +24,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import model.GrammarModel;
 import model.TestGrammarModel;
 
 import java.io.IOException;
@@ -51,7 +52,7 @@ public class UserTestGrammarController implements Initializable {
     private List<String[]> answer;
     private String[] clone;
 
-    private TestGrammarModel model;
+    private GrammarModel model;
     private Map<String, List<List<String>>> listQuestion;
     List<Map.Entry<String, List<List<String>>>> entryList;
     List<String> key = new ArrayList<>();
@@ -80,8 +81,8 @@ public class UserTestGrammarController implements Initializable {
                 submit.setText("SUBMIT");
             }
         });
-        model = new TestGrammarModel();
-        listQuestion = model.getTestGrammarFollowGrammarId();
+        model = new GrammarModel();
+        listQuestion = model.getTestGrammar();
         entryList = new ArrayList<>(listQuestion.entrySet());
         isSubmited = true;
         for (Map.Entry<String, List<List<String>>> entry :

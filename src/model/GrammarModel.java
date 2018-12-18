@@ -9,9 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class GrammarModel  {
 
@@ -84,7 +82,87 @@ public class GrammarModel  {
 
     }
 
-    public static class Grammar {
+
+    public Map<String, List<List<String>>> getTestGrammar(){
+        String query ="select description,grammar.grammarid, question.content, optionA, optionB, optionC, optionD, keyQuestion from grammar join question on grammar.grammarid = question.grammarid;";
+        Map<String, List<List<String>>> listTestGrammar = new HashMap<>();
+        try(Statement statement = ConnectDataHelper.getInstance().connectDB().createStatement()) {
+            statement.execute("use data");
+            ResultSet resultSet = statement.executeQuery(query);
+            while (resultSet.next()){
+                List<String> testgrammarid = new ArrayList<>();
+                List<String> question = new ArrayList<>();
+                List<String> a = new ArrayList<>();
+                List<String> b = new ArrayList<>();
+                List<String> c = new ArrayList<>();
+                List<String> d = new ArrayList<>();
+                List<String> key = new ArrayList<>();
+                if (!listTestGrammar.containsKey(resultSet.getString("description"))){
+                    List<List<String>> tmp = new ArrayList<>();
+                    testgrammarid.add(resultSet.getString("grammar.grammarid"));
+                    question.add(resultSet.getString("question.content"));
+                    a.add(resultSet.getString("optionA"));
+                    b.add(resultSet.getString("optionB"));
+                    c.add(resultSet.getString("optionC"));
+                    d.add(resultSet.getString("optionD"));
+                    key.add(resultSet.getString("keyQuestion"));
+                    tmp.add(testgrammarid);
+                    tmp.add(question);
+                    tmp.add(a);
+                    tmp.add(b);
+                    tmp.add(c);
+                    tmp.add(d);
+                    tmp.add(key);
+                    listTestGrammar.put(resultSet.getString("description"), tmp);
+                }else {
+                    List<List<String>> tmp = new ArrayList<>(listTestGrammar.get(resultSet.getString("description")));
+                    tmp.get(0).add(resultSet.getString("grammar.grammarid"));
+                    tmp.get(1).add(resultSet.getString("question.content"));
+                    tmp.get(2).add(resultSet.getString("optionA"));
+                    tmp.get(3).add(resultSet.getString("optionB"));
+                    tmp.get(4).add(resultSet.getString("optionC"));
+                    tmp.get(5).add(resultSet.getString("optionD"));
+                    tmp.get(6).add(resultSet.getString("keyQuestion"));
+                    listTestGrammar.replace(resultSet.getString("description"), listTestGrammar.get(resultSet.getString("description")), tmp);
+                }
+            }
+        } catch (IllegalAccessException | InstantiationException | SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return listTestGrammar;
+    }
+
+    //getting totalGrammar
+    public int getTotalGrammar() {
+        String query = "select count(distinct grammarid) as 'total' from grammar";
+        try (Statement statement = ConnectDataHelper.getInstance().connectDB().createStatement()) {
+            statement.execute("use data");
+            ResultSet resultSet = statement.executeQuery(query);
+            return resultSet.getInt("total");
+
+        } catch (IllegalAccessException | InstantiationException | SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    //getting getTotalCompletedGrammarByUser
+    /**@param id Integer*/
+    public int getTotalCompletedGrammarByUser(int id) {
+        String query = "select count(distinct resultid) as 'totalCompletedGrammar' from testresult where typeresultid = 0 and userInfoid =" + id;
+        try (Statement statement = ConnectDataHelper.getInstance().connectDB().createStatement()) {
+            statement.execute("use data");
+            ResultSet resultSet = statement.executeQuery(query);
+            return resultSet.getInt("totalCompletedGrammar");
+        } catch (IllegalAccessException | InstantiationException | SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+
+
+        public static class Grammar {
         private String id;
         private String des;
         private String content;
