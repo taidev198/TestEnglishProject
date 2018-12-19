@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_testenglishproject" default="compile.module.testenglishproject">
+  <dirname property="module.testenglishproject.basedir" file="${ant.file.module_testenglishproject}"/>
+  
+  <property name="module.jdk.home.testenglishproject" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.testenglishproject" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.testenglishproject" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.testenglishproject" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  
+  <property name="testenglishproject.output.dir" value="${module.testenglishproject.basedir}/out/production/TestEnglishProject"/>
+  <property name="testenglishproject.testoutput.dir" value="${module.testenglishproject.basedir}/out/test/TestEnglishProject"/>
+  
+  <path id="testenglishproject.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="testenglishproject.module.production.classpath">
+    <path refid="${module.jdk.classpath.testenglishproject}"/>
+    <path refid="library.controlsfx-8.40.14.classpath"/>
+    <path refid="library.io.github.typhon0:animatefx:1.2.0.classpath"/>
+    <path refid="library.mysql-connector-java-8.0.13.classpath"/>
+    <path refid="library.jfoenix-8.0.7.classpath"/>
+  </path>
+  
+  <path id="testenglishproject.runtime.production.module.classpath">
+    <pathelement location="${testenglishproject.output.dir}"/>
+    <path refid="library.controlsfx-8.40.14.classpath"/>
+    <path refid="library.io.github.typhon0:animatefx:1.2.0.classpath"/>
+    <path refid="library.mysql-connector-java-8.0.13.classpath"/>
+    <path refid="library.jfoenix-8.0.7.classpath"/>
+  </path>
+  
+  <path id="testenglishproject.module.classpath">
+    <path refid="${module.jdk.classpath.testenglishproject}"/>
+    <pathelement location="${testenglishproject.output.dir}"/>
+    <path refid="library.controlsfx-8.40.14.classpath"/>
+    <path refid="library.io.github.typhon0:animatefx:1.2.0.classpath"/>
+    <path refid="library.mysql-connector-java-8.0.13.classpath"/>
+    <path refid="library.jfoenix-8.0.7.classpath"/>
+  </path>
+  
+  <path id="testenglishproject.runtime.module.classpath">
+    <pathelement location="${testenglishproject.testoutput.dir}"/>
+    <pathelement location="${testenglishproject.output.dir}"/>
+    <path refid="library.controlsfx-8.40.14.classpath"/>
+    <path refid="library.io.github.typhon0:animatefx:1.2.0.classpath"/>
+    <path refid="library.mysql-connector-java-8.0.13.classpath"/>
+    <path refid="library.jfoenix-8.0.7.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.testenglishproject">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.testenglishproject">
+    <patternset refid="excluded.from.module.testenglishproject"/>
+  </patternset>
+  
+  <path id="testenglishproject.module.sourcepath">
+    <dirset dir="${module.testenglishproject.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.testenglishproject" depends="compile.module.testenglishproject.production,compile.module.testenglishproject.tests" description="Compile module TestEnglishProject"/>
+  
+  <target name="compile.module.testenglishproject.production" depends="register.custom.compilers" description="Compile module TestEnglishProject; production classes">
+    <mkdir dir="${testenglishproject.output.dir}"/>
+    <javac2 destdir="${testenglishproject.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.testenglishproject}/javac">
+      <compilerarg line="${compiler.args.testenglishproject}"/>
+      <bootclasspath refid="testenglishproject.module.bootclasspath"/>
+      <classpath refid="testenglishproject.module.production.classpath"/>
+      <src refid="testenglishproject.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.testenglishproject"/>
+    </javac2>
+    
+    <copy todir="${testenglishproject.output.dir}">
+      <fileset dir="${module.testenglishproject.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.testenglishproject.tests" depends="register.custom.compilers,compile.module.testenglishproject.production" description="compile module TestEnglishProject; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.testenglishproject" description="cleanup module">
+    <delete dir="${testenglishproject.output.dir}"/>
+    <delete dir="${testenglishproject.testoutput.dir}"/>
+  </target>
+</project>

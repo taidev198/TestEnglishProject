@@ -47,23 +47,6 @@ public class AdminUserController implements Initializable, LoadSceneHelper {
     FilteredList<UserModel.User> filteredList;
     private  List<List<String>> listUser;
 
-    //result
-//    @FXML
-//    TableColumn<QuizTestModel.TestResultUser, String> contestCol;
-//    @FXML
-//    TableColumn<QuizTestModel.TestResultUser, String> grammarCol;
-//    @FXML
-//    TableColumn<QuizTestModel.TestResultUser, String> numOfCorrectCol;
-//    @FXML
-//    TableColumn<QuizTestModel.TestResultUser, String> numOfIncorrectCol;
-//    @FXML
-//    TableColumn<QuizTestModel.TestResultUser, String> timesCol;
-//    @FXML
-//    TableColumn<QuizTestModel.TestResultUser, String> totalTimeCol;
-//    @FXML
-//    TableColumn<QuizTestModel.TestResultUser, String> dateCol;
-
-
     @FXML
     TableColumn<TestGrammarModel.QuestionTableView, String> idCol;
     @FXML
