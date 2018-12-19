@@ -133,22 +133,20 @@ public class AdminUserController implements Initializable, LoadSceneHelper {
             result.setOnAction(event -> {
                 Stage stage = new Stage();
                 stage.setTitle("RESULT TEST OF USERID :" + Integer.parseInt(listUser.get(0).get(id)));
-                stage.setWidth(1280);
+                stage.setWidth(1020);
                 stage.setHeight(449);
                 Scene scene = new Scene(new AnchorPane());
+
                 TableView<QuizTestModel.TestResultUser> resultTableView = new TableView<>();
 
                 TableColumn<QuizTestModel.TestResultUser, String> contestCol = new TableColumn<>("CONTEST");
                 contestCol.setPrefWidth(268.79999351501465);
                 contestCol.setStyle( "-fx-alignment: CENTER;");
-                TableColumn<QuizTestModel.TestResultUser, String> grammarCol = new TableColumn<>("GRAMMAR");
-                grammarCol.setPrefWidth(337.5999450683594);
-                grammarCol.setStyle( "-fx-alignment: CENTER;");
                 TableColumn<QuizTestModel.TestResultUser, String> numOfCorrectCol = new TableColumn<>("NUM OF CORRECT");
-                numOfCorrectCol.setPrefWidth(131.20001220703125);
+                numOfCorrectCol.setPrefWidth(150);
                 numOfCorrectCol.setStyle( "-fx-alignment: CENTER;");
                 TableColumn<QuizTestModel.TestResultUser, String> numOfIncorrectCol = new TableColumn<>("NUM OF INCORRECT");
-                numOfIncorrectCol.setPrefWidth(139.20001220703125);
+                numOfIncorrectCol.setPrefWidth(160);
                 numOfIncorrectCol.setStyle( "-fx-alignment: CENTER;");
                 TableColumn<QuizTestModel.TestResultUser, String> timesCol = new TableColumn<>("TIMES");
                 timesCol.setPrefWidth(102.4000244140625);
@@ -171,20 +169,25 @@ public class AdminUserController implements Initializable, LoadSceneHelper {
                  ObservableList<QuizTestModel.TestResultUser> data =
                         FXCollections.observableArrayList();
                 listResultsContest = quizTestModel.getResultByAdmin(Integer.parseInt(listUser.get(0).get(id)));
-                for (int j = 0; j < listResultsContest.size(); j++) {
+                System.out.println(listResultsContest);
+                if (listResultsContest.size() > 0){
+                    for (int j = 0; j < listResultsContest.get(0).size(); j++) {
                         data.add(new QuizTestModel.TestResultUser(listResultsContest.get(0).get(j), listResultsContest.get(1).get(j),
                                 listResultsContest.get(2).get(j), listResultsContest.get(3).get(j), listResultsContest.get(4).get(j),
                                 listResultsContest.get(5).get(j)));
+                    }
                 }
-                resultTableView.getColumns().addAll(contestCol, grammarCol, numOfCorrectCol, numOfIncorrectCol,
+
+                resultTableView.getColumns().addAll(contestCol, numOfCorrectCol, numOfIncorrectCol,
                         timesCol, totalTimeCol, dateCol);
                 resultTableView.setItems(data);
-                resultTableView.setPrefWidth(1242);
-                resultTableView.setPrefHeight(367);
+                resultTableView.setPrefWidth(1000);
+                resultTableView.setPrefHeight(200);
                 resultTableView.setLayoutX(7);
                 resultTableView.setLayoutY(24);
                 ((AnchorPane) scene.getRoot()).getChildren().addAll(resultTableView);
                 stage.setScene(scene);
+                stage.setResizable(false);
                 stage.show();
             });
 

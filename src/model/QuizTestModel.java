@@ -163,7 +163,7 @@ public class QuizTestModel {
     public List<List<String>> getResultByAdmin(int userId){
         List<List<String>> res = new ArrayList<>();
         String query = "select  description, numOfCorrect, numOfIncorrect, times, totalTime, date from testresult join quiztest\n" +
-                " on testresult.resultid = quiztest.idquiztest and userInfoid = "+ userId + " order by description;";
+                " on testresult.resultid = quiztest.idquiztest and typeresultid = 1 and userInfoid = "+ userId + " order by description;";
         try(Statement statement = ConnectDataHelper.getInstance().connectDB().createStatement()) {
             statement.execute("use data");
             ResultSet resultSet = statement.executeQuery(query);
@@ -174,7 +174,6 @@ public class QuizTestModel {
             List<String> totalTime = new ArrayList<>();
             List<String> date = new ArrayList<>();
             while (resultSet.next()){
-
                 description.add(resultSet.getString("description"));
                 numOfCorrect.add(String.valueOf(resultSet.getInt("numOfCorrect")));
                 numOfIncorrect.add(String.valueOf(resultSet.getInt("numOfIncorrect")));
@@ -182,12 +181,15 @@ public class QuizTestModel {
                 totalTime.add(resultSet.getString("totalTime"));
                 date.add(String.valueOf(resultSet.getTimestamp("date")));
             }
-            res.add(description);
-            res.add(numOfCorrect);
-            res.add(numOfIncorrect);
-            res.add(times);
-            res.add(totalTime);
-            res.add(date);
+            if (description.size() > 0){
+                res.add(description);
+                res.add(numOfCorrect);
+                res.add(numOfIncorrect);
+                res.add(times);
+                res.add(totalTime);
+                res.add(date);
+            }
+
         } catch (SQLException | IllegalAccessException | InstantiationException | ClassNotFoundException e) {
             e.printStackTrace();
         }
