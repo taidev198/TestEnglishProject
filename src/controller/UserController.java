@@ -8,7 +8,6 @@ import helper.WorkIndicatorDialog;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -18,9 +17,6 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import model.QuizTestModel;
@@ -30,9 +26,7 @@ import model.UserModel;
 import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.ResourceBundle;
 
 
@@ -145,7 +139,7 @@ public class UserController implements Initializable, LoadSceneHelper, Progressa
     @FXML
     private void goToQuizTest(){
 
-        OnProgress("/view/QuizTestView.fxml", anchorPane);
+        OnProgress("/view/UserQuizTestView.fxml", anchorPane);
     }
 
     @Override

@@ -117,7 +117,7 @@ public class AdminUserController implements Initializable, LoadSceneHelper {
                 Stage stage = new Stage();
                 stage.setTitle("RESULT TEST OF USERID :" + Integer.parseInt(listUser.get(0).get(id)));
                 stage.setWidth(1020);
-                stage.setHeight(449);
+                stage.setHeight(300);
                 Scene scene = new Scene(new AnchorPane());
 
                 TableView<QuizTestModel.TestResultUser> resultTableView = new TableView<>();
@@ -141,7 +141,6 @@ public class AdminUserController implements Initializable, LoadSceneHelper {
                 dateCol.setPrefWidth(200);
                 dateCol.setStyle( "-fx-alignment: CENTER;");
                 contestCol.setCellValueFactory(new PropertyValueFactory<>("description"));
-//                grammarCol.setCellValueFactory(new PropertyValueFactory<>("grammar"));
                 numOfCorrectCol.setCellValueFactory(new PropertyValueFactory<>("numOfCorrect"));
                 numOfIncorrectCol.setCellValueFactory(new PropertyValueFactory<>("numOfIncorrect"));
                 timesCol.setCellValueFactory(new PropertyValueFactory<>("times"));

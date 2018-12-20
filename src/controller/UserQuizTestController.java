@@ -131,10 +131,11 @@ public class UserQuizTestController implements Initializable {
 
     private void createQuestion(List<List<String>>  listQuestion) {
         FlowPane flowPane = new FlowPane(Orientation.HORIZONTAL);
-        rootLayout.setPadding(new Insets(10, 10, 10, 10));
+        rootLayout.setPadding(new Insets(10, 15, 10, 10));
+        flowPane.setPadding(new Insets(10, 15, 10, 10));
         flowPane.setVgap(10);
-        flowPane.setHgap(4);
-        flowPane.setPrefWrapLength(320);
+        flowPane.setHgap(20);
+        flowPane.setPrefWrapLength(340);
         for (int i = 0; i < listQuestion.get(0).size(); i++) {
             //init question and add event handler on each questions.
             HBox content;
@@ -224,12 +225,12 @@ public class UserQuizTestController implements Initializable {
 
             });
             vBox.setStyle("-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0.5, 0.0, 0.0);" +
-                    "-fx-background-color: white;" + "-fx-border-radius: 3px"); // Shadow effect
+                    "-fx-background-color: white;" + "-fx-border-radius: 10;"); // Shadow effect
             //vBox.setEffect(new DropShadow(2d, 0d, +2d, Color.WHITE));
             flowPane.getChildren().add(vBox);
         }
 
-        flowPane.setPadding(new Insets(5, 0, 5, 0));
+        //flowPane.setPadding(new Insets(5, 0, 5, 0));
         //    flowPane.setEffect(new DropShadow(2d, 0d, +2d, new Color("#D1D7DB")));
         rootLayout.setContent(flowPane);
     }
