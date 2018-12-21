@@ -5,11 +5,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.MenuButton;
 
 import java.net.URL;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.*;
+import java.util.Date;
 
 public class GrammarModel  {
 
@@ -82,6 +80,26 @@ public class GrammarModel  {
 
     }
 
+
+    public boolean addResult(GrammarResult testResult){
+        java.util.Date date = new Date();
+        String query = "insert into testresult(userInfoid, typeresultid, resultid, numOfCorrect, numOfInCorrect,times, date) values( ?,?, ?, ?, ?, ?, ? )";
+        try(PreparedStatement statement = ConnectDataHelper.getInstance().connectDB().prepareStatement(query)) {
+            statement.execute("use data");
+            statement.setInt(1, Integer.parseInt(testResult.getUserInfoid()));
+            statement.setInt(2, Integer.parseInt(testResult.getTyperesultid()));
+            statement.setInt(3, Integer.parseInt(testResult.getResultid()));
+            statement.setInt(4, Integer.parseInt(testResult.getNumOfCorrect()));
+            statement.setString(5, testResult.getNumOfIncorrect());
+            statement.setInt(6, Integer.parseInt(testResult.getTimes()));
+            statement.setTimestamp(7, new Timestamp(date.getTime()));
+            statement.executeUpdate();
+        } catch (IllegalAccessException | InstantiationException | ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
 
     public List<List<String>> getResultGramarByAdmin(int userId){
         List<List<String>> res = new ArrayList<>();
@@ -175,7 +193,9 @@ public class GrammarModel  {
         try (Statement statement = ConnectDataHelper.getInstance().connectDB().createStatement()) {
             statement.execute("use data");
             ResultSet resultSet = statement.executeQuery(query);
-            return resultSet.getInt("total");
+            while (resultSet.next()){
+              return   resultSet.getInt("total");
+            }
 
         } catch (IllegalAccessException | InstantiationException | SQLException | ClassNotFoundException e) {
             e.printStackTrace();
@@ -190,8 +210,11 @@ public class GrammarModel  {
         try (Statement statement = ConnectDataHelper.getInstance().connectDB().createStatement()) {
             statement.execute("use data");
             ResultSet resultSet = statement.executeQuery(query);
-            return resultSet.getInt("totalCompletedGrammar");
-        } catch (IllegalAccessException | InstantiationException | SQLException | ClassNotFoundException e) {
+            while (resultSet.next()){
+                return resultSet.getInt("totalCompletedGrammar");
+            }
+        }
+             catch (IllegalAccessException | InstantiationException | SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
         return -1;
@@ -245,4 +268,69 @@ public class GrammarModel  {
         }
     }
 
+    public static class GrammarResult {
+        private String userInfoid;
+        private String typeresultid;
+        private String resultid;
+        private String numOfCorrect;
+        private String numOfIncorrect;
+        private String times;
+
+        public GrammarResult(String userInfoid, String typeresultid, String resultid, String numOfCorrect, String numOfIncorrect, String times) {
+            this.userInfoid = userInfoid;
+            this.typeresultid = typeresultid;
+            this.resultid = resultid;
+            this.numOfCorrect = numOfCorrect;
+            this.numOfIncorrect = numOfIncorrect;
+            this.times = times;
+        }
+
+        public String getTimes() {
+            return times;
+        }
+
+        public void setTimes(String times) {
+            this.times = times;
+        }
+
+        public String getUserInfoid() {
+            return userInfoid;
+        }
+
+        public void setUserInfoid(String userInfoid) {
+            this.userInfoid = userInfoid;
+        }
+
+        public String getTyperesultid() {
+            return typeresultid;
+        }
+
+        public void setTyperesultid(String typeresultid) {
+            this.typeresultid = typeresultid;
+        }
+
+        public String getResultid() {
+            return resultid;
+        }
+
+        public void setResultid(String resultid) {
+            this.resultid = resultid;
+        }
+
+        public String getNumOfCorrect() {
+            return numOfCorrect;
+        }
+
+        public void setNumOfCorrect(String numOfCorrect) {
+            this.numOfCorrect = numOfCorrect;
+        }
+
+        public String getNumOfIncorrect() {
+            return numOfIncorrect;
+        }
+
+        public void setNumOfIncorrect(String numOfIncorrect) {
+            this.numOfIncorrect = numOfIncorrect;
+        }
+    }
 }

@@ -59,6 +59,8 @@ public class UserTestGrammarController implements Initializable {
     Map<Integer, List<RadioButton>> listButton = new HashMap<>();
     Boolean isSubmited ;
     Integer selectedIdx ;
+    private int times =0;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         submit.setVisible(false);
@@ -415,12 +417,13 @@ public class UserTestGrammarController implements Initializable {
                     createQuestion(entryList.get(selectedIdx).getValue());
 
                 });
+
+        model.addResult(new GrammarModel.GrammarResult(Integer.toString(UserController.userId), "0", entryList.get(selectedIdx).getValue().get(0).get(selectedIdx)
+                , Integer.toString(numberOfCorrect), Integer.toString(numberOfWrong),Integer.toString(times++)));
         Scene dialogScene = new Scene(dialogVbox1, 600, 450);
-//        dialogScene.getStylesheets().add("//style sheet of your choice");
         dialog.setScene(dialogScene);
         dialog.show();
         submit.setVisible(false);
-
     }
 
 }

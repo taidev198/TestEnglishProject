@@ -19,6 +19,7 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import model.GrammarModel;
 import model.QuizTestModel;
 import model.UserModel;
 
@@ -59,10 +60,13 @@ public class UserController implements Initializable, LoadSceneHelper, Progressa
     private List<List<String>> quizTestResult;
     List<String > listContest;
     UserModel userModel;
+
+    GrammarModel grammarModel;
     public static int userId;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         makeStageDragerable();
+        grammarModel = new GrammarModel();
         userModel = new UserModel();
         //get userid
         userId = userModel.getUserId(temp);
@@ -74,10 +78,10 @@ public class UserController implements Initializable, LoadSceneHelper, Progressa
         listContest = userModel.getResultUser(userId);
         System.out.println(quizTestResult);
         //pie chart
-        list.addAll(new PieChart.Data("Completed Grammar", 90),
-                new PieChart.Data("Uncompleted Grammar", 10));
-        list1.addAll(new PieChart.Data("Completed Contest", 90),
-                new PieChart.Data("Uncompleted Contest", 10));
+        list.add(new PieChart.Data("Completed Grammar", grammarModel.getTotalCompletedGrammarByUser(userId)));
+        list.add(new PieChart.Data("Uncompleted Grammar",grammarModel.getTotalGrammar() -list.get(0).getPieValue()));
+        list1.add(new PieChart.Data("Completed Contest", quizTestModel.getTotalCompletedContestByUser(userId)));
+        list1.add(new PieChart.Data("Uncompleted Contest", quizTestModel.getTotalContest()- list1.get(0).getPieValue()));
         pieChart.setData(list);
         pieChart.setStartAngle(90);
 

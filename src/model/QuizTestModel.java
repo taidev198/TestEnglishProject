@@ -103,7 +103,24 @@ public class QuizTestModel {
         try (Statement statement = ConnectDataHelper.getInstance().connectDB().createStatement()) {
             statement.execute("use data");
             ResultSet resultSet = statement.executeQuery(query);
-            return resultSet.getInt("totalCompletedContest");
+            while (resultSet.next()){
+                return resultSet.getInt("totalCompletedContest");
+            }
+        } catch (IllegalAccessException | InstantiationException | SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    public int getTotalContest() {
+        String query = "select count(distinct idquiztest) as 'total' from quiztest";
+        try (Statement statement = ConnectDataHelper.getInstance().connectDB().createStatement()) {
+            statement.execute("use data");
+            ResultSet resultSet = statement.executeQuery(query);
+            while (resultSet.next()){
+                return   resultSet.getInt("total");
+            }
+
         } catch (IllegalAccessException | InstantiationException | SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
