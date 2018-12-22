@@ -2,8 +2,8 @@
 
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
-<?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.Label?>
@@ -19,18 +19,18 @@
    <children>
       <AnchorPane fx:id="anchorPane1" layoutX="241.0" layoutY="-2.0" prefHeight="800.0" prefWidth="1261.0">
          <children>
-            <Pane layoutY="-1.0" prefHeight="801.0" prefWidth="1256.0" style="-fx-background-color: #F2F2F2;">
+            <Pane layoutX="8.0" layoutY="3.0" prefHeight="790.0" prefWidth="1238.0" style="-fx-background-color: #F2F2F2;">
                <children>
-                  <PieChart fx:id="pieChart" layoutX="107.0" layoutY="410.0" prefHeight="297.0" prefWidth="374.0" />
-                  <PieChart fx:id="pieChart1" layoutX="804.0" layoutY="402.0" prefHeight="297.0" prefWidth="374.0" />
-                  <LineChart fx:id="lineChart" layoutX="50.0" layoutY="12.0" prefHeight="362.0" prefWidth="1128.0">
-                     <xAxis>
-                        <CategoryAxis prefWidth="444.0" side="BOTTOM" />
-                     </xAxis>
-                     <yAxis>
-                        <NumberAxis side="LEFT" />
-                     </yAxis>
-                  </LineChart>
+                  <PieChart fx:id="pieChart" layoutX="13.0" layoutY="424.0" prefHeight="365.0" prefWidth="566.0" />
+                  <PieChart fx:id="pieChart1" layoutX="642.0" layoutY="425.0" prefHeight="355.0" prefWidth="566.0" />
+                  <BarChart fx:id="barChart" layoutX="20.0" layoutY="19.0" prefHeight="405.0" prefWidth="1163.0">
+                    <xAxis>
+                      <CategoryAxis side="BOTTOM" fx:id="xAxis" />
+                    </xAxis>
+                    <yAxis>
+                      <NumberAxis fx:id="yAxis" side="LEFT" />
+                    </yAxis>
+                  </BarChart>
                </children>
             </Pane>
          </children>

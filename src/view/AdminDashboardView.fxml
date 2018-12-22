@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
-<?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -9,18 +9,18 @@
 
 <AnchorPane fx:id="anchorPane1" minHeight="-Infinity" minWidth="-Infinity" prefHeight="810.0" prefWidth="1150.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AdminDashboardController">
    <children>
-      <Pane layoutX="25.0" layoutY="81.0" prefHeight="700.0" prefWidth="1100.0" style="-fx-background-color: #F2F2F2;">
+      <Pane layoutX="2.0" layoutY="11.0" prefHeight="792.0" prefWidth="1142.0" style="-fx-background-color: #F2F2F2;">
          <children>
-            <PieChart fx:id="pieChart" layoutX="43.0" layoutY="410.0" prefHeight="276.0" prefWidth="307.0" />
-            <PieChart fx:id="pieChart1" layoutX="743.0" layoutY="410.0" prefHeight="276.0" prefWidth="307.0" />
-            <LineChart fx:id="lineChart" layoutX="50.0" layoutY="24.0" prefHeight="350.0" prefWidth="1000.0">
-               <xAxis>
-                  <CategoryAxis prefWidth="444.0" side="BOTTOM" />
-               </xAxis>
-               <yAxis>
-                  <NumberAxis side="LEFT" />
-               </yAxis>
-            </LineChart>
+            <PieChart fx:id="pieChart" layoutX="7.0" layoutY="410.0" prefHeight="379.0" prefWidth="513.0" />
+            <PieChart fx:id="pieChart1" layoutX="579.0" layoutY="410.0" prefHeight="379.0" prefWidth="557.0" />
+            <BarChart fx:id="barChart" layoutX="2.0" layoutY="22.0" prefHeight="351.0" prefWidth="1048.0">
+              <xAxis>
+                <CategoryAxis side="BOTTOM" />
+              </xAxis>
+              <yAxis>
+                <NumberAxis side="LEFT" />
+              </yAxis>
+            </BarChart>
          </children>
       </Pane>
    </children>
