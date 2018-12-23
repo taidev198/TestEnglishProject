@@ -220,6 +220,21 @@ public class GrammarModel  {
         return -1;
     }
 
+    public int getTotalCompletedGrammarByAdmin() {
+        String query = "select count(distinct resultid) as 'totalCompletedGrammar' from testresult where typeresultid = 0 " ;
+        try (Statement statement = ConnectDataHelper.getInstance().connectDB().createStatement()) {
+            statement.execute("use data");
+            ResultSet resultSet = statement.executeQuery(query);
+            while (resultSet.next()){
+                return resultSet.getInt("totalCompletedGrammar");
+            }
+        }
+        catch (IllegalAccessException | InstantiationException | SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
 
 
         public static class Grammar {

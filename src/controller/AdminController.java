@@ -17,6 +17,8 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import model.AdminModel;
+import model.GrammarModel;
+import model.QuizTestModel;
 
 import java.awt.*;
 import java.io.IOException;
@@ -45,30 +47,29 @@ public class AdminController implements Initializable, LoadSceneHelper, Progress
     Label userName;
     @FXML
     private CategoryAxis xAxis;
-
+    GrammarModel grammarModel;
+    QuizTestModel quizTestModel;
     AdminModel model ;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         model = new AdminModel();
+        grammarModel = new GrammarModel();
+        quizTestModel = new QuizTestModel();
         Map<String, int[]> res = model.getResultOfContests();
         System.out.println(res);
-        listDataLinechart.addAll(new PieChart.Data("tai", 10),
-                new PieChart.Data("tai", 10),
-                new PieChart.Data("tai", 10),
-                new PieChart.Data("tai", 10));
-        listDataLinechart1.addAll(new PieChart.Data("tai", 10),
-                new PieChart.Data("tai", 10),
-                new PieChart.Data("tai", 10),
-                new PieChart.Data("tai", 10));
+        listDataLinechart.add(new PieChart.Data(" completed", grammarModel.getTotalCompletedGrammarByAdmin()));
+        listDataLinechart.add( new PieChart.Data("uncompleted ", listDataLinechart.get(0).getPieValue()));
+        listDataLinechart1.add(new PieChart.Data("completed ", quizTestModel.getTotalCompletedContestByAdmin()));
+        listDataLinechart1.add(new PieChart.Data("uncompleted ", listDataLinechart1.get(0).getPieValue()));
         pieChart.setData(listDataLinechart);
         pieChart.setStartAngle(90);
 
-        pieChart.setTitle("USER");
+        pieChart.setTitle("GRAMMAR");
         pieChart.setLegendSide(Side.BOTTOM);
         pieChart1.setData(listDataLinechart1);
         pieChart1.setStartAngle(90);
 
-        pieChart1.setTitle("OverView");
+        pieChart1.setTitle("CONTEST");
         pieChart1.setLegendSide(Side.BOTTOM);
         contest.addAll(Arrays.asList("tai0", "tai1", "tai2", "tai3", "tai4"));
 
