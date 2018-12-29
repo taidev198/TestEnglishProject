@@ -29,7 +29,7 @@ import java.util.ResourceBundle;
 /**Set center scene:https://stackoverflow.com/questions/29350181/how-to-center-a-window-properly-in-java-fx?noredirect=1&lq=1
  * set size of bars in barchart:https://stackoverflow.com/questions/28047818/limit-width-size-of-bar-chart?rq=1*/
 public class AdminController implements Initializable, LoadSceneHelper, Progressable {
-    private static String temp;
+    public static String temp;
     @FXML
     AnchorPane anchorPane1;
     private ObservableList<PieChart.Data> listDataLinechart = FXCollections.observableArrayList();

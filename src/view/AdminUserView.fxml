@@ -17,10 +17,10 @@
             <TableColumn fx:id="firstnameCol" prefWidth="123.20001220703125" text="FIRSTNAME" />
             <TableColumn fx:id="lastnameCol" prefWidth="129.5999755859375" text="LASTNAME" />
             <TableColumn fx:id="addressCol" prefWidth="207.20001220703125" text="ADDRESS" />
-            <TableColumn fx:id="phoneCol" maxWidth="221.5999755859375" prefWidth="96.79998779296875" text="PHONE" />
-            <TableColumn fx:id="emailCol" maxWidth="264.0" prefWidth="100.7999267578125" text="EMAIL" />
-            <TableColumn fx:id="birthCol" maxWidth="192.800048828125" prefWidth="111.2000732421875" text="BIRTH" />
-            <TableColumn fx:id="actionCol" maxWidth="192.800048828125" prefWidth="80.7999267578125" text="ACTION" />
+            <TableColumn fx:id="phoneCol" maxWidth="221.5999755859375" prefWidth="151.20001220703125" text="PHONE" />
+            <TableColumn fx:id="emailCol" maxWidth="264.0" prefWidth="148.800048828125" text="EMAIL" />
+            <TableColumn fx:id="birthCol" maxWidth="192.800048828125" prefWidth="140.7999267578125" text="BIRTH" />
+            <TableColumn fx:id="actionCol" maxWidth="221.5999511718751" prefWidth="90.4000244140625" text="ACTION" />
          </columns>
       </TableView>
       <TextField fx:id="searchingField" layoutX="56.0" layoutY="24.0" prefHeight="26.0" prefWidth="354.0" />

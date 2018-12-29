@@ -82,11 +82,11 @@ public class AdminUserController implements Initializable, LoadSceneHelper {
         idCol.setCellValueFactory(new PropertyValueFactory<>("userInfoid"));
         usernameCol.setCellValueFactory(new PropertyValueFactory<>("username"));
         passwordCol.setCellValueFactory(new PropertyValueFactory<>("password"));
-        firstnameCol.setCellValueFactory(new PropertyValueFactory<>("address"));
-        lastnameCol.setCellValueFactory(new PropertyValueFactory<>("email"));
-        addressCol.setCellValueFactory(new PropertyValueFactory<>("phone"));
-        phoneCol.setCellValueFactory(new PropertyValueFactory<>("firstname"));
-        emailCol.setCellValueFactory(new PropertyValueFactory<>("lastname"));
+        firstnameCol.setCellValueFactory(new PropertyValueFactory<>("firstname"));
+        lastnameCol.setCellValueFactory(new PropertyValueFactory<>("lastname"));
+        addressCol.setCellValueFactory(new PropertyValueFactory<>("address"));
+        phoneCol.setCellValueFactory(new PropertyValueFactory<>("phone"));
+        emailCol.setCellValueFactory(new PropertyValueFactory<>("email"));
         birthCol.setCellValueFactory(new PropertyValueFactory<>("birth"));
         actionCol.setCellValueFactory(new PropertyValueFactory<>("menuButton"));
         menuButton = new ArrayList<>();
