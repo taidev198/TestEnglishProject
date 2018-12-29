@@ -267,6 +267,7 @@ public class UserTestGrammarController implements Initializable {
                 System.out.println(tmp);
                 createQuestion(tmp);
                 initQuestion();
+                description.setText(key.get(selectedIdx));
                 clone = saveList(answer.get(selectedIdx));
                 grammarLists.setFocusTraversable( false );
             }else {

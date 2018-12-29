@@ -21,12 +21,8 @@ import java.util.ResourceBundle;
  * Created by traig on 8:33 PM, 11/14/2018
  */
 public class AdminDashboardController implements Initializable {
-
-    AnchorPane anchorPane1;
     private ObservableList<PieChart.Data> listDataLinechart = FXCollections.observableArrayList();
     private ObservableList<PieChart.Data> listDataLinechart1 = FXCollections.observableArrayList();
-    @FXML
-    AnchorPane anchorPane;
     @FXML
     PieChart pieChart;
     @FXML

@@ -496,10 +496,10 @@ public class UserQuizTestController implements Initializable {
                         final int m = s == 0 ? minValue-1: minValue;
                         @Override
                         public void run() {
-                            bar.setProgress(update_i * 60);
+                            bar.setProgress(update_i /100);
                             min.setText(String.valueOf(m));
                             sec.setText(String.valueOf(s));
-                            totalTime = String.valueOf(update_i/ 100);
+                            totalTime = String.valueOf(update_i);
                             if (m == 0 && s == 0){
                                 OnSubmit();
                                 totalTime = "600";
