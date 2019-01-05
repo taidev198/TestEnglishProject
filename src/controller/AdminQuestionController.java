@@ -404,15 +404,15 @@ public class AdminQuestionController implements Initializable {
         Scene dialogScene = new Scene(root, 600, 800);
         dialog.setScene(dialogScene);
         root.setStyle(
-                "   -fx-background-color: rgb(58,69,88);\n" +
+                "   -fx-background-color: lightgoldenrodyellow;\n" +
                         "    -fx-background-radius: 0px;\n" +
                         "    -fx-text-fill: #b8b1b1;\n");
         update.setStyle("-fx-background-color: rgb(22,169,250);\n" +
                 "    -fx-background-radius: 0px;\n" +
-                "    -fx-text-fill: #0099ff;");
+                "    -fx-text-fill: lightgoldenrodyellow;");
         add.setStyle("-fx-background-color: rgb(22,169,250);\n" +
                 "    -fx-background-radius: 0px;\n" +
-                "    -fx-text-fill: #0099ff;");
+                "    -fx-text-fill: lightgoldenrodyellow;");
         dialog.show();
     }
 

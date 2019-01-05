@@ -235,8 +235,42 @@ public class GrammarModel  {
         return -1;
     }
 
+    public List<List<String>> getResultByAdmin(int userId){
+        List<List<String>> res = new ArrayList<>();
+        String query = "select  description, numOfCorrect, numOfIncorrect, times, totalTime, date from testresult join grammar\n" +
+                "                 on testresult.resultid = grammar.grammarid and typeresultid = 0 and userInfoid = +"+ userId+" order by description;\n";
+        try(Statement statement = ConnectDataHelper.getInstance().connectDB().createStatement()) {
+            statement.execute("use data");
+            ResultSet resultSet = statement.executeQuery(query);
+            List<String> description = new ArrayList<>();
+            List<String> numOfCorrect = new ArrayList<>();
+            List<String> numOfIncorrect = new ArrayList<>();
+            List<String> times = new ArrayList<>();
+            List<String> totalTime = new ArrayList<>();
+            List<String> date = new ArrayList<>();
+            while (resultSet.next()){
+                description.add(resultSet.getString("description"));
+                numOfCorrect.add(String.valueOf(resultSet.getInt("numOfCorrect")));
+                numOfIncorrect.add(String.valueOf(resultSet.getInt("numOfIncorrect")));
+                times.add(String.valueOf(resultSet.getInt("times")));
+                totalTime.add(resultSet.getString("totalTime"));
+                date.add(String.valueOf(resultSet.getTimestamp("date")));
+            }
+            if (description.size() > 0){
+                res.add(description);
+                res.add(numOfCorrect);
+                res.add(numOfIncorrect);
+                res.add(times);
+                res.add(totalTime);
+                res.add(date);
+            }
 
+        } catch (SQLException | IllegalAccessException | InstantiationException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
 
+        return res;
+    }
         public static class Grammar {
         private String id;
         private String des;
@@ -284,20 +318,24 @@ public class GrammarModel  {
     }
 
     public static class GrammarResult {
+        private String description;
         private String userInfoid;
         private String typeresultid;
         private String resultid;
         private String numOfCorrect;
         private String numOfIncorrect;
         private String times;
+        private String date;
 
-        public GrammarResult(String userInfoid, String typeresultid, String resultid, String numOfCorrect, String numOfIncorrect, String times) {
+        public GrammarResult(String description, String userInfoid, String typeresultid, String resultid, String numOfCorrect, String numOfIncorrect, String times, String date) {
             this.userInfoid = userInfoid;
             this.typeresultid = typeresultid;
             this.resultid = resultid;
             this.numOfCorrect = numOfCorrect;
             this.numOfIncorrect = numOfIncorrect;
             this.times = times;
+            this.description = description;
+            this.date = date;
         }
 
         public String getTimes() {
@@ -346,6 +384,22 @@ public class GrammarModel  {
 
         public void setNumOfIncorrect(String numOfIncorrect) {
             this.numOfIncorrect = numOfIncorrect;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        public void setDescription(String description) {
+            this.description = description;
+        }
+
+        public String getDate() {
+            return date;
+        }
+
+        public void setDate(String date) {
+            this.date = date;
         }
     }
 }

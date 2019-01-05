@@ -23,6 +23,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import model.GrammarModel;
 import model.QuizTestModel;
 import model.TestGrammarModel;
 import model.UserModel;
@@ -73,12 +74,14 @@ public class AdminUserController implements Initializable, LoadSceneHelper {
     Button addBtn;
     List<List<String>> listResultsContest ;
     QuizTestModel quizTestModel;
+    GrammarModel grammarModel;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         model = new UserModel();
         quizTestModel = new QuizTestModel();
         listUser = model.getUserInfo();
+        grammarModel = new GrammarModel();
         idCol.setCellValueFactory(new PropertyValueFactory<>("userInfoid"));
         usernameCol.setCellValueFactory(new PropertyValueFactory<>("username"));
         passwordCol.setCellValueFactory(new PropertyValueFactory<>("password"));
@@ -117,7 +120,7 @@ public class AdminUserController implements Initializable, LoadSceneHelper {
                 Stage stage = new Stage();
                 stage.setTitle("RESULT TEST OF USERID :" + Integer.parseInt(listUser.get(0).get(id)));
                 stage.setWidth(1020);
-                stage.setHeight(300);
+                stage.setHeight(600);
                 Scene scene = new Scene(new AnchorPane());
 
                 TableView<QuizTestModel.TestResultUser> resultTableView = new TableView<>();
@@ -167,7 +170,58 @@ public class AdminUserController implements Initializable, LoadSceneHelper {
                 resultTableView.setPrefHeight(200);
                 resultTableView.setLayoutX(7);
                 resultTableView.setLayoutY(24);
-                ((AnchorPane) scene.getRoot()).getChildren().addAll(resultTableView);
+                TableView<GrammarModel.GrammarResult> resultGrammarTableView = new TableView<>();
+
+                TableColumn<GrammarModel.GrammarResult, String> contestCol1 = new TableColumn<>("CONTEST");
+                contestCol.setPrefWidth(268.79999351501465);
+                contestCol.setStyle( "-fx-alignment: CENTER;");
+                TableColumn<GrammarModel.GrammarResult, String> numOfCorrectCol1 = new TableColumn<>("NUM OF CORRECT");
+                numOfCorrectCol.setPrefWidth(150);
+                numOfCorrectCol.setStyle( "-fx-alignment: CENTER;");
+                TableColumn<GrammarModel.GrammarResult, String> numOfIncorrectCol1 = new TableColumn<>("NUM OF INCORRECT");
+                numOfIncorrectCol.setPrefWidth(160);
+                numOfIncorrectCol.setStyle( "-fx-alignment: CENTER;");
+                TableColumn<GrammarModel.GrammarResult, String> timesCol1 = new TableColumn<>("TIMES");
+                timesCol.setPrefWidth(102.4000244140625);
+                timesCol.setStyle( "-fx-alignment: CENTER;");
+                TableColumn<GrammarModel.GrammarResult, String> totalTimeCol1 = new TableColumn<>("TOTAL TIME");
+                totalTimeCol.setPrefWidth(115.2000732421875);
+                totalTimeCol.setStyle( "-fx-alignment: CENTER;");
+                TableColumn<GrammarModel.GrammarResult, String> dateCol1 = new TableColumn<>("DATE");
+                dateCol1.setPrefWidth(200);
+                dateCol1.setStyle( "-fx-alignment: CENTER;");
+                contestCol1.setCellValueFactory(new PropertyValueFactory<>("description"));
+                numOfCorrectCol1.setCellValueFactory(new PropertyValueFactory<>("numOfCorrect"));
+                numOfIncorrectCol1.setCellValueFactory(new PropertyValueFactory<>("numOfIncorrect"));
+                timesCol1.setCellValueFactory(new PropertyValueFactory<>("times"));
+                totalTimeCol1.setCellValueFactory(new PropertyValueFactory<>("totalTime"));
+                dateCol1.setCellValueFactory(new PropertyValueFactory<>("date"));
+
+
+                ObservableList<GrammarModel.GrammarResult> data1 =
+                        FXCollections.observableArrayList();
+                listResultsContest = grammarModel.getResultByAdmin(Integer.parseInt(listUser.get(0).get(id)));
+                System.out.println(listResultsContest);
+                if (listResultsContest.size() > 0){
+                    for (int j = 0; j < listResultsContest.get(0).size(); j++) {
+                        data1.add(new GrammarModel.GrammarResult(listResultsContest.get(0).get(j), listResultsContest.get(1).get(j),"","",
+                                listResultsContest.get(2).get(j), listResultsContest.get(3).get(j), listResultsContest.get(4).get(j),
+                                listResultsContest.get(5).get(j)));
+                    }
+                }
+
+
+
+                resultGrammarTableView.getColumns().addAll(contestCol1, numOfCorrectCol1, numOfIncorrectCol1,
+                        timesCol1, totalTimeCol1, dateCol1);
+                resultGrammarTableView.setItems(data1);
+                resultGrammarTableView.setPrefWidth(1000);
+                resultGrammarTableView.setPrefHeight(200);
+                resultGrammarTableView.setLayoutX(7);
+                resultGrammarTableView.setLayoutY(24);
+                VBox vBox = new VBox(30);
+                ((AnchorPane) scene.getRoot()).getChildren().addAll(vBox);
+                vBox.getChildren().addAll(resultTableView, resultGrammarTableView);
                 stage.setScene(scene);
                 stage.setResizable(false);
                 stage.show();
@@ -465,15 +519,15 @@ public class AdminUserController implements Initializable, LoadSceneHelper {
         root.getChildren().addAll(dialogVbox1);
         Scene dialogScene = new Scene(root, 500, 700);
         root.setStyle(
-                "   -fx-background-color: rgb(58,69,88);\n" +
+                "   -fx-background-color: lightgoldenrodyellow;\n" +
                         "    -fx-background-radius: 0px;\n" +
                         "    -fx-text-fill: #b8b1b1;\n");
         update.setStyle("-fx-background-color: rgb(22,169,250);\n" +
                 "    -fx-background-radius: 0px;\n" +
-                "    -fx-text-fill: #0099ff;");
+                "    -fx-text-fill: lightgoldenrodyellow;");
         add.setStyle("-fx-background-color: rgb(22,169,250);\n" +
                 "    -fx-background-radius: 0px;\n" +
-                "    -fx-text-fill: #0099ff;");
+                "    -fx-text-fill: lightgoldenrodyellow;");
         dialog.setScene(dialogScene);
         dialog.show();
     }

@@ -420,7 +420,7 @@ public class UserTestGrammarController implements Initializable {
                 });
 
         model.addResult(new GrammarModel.GrammarResult(Integer.toString(UserController.userId), "0", entryList.get(selectedIdx).getValue().get(0).get(selectedIdx)
-                , Integer.toString(numberOfCorrect), Integer.toString(numberOfWrong),Integer.toString(times++)));
+                , Integer.toString(numberOfCorrect), Integer.toString(numberOfWrong),Integer.toString(times++), "",""));
         Scene dialogScene = new Scene(dialogVbox1, 600, 450);
         dialog.setScene(dialogScene);
         dialog.show();

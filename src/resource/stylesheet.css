@@ -6,7 +6,9 @@
     -fx-background-radius: 0px;
     -fx-text-fill: #b8b1b1;
 }
-
+.menu{
+    -fx-background-color: lightgoldenrodyellow;
+}
 .sidebar-btn{
     -fx-background-color: transparent;
     -fx-background-radius: 0px;
