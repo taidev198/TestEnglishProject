@@ -172,29 +172,25 @@ public class AdminUserController implements Initializable, LoadSceneHelper {
                 resultTableView.setLayoutY(24);
                 TableView<GrammarModel.GrammarResult> resultGrammarTableView = new TableView<>();
 
-                TableColumn<GrammarModel.GrammarResult, String> contestCol1 = new TableColumn<>("CONTEST");
-                contestCol.setPrefWidth(268.79999351501465);
-                contestCol.setStyle( "-fx-alignment: CENTER;");
+                TableColumn<GrammarModel.GrammarResult, String> contestCol1 = new TableColumn<>("GRAMMAR");
+                contestCol1.setPrefWidth(268.79999351501465 +60);
+                contestCol1.setStyle( "-fx-alignment: LEFT;");
                 TableColumn<GrammarModel.GrammarResult, String> numOfCorrectCol1 = new TableColumn<>("NUM OF CORRECT");
-                numOfCorrectCol.setPrefWidth(150);
-                numOfCorrectCol.setStyle( "-fx-alignment: CENTER;");
+                numOfCorrectCol1.setPrefWidth(150);
+                numOfCorrectCol1.setStyle( "-fx-alignment: CENTER;");
                 TableColumn<GrammarModel.GrammarResult, String> numOfIncorrectCol1 = new TableColumn<>("NUM OF INCORRECT");
-                numOfIncorrectCol.setPrefWidth(160);
-                numOfIncorrectCol.setStyle( "-fx-alignment: CENTER;");
+                numOfIncorrectCol1.setPrefWidth(170);
+                numOfIncorrectCol1.setStyle( "-fx-alignment: CENTER;");
                 TableColumn<GrammarModel.GrammarResult, String> timesCol1 = new TableColumn<>("TIMES");
-                timesCol.setPrefWidth(102.4000244140625);
-                timesCol.setStyle( "-fx-alignment: CENTER;");
-                TableColumn<GrammarModel.GrammarResult, String> totalTimeCol1 = new TableColumn<>("TOTAL TIME");
-                totalTimeCol.setPrefWidth(115.2000732421875);
-                totalTimeCol.setStyle( "-fx-alignment: CENTER;");
+                timesCol1.setPrefWidth(102.4000244140625 +25);
+                timesCol1.setStyle( "-fx-alignment: CENTER;");
                 TableColumn<GrammarModel.GrammarResult, String> dateCol1 = new TableColumn<>("DATE");
-                dateCol1.setPrefWidth(200);
+                dateCol1.setPrefWidth(210);
                 dateCol1.setStyle( "-fx-alignment: CENTER;");
                 contestCol1.setCellValueFactory(new PropertyValueFactory<>("description"));
                 numOfCorrectCol1.setCellValueFactory(new PropertyValueFactory<>("numOfCorrect"));
                 numOfIncorrectCol1.setCellValueFactory(new PropertyValueFactory<>("numOfIncorrect"));
                 timesCol1.setCellValueFactory(new PropertyValueFactory<>("times"));
-                totalTimeCol1.setCellValueFactory(new PropertyValueFactory<>("totalTime"));
                 dateCol1.setCellValueFactory(new PropertyValueFactory<>("date"));
 
 
@@ -213,7 +209,7 @@ public class AdminUserController implements Initializable, LoadSceneHelper {
 
 
                 resultGrammarTableView.getColumns().addAll(contestCol1, numOfCorrectCol1, numOfIncorrectCol1,
-                        timesCol1, totalTimeCol1, dateCol1);
+                        timesCol1, dateCol1);
                 resultGrammarTableView.setItems(data1);
                 resultGrammarTableView.setPrefWidth(1000);
                 resultGrammarTableView.setPrefHeight(200);
