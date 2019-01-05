@@ -30,11 +30,14 @@ import model.UserModel;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 /**
  * Created by traig on 9:59 AM, 11/15/2018
  */
+/**https://stackoverflow.com/questions/26831978/javafx-datepicker-getvalue-in-a-specific-format*/
 public class AdminUserController implements Initializable, LoadSceneHelper {
     @FXML
      TableView<UserModel.User> tableView;
@@ -419,6 +422,7 @@ public class AdminUserController implements Initializable, LoadSceneHelper {
             phoneText.setText(listUser.get(5).get(selectedIdx));
             firstnameText.setText(listUser.get(6).get(selectedIdx));
             lastnameText.setText(listUser.get(7).get(selectedIdx));
+            birthText.setValue(LocalDate.parse(listUser.get(8).get(selectedIdx)));
         }
         int selectedIdx = tableView.getSelectionModel().getSelectedIndex();
         String ordinaryId = idText.getText();
