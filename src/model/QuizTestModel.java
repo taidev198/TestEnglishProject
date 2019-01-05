@@ -142,7 +142,7 @@ public class QuizTestModel {
     }
 
     public  Map<String, List<List<String>>> getContest(){
-        String query ="select description,idquiztest, content, optionA, optionB, optionC, optionD, keyQuestion from quiztest join question on quiztest.idquiztest = question.contestid;";
+        String query ="select description,idquiztest, content, optionA, optionB, optionC, optionD, keyQuestion from quiztest join question on quiztest.idquiztest = question.contestid " +"order by question.contestid;" ;
         Map<String, List<List<String>>> listContests = new HashMap<>();
         try(Statement statement = ConnectDataHelper.getInstance().connectDB().createStatement()) {
             statement.execute("use data");
