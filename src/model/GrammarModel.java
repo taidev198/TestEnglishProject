@@ -83,7 +83,7 @@ public class GrammarModel  {
 
     public boolean addResult(GrammarResult testResult){
         java.util.Date date = new Date();
-        String query = "insert into testresult(userInfoid, typeresultid, resultid, numOfCorrect, numOfInCorrect,times, date) values( ?,?, ?, ?, ?, ?, ? )";
+        String query = "insert into testresult(userInfoid, typeresultid, resultid, numOfCorrect, numOfInCorrect,times, date) values( ?, ?, ?, ?, ?, ?, ? )";
         try(PreparedStatement statement = ConnectDataHelper.getInstance().connectDB().prepareStatement(query)) {
             statement.execute("use data");
             statement.setInt(1, Integer.parseInt(testResult.getUserInfoid()));
@@ -138,9 +138,9 @@ public class GrammarModel  {
         return res;
     }
 
-    public Map<String, List<List<String>>> getTestGrammar(){
+    public TreeMap<String, List<List<String>>> getTestGrammar(){
         String query ="select description,grammar.grammarid, question.content, optionA, optionB, optionC, optionD, keyQuestion from grammar join question on grammar.grammarid = question.grammarid;";
-        Map<String, List<List<String>>> listTestGrammar = new HashMap<>();
+        TreeMap<String, List<List<String>>> listTestGrammar = new TreeMap<>();
         try(Statement statement = ConnectDataHelper.getInstance().connectDB().createStatement()) {
             statement.execute("use data");
             ResultSet resultSet = statement.executeQuery(query);

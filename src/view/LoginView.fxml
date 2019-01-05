@@ -15,7 +15,7 @@
 
 <AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="608.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
    <children>
-      <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mouseTransparent="true" prefHeight="614.0" prefWidth="500.0" style="-fx-background-color: #DBDBDB;" styleClass="parent" stylesheets="@../resource/style.css">
+      <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mouseTransparent="true" prefHeight="614.0" prefWidth="500.0" style="-fx-background-color: #499C54;" styleClass="parent" stylesheets="@../resource/style.css">
          <padding>
             <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
          </padding>
@@ -23,10 +23,13 @@
             <ColorAdjust />
          </effect>
          <children>
-            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="281.0" fitWidth="238.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../resource/logo.JPG" />
+                  <Image url="@../resource/logo2.png" />
                </image>
+               <VBox.margin>
+                  <Insets left="120.0" top="150.0" />
+               </VBox.margin>
             </ImageView>
          </children>
       </VBox>

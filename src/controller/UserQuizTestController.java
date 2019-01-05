@@ -38,7 +38,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**Progressingbar:http://java-buddy.blogspot.com/2014/02/update-javafx-ui-in-scheduled-task-of.html
+/**Progressing bar:http://java-buddy.blogspot.com/2014/02/update-javafx-ui-in-scheduled-task-of.html
  * https://github.com/HanSolo/timer
  * Custom Progress bar:https://stackoverflow.com/questions/19417246/how-can-i-style-the-progressbar-component-in-javafx
  * docs oracle:https://docs.oracle.com/javase/8/javafx/user-interface-tutorial/progress.htm
@@ -111,6 +111,7 @@ public class UserQuizTestController implements Initializable {
         min.setText("15");
         listQuestion = model.getContest();
          entryList = new ArrayList<>(listQuestion.entrySet());
+        System.out.println(entryList.size() + "size");
          key = new ArrayList<>();
         for (Map.Entry<String, List<List<String>>> entry :
                 entryList ) {
@@ -331,7 +332,7 @@ public class UserQuizTestController implements Initializable {
         String[] newList = new String[list.length];
         System.out.println("list:" + Arrays.toString(list));
         newList[list.length-1] = String.valueOf(list.length-2);
-        newList[list.length-2] = String.valueOf("0");
+        newList[list.length-2] = "0";
         return newList;
     }
 
@@ -435,18 +436,13 @@ public class UserQuizTestController implements Initializable {
         dialogHbox.getChildren().add(review);
         dialogHbox.getChildren().add(restart);
 
-        //adding result to database
-        model.addResult(new QuizTestModel.TestResult(Integer.toString(UserController.userId), "1", entryList.get(selectedIdx).getValue().get(0).get(selectedIdx)
-                , Integer.toString(numberOfCorrect), Integer.toString(numberOfWrong),Integer.toString(times++), totalTime));
-
-
         dialog.initStyle(StageStyle.TRANSPARENT);
         isRunning.set(false);
         review.addEventHandler(MouseEvent.MOUSE_CLICKED,
                 e -> {
                     checkAns();
                     this.isSubmited = true;
-                    answer.set(selectedIdx, clone);
+                    answer.set(selectedIdx, saveList(clone));
                     // inside here you can use the minimize or close the previous stage//
                     dialog.close();
                     submit.setVisible(true);
@@ -454,7 +450,7 @@ public class UserQuizTestController implements Initializable {
                 });
         restart.addEventHandler(MouseEvent.MOUSE_CLICKED,
                 e -> {
-                    answer.set(selectedIdx, clone);
+                    answer.set(selectedIdx, saveList(clone));
                     System.out.println(Arrays.toString(answer.get(0)));
                     //refresh listview when user restart contest.
                     dialog.close();
@@ -467,6 +463,12 @@ public class UserQuizTestController implements Initializable {
                     }
 
                 });
+
+
+        //adding result to database
+        model.addResult(new QuizTestModel.TestResult(Integer.toString(UserController.userId), "1", entryList.get(selectedIdx).getValue().get(0).get(0)
+                , Integer.toString(numberOfCorrect), Integer.toString(numberOfWrong),Integer.toString(times++), totalTime));
+
         Scene dialogScene = new Scene(dialogVbox1, 600, 450);
         dialog.setScene(dialogScene);
         dialog.show();
@@ -478,7 +480,7 @@ public class UserQuizTestController implements Initializable {
 
         ProgressBar bar;
 
-        public MyRunnable(ProgressBar b) {
+        MyRunnable(ProgressBar b) {
             bar = b;
         }
 

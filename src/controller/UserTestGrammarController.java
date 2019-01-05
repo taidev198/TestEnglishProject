@@ -53,13 +53,13 @@ public class UserTestGrammarController implements Initializable {
     private String[] clone;
 
     private GrammarModel model;
-    private Map<String, List<List<String>>> listQuestion;
+    private TreeMap<String, List<List<String>>> listQuestion;
     List<Map.Entry<String, List<List<String>>>> entryList;
     List<String> key = new ArrayList<>();
     Map<Integer, List<RadioButton>> listButton = new HashMap<>();
     Boolean isSubmited ;
     Integer selectedIdx ;
-    private int times =0;
+    private int times =1;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -418,9 +418,9 @@ public class UserTestGrammarController implements Initializable {
                     createQuestion(entryList.get(selectedIdx).getValue());
 
                 });
-
-        model.addResult(new GrammarModel.GrammarResult(Integer.toString(UserController.userId), "0", entryList.get(selectedIdx).getValue().get(0).get(selectedIdx)
-                , Integer.toString(numberOfCorrect), Integer.toString(numberOfWrong),Integer.toString(times++), "",""));
+        //adding result to database.
+        model.addResult(new GrammarModel.GrammarResult(Integer.toString(UserController.userId), Integer.toString(UserController.userId), "0",
+                entryList.get(selectedIdx).getValue().get(0).get(0) , Integer.toString(numberOfCorrect), Integer.toString(numberOfWrong),Integer.toString(times++),""));
         Scene dialogScene = new Scene(dialogVbox1, 600, 450);
         dialog.setScene(dialogScene);
         dialog.show();

@@ -32,13 +32,13 @@
 .label:hover{
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0.5, 0.0, 0.0);
 }
-.sidebar-btn:pressed .label{
+.sidebar-btn:pressed {
     -fx-background-color: rgb(22,169,250);
     -fx-background-radius: 0px;
     -fx-text-fill: #0099ff;
 }
 .sidebar-btn:pressed .sidebar-btn-icon{
-    -fx-fill: #0099ff;
+
 }
 .sidebar-btn-icon{
     -fx-fill: #b8b1b1;
