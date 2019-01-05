@@ -94,7 +94,7 @@ public class AdminDashboardController implements Initializable {
         barChart.widthProperty().addListener((obs,b,b1)->{
             Platform.runLater(()->setMaxBarWidth(30, 10));
         });
-        barChart.setTitle("BOARD");
+        barChart.setTitle("OVERVIEW");
         barChart.getData().add(series);
         barChart.getData().add(series1);
         barChart.getData().add(series2);

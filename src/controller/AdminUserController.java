@@ -38,8 +38,6 @@ import java.util.*;
 public class AdminUserController implements Initializable, LoadSceneHelper {
     @FXML
      TableView<UserModel.User> tableView;
-//    @FXML
-//    TableView<QuizTestModel.TestResultUser> resultTableView;
      UserModel model;
     ObservableList<UserModel.User> data;
     @FXML
@@ -440,11 +438,11 @@ public class AdminUserController implements Initializable, LoadSceneHelper {
                         listUser.get(5).set(selectedIdx, phoneText.getText());
                         listUser.get(6).set(selectedIdx, firstnameText.getText());
                         listUser.get(7).set(selectedIdx, lastnameText.getText());
-                        listUser.get(8).set(selectedIdx, "1990-12-31");
+                        listUser.get(8).set(selectedIdx, "1990-12-31");//show default date.
                         OnMessage("", Alert.AlertType.INFORMATION, "SUCCESS", "DONE!");
                         data.set(selectedIdx,new UserModel.User(idText.getText(), usernameText.getText(), passwordText.getText(),
                                 addressText.getText(), emailText.getText(), phoneText.getText(),
-                                firstnameText.getText(),lastnameText.getText(),"1990-12-31", menuButton.get(selectedIdx)));
+                                firstnameText.getText(),lastnameText.getText(),"1990-12-31", menuButton.get(selectedIdx)));//set default date.
                     }
                 });
         add.addEventHandler(MouseEvent.MOUSE_CLICKED,
@@ -474,7 +472,7 @@ public class AdminUserController implements Initializable, LoadSceneHelper {
                         UserModel.User user =
                                 new UserModel.User(idText.getText(), usernameText.getText(), passwordText.getText(),
                                         addressText.getText(), emailText.getText(), phoneText.getText(),
-                                        firstnameText.getText(),lastnameText.getText(),"1990-12-31", menuButton.get(menuButton.size()-1));
+                                        firstnameText.getText(),lastnameText.getText(),birthText.getValue().toString(), menuButton.get(menuButton.size()-1));
                         listUser.get(0).add(idText.getText());
                         listUser.get(1).add(usernameText.getText());
                         listUser.get(2).add(passwordText.getText());
@@ -483,7 +481,7 @@ public class AdminUserController implements Initializable, LoadSceneHelper {
                         listUser.get(5).add(phoneText.getText());
                         listUser.get(6).add(firstnameText.getText());
                         listUser.get(7).add(lastnameText.getText());
-                        listUser.get(8).add("1999-1-1");
+                        listUser.get(8).add(birthText.getValue().toString());
 
                         model.addUser(user, false);
                         data.add( user);
