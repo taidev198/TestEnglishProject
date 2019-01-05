@@ -146,6 +146,11 @@ public class UserController implements Initializable, LoadSceneHelper, Progressa
         OnProgress("/view/UserQuizTestView.fxml", anchorPane);
     }
 
+    @FXML
+    private void goToProfile(){
+
+    }
+
     @Override
     public void switchScene(String url, Object parent) {
         try {

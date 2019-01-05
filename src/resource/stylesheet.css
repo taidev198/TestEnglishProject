@@ -14,8 +14,12 @@
     -fx-background-radius: 0px;
     -fx-text-fill: #b8b1b1;
 }
+.effect:hover{
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0.5, 0.0, 0.0);
+}
 .sidebar-btn:hover{
-    -fx-background-color: rgb(22,169,250);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0.5, 0.0, 0.0);
+    -fx-background-color: #4A7ABA;
     -fx-background-radius: 0px;
     -fx-text-fill: #b8b1b1;
     -fx-border-color: rgb(22,169,250);
@@ -23,6 +27,10 @@
 }
 .label{
     -fx-text-fill: #b8b1b1;
+}
+
+.label:hover{
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0.5, 0.0, 0.0);
 }
 .sidebar-btn:pressed .label{
     -fx-background-color: rgb(22,169,250);
@@ -35,6 +43,29 @@
 .sidebar-btn-icon{
     -fx-fill: #b8b1b1;
 }
+.button{
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+}
+.button:hover{
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0.5, 0.0, 0.0);
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-background-color: transparent;
+
+}
+
+.text-field {
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+}
+.text-field :focused{
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-background-color: transparent;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0.5, 0.0, 0.0);
+}
+
 
 .menu-bar-btns{
     -fx-background-color: #fff;
@@ -93,12 +124,14 @@
 .fx-list-cell.jfx-rippler{
     -fx-background-color: #3E869F;
 }
+.fx-list-cell.label{
+
+}
 .fx-list-view{
     -fx-vertical-grap: 10;
     -fx-background-insets: 0;
     -fx-cell-vertical-margin:10;
-    -fx-pref-width:250;
-    -fx-background-color: #31B07A;
+    -fx-background-color: white;
 }
 .fx-list-view:hover{
     -fx-background-color: #3E869F;
@@ -107,13 +140,13 @@
 .list-view .list-cell:even {
     -fx-background-color: #FFFFFF;
     -fx-text-fill: #FFFFFF;
-    -fx-border-color: #1E3A50;
+    -fx-border-color: white;
 
 }
 .list-view .list-cell:odd {
     -fx-background-color: #FFFFFF;
     -fx-text-fill: #FFFFFF;
-    -fx-border-color: #1E3A50;
+    -fx-border-color: white;
 }
 
 /**progress bar*/

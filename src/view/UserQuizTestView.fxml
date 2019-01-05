@@ -10,7 +10,7 @@
 
 <AnchorPane fx:id="anchorPane" prefHeight="800.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.UserQuizTestController">
    <children>
-      <ScrollPane fx:id="rootLayout" layoutX="353.0" layoutY="105.0" prefHeight="647.0" prefWidth="1147.0" style="-fx-background-color: #E9E9E9;" />
+      <ScrollPane fx:id="rootLayout" layoutX="353.0" layoutY="105.0" prefHeight="647.0" prefWidth="1147.0" style="-fx-background-color: #E9E9E9;" styleClass="effect" stylesheets="@../resource/stylesheet.css" />
       <ListView fx:id="contestLists" layoutX="-4.0" layoutY="104.0" prefHeight="647.0" prefWidth="346.0" />
       <Text fx:id="description" fill="#a72a2a" layoutX="865.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DESCRIPTION" textAlignment="CENTER">
          <font>

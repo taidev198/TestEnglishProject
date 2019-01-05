@@ -19,7 +19,7 @@
    <children>
       <AnchorPane fx:id="anchorPane1" prefHeight="800.0" prefWidth="350.0" styleClass="sidebar" stylesheets="@../resource/stylesheet.css">
          <children>
-            <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="806.0" prefWidth="350.0">
+            <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="813.0" prefWidth="350.0">
                <children>
                   <ImageView fitHeight="80.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -124,7 +124,7 @@
                         <Insets left="10.0" />
                      </VBox.margin>
                   </Label>
-                  <HBox layoutX="10.0" layoutY="247.0" prefHeight="46.0" prefWidth="250.0" styleClass="sidebar-btn" stylesheets="@../resource/stylesheet.css">
+                  <HBox layoutX="10.0" layoutY="247.0" onMouseClicked="#goToProfile" prefHeight="46.0" prefWidth="250.0" styleClass="sidebar-btn" stylesheets="@../resource/stylesheet.css">
                      <children>
                         <FontAwesomeIcon fill="#b8b1b1" iconName="TASKS" size="2em" styleClass="sidebar-btn-icon">
                            <HBox.margin>

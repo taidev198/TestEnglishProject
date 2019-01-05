@@ -91,7 +91,7 @@
                         <Insets bottom="20.0" />
                      </padding>
                   </HBox>
-                  <HBox layoutX="10.0" layoutY="154.0" onMouseClicked="#goToUser" prefHeight="46.0" prefWidth="250.0" styleClass="sidebar-btn" stylesheets="@../resource/stylesheet.css">
+                  <HBox layoutX="10.0" layoutY="154.0" onMouseClicked="#goToUser" prefHeight="58.0" prefWidth="239.0" styleClass="sidebar-btn" stylesheets="@../resource/stylesheet.css">
                      <children>
                         <FontAwesomeIcon fill="#b8b1b1" iconName="ARCHIVE" size="1.5em" styleClass="sidebar-btn-icon" text="">
                            <HBox.margin>
@@ -230,9 +230,6 @@
                      </padding>
                   </HBox>
                </children>
-               <padding>
-                  <Insets left="20.0" />
-               </padding>
             </VBox>
          </children>
       </AnchorPane>

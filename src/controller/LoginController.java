@@ -91,7 +91,7 @@ public class LoginController implements Initializable, LoadSceneHelper, IResult,
     }
 
 
-    public boolean isValidUser(String username, String password){
+    private boolean isValidUser(String username, String password){
 
         boolean validUsername = false;
         boolean validPassword = false;

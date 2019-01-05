@@ -12,21 +12,21 @@
 
 <AnchorPane fx:id="anchorPaneSignUp" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
    <children>
-      <Pane fx:id="pane1" prefHeight="609.0" prefWidth="500.0" styleClass="parent" stylesheets="@../resource/style.css">
+      <Pane fx:id="pane1" prefHeight="609.0" prefWidth="500.0" style="-fx-background-color: #499C54;" styleClass="parent" stylesheets="@../resource/style.css">
          <children>
-            <PasswordField fx:id="passwordSignUp" layoutX="198.0" layoutY="225.0" prefHeight="25.0" prefWidth="189.0" promptText="PASSWORD" />
+            <PasswordField fx:id="passwordSignUp" layoutX="198.0" layoutY="225.0" prefHeight="25.0" prefWidth="189.0" promptText="PASSWORD" styleClass="text-field" stylesheets="@../resource/stylesheet.css" />
             <ImageView fitHeight="100.0" fitWidth="200.0" layoutX="207.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../resource/avatar.png" />
                </image>
             </ImageView>
-            <Button layoutX="109.0" layoutY="500.0" mnemonicParsing="false" onAction="#OnSignUp" prefHeight="39.0" prefWidth="274.0" style="-fx-background-color: #3377AB;" styleClass="box" stylesheets="@../resource/style.css" text="Sign Up">
+            <Button layoutX="109.0" layoutY="500.0" mnemonicParsing="false" onAction="#OnSignUp" prefHeight="39.0" prefWidth="274.0" style="-fx-background-color: #3377AB;" stylesheets="@../resource/stylesheet.css" text="Sign Up">
                <font>
                   <Font size="18.0" />
                </font>
             </Button>
-            <PasswordField fx:id="confirmSignUp" layoutX="198.0" layoutY="285.0" prefHeight="25.0" prefWidth="189.0" promptText="CONFIRM PASSWORD" />
-            <TextField fx:id="usernameSignUp" layoutX="198.0" layoutY="168.0" prefHeight="25.0" prefWidth="189.0" promptText="USERNAME" />
+            <PasswordField fx:id="confirmSignUp" layoutX="198.0" layoutY="285.0" prefHeight="25.0" prefWidth="189.0" promptText="CONFIRM PASSWORD" styleClass="text-field" stylesheets="@../resource/stylesheet.css" />
+            <TextField fx:id="usernameSignUp" layoutX="198.0" layoutY="168.0" prefHeight="25.0" prefWidth="189.0" promptText="USERNAME" styleClass="text-field" stylesheets="@../resource/stylesheet.css" />
             <Label layoutX="57.0" layoutY="172.0" text="USERNAME" textFill="#893737" />
             <Label layoutX="50.0" layoutY="289.0" text="CONFIRM PASSWORD" textFill="#893737" />
             <Label layoutX="60.0" layoutY="229.0" text="PASSWORD" textFill="#893737" />
@@ -37,8 +37,8 @@
                   <Font name="Arial" size="10.0" />
                </font>
             </Label>
-            <TextField fx:id="emailSignUp" layoutX="198.0" layoutY="341.0" prefHeight="25.0" prefWidth="189.0" promptText="EMAIL" />
-            <TextField fx:id="phoneSignUp" layoutX="198.0" layoutY="399.0" prefHeight="25.0" prefWidth="189.0" promptText="PHONE NUMBER" />
+            <TextField fx:id="emailSignUp" layoutX="198.0" layoutY="341.0" prefHeight="25.0" prefWidth="189.0" promptText="EMAIL" styleClass="text-field" stylesheets="@../resource/stylesheet.css" />
+            <TextField fx:id="phoneSignUp" layoutX="198.0" layoutY="399.0" prefHeight="25.0" prefWidth="189.0" promptText="PHONE NUMBER" styleClass="text-field" stylesheets="@../resource/stylesheet.css" />
          </children>
       </Pane>
    </children>
