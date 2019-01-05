@@ -8,6 +8,7 @@ import javafx.scene.control.MenuButton;
 import java.net.URL;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -52,7 +53,7 @@ public class UserModel  {
 
 
     public List<String> getResultUser(int userId){
-        String query = "select description from testresult join quiztest on quiztest.idquiztest = testresult.resultid where typeresultid = 1 and userInfoid =" + userId;
+        String query = "select description from testresult join quiztest on quiztest.idquiztest = testresult.resultid where typeresultid = 1 and userInfoid =" + userId +" order by description";
         List<String> res = new ArrayList<>();
 
 
@@ -65,6 +66,7 @@ public class UserModel  {
         } catch (SQLException | IllegalAccessException | InstantiationException | ClassNotFoundException e) {
             e.printStackTrace();
         }
+        //Collections.sort(res);
         return res;
 
     }

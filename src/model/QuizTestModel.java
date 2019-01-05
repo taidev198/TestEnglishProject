@@ -3,11 +3,8 @@ package model;
 import helper.ConnectDataHelper;
 
 import java.sql.*;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Created by traig on 4:35 PM, 11/12/2018
@@ -61,7 +58,7 @@ public class QuizTestModel {
 
 
     public List<List<String>> getResult(int id){
-        String query = "select * from testresult where userInfoid = "+id +" and typeresultid = 1";
+        String query = "select * from testresult where userInfoid = "+id +" and typeresultid = 1 order by  resultid";
         List<List<String>> ans = new ArrayList<>();
         try(PreparedStatement statement = ConnectDataHelper.getInstance().connectDB().prepareStatement(query)) {
             statement.execute("use data");
@@ -141,9 +138,9 @@ public class QuizTestModel {
         return -1;
     }
 
-    public  Map<String, List<List<String>>> getContest(){
+    public TreeMap<String, List<List<String>>> getContest(){
         String query ="select description,idquiztest, content, optionA, optionB, optionC, optionD, keyQuestion from quiztest join question on quiztest.idquiztest = question.contestid " +"order by question.contestid;" ;
-        Map<String, List<List<String>>> listContests = new HashMap<>();
+        TreeMap<String, List<List<String>>> listContests = new TreeMap<>();
         try(Statement statement = ConnectDataHelper.getInstance().connectDB().createStatement()) {
             statement.execute("use data");
             ResultSet resultSet = statement.executeQuery(query);
@@ -183,7 +180,9 @@ public class QuizTestModel {
                     tmp.get(6).add(resultSet.getString("keyQuestion"));
                     listContests.replace(resultSet.getString("description"), listContests.get(resultSet.getString("description")), tmp);
                 }
-            }
+
+
+            }System.out.println(listContests);
         } catch (IllegalAccessException | InstantiationException | SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }

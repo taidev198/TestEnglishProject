@@ -76,7 +76,7 @@ public class UserQuizTestController implements Initializable {
     MyRunnable myRunnable;
     private AtomicBoolean isRunning = new AtomicBoolean(false);
     private QuizTestModel model;
-    private Map<String, List<List<String>>> listQuestion;
+    private TreeMap<String, List<List<String>>> listQuestion;
     List<Map.Entry<String, List<List<String>>>> entryList;
     List<String> key;
     Integer selectedIdx;
